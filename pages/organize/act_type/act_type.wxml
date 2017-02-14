@@ -1,0 +1,30 @@
+
+<!--pages/huodongleixing/huodongleixing.wxml-->
+
+<!--公开活动-->
+
+<view class="line1" bindtap="changehidden">
+  <text class="t34rpx">公开活动</text>
+  <!--控制隐藏勾-->
+  <view wx:if="{{hidden==0}}">
+  <icon type="success_no_circle" size="18"></icon>
+  </view>
+</view>
+
+<!--公开活动，所有人均可报名。-->
+<view style="margin:19rpx 0 0 33px;">
+  <text class="t26rpx">公开活动，所有人均可报名。</text>
+</view>
+
+<!--俱乐部内活动-->
+<view class="line1" bindtap="changehidden1">
+  <text class="t34rpx">俱乐部内活动</text>
+    <!--控制隐藏勾-->
+  <view wx:if="{{hidden==1}}">
+  <icon type="success_no_circle" size="18"></icon>
+</view>
+</view>
+<!--俱乐部内活动，仅俱乐部成员报名。-->
+<view style="margin:19rpx 0 0 33px;">
+  <text class="t26rpx">俱乐部内活动，仅俱乐部成员报名。</text>
+</view>

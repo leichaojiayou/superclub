@@ -1,0 +1,4 @@
+/* pages/yanzhengxiaoxi/yanzhengxiaoxi.wxss */
+page{
+    white-space: normal;
+}

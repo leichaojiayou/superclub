@@ -1,0 +1,159 @@
+<view class="body">
+  <view class="bg">
+
+    <!-- 标题-->
+    <view>
+      <input class="input_title" placeholder="输入活动主题" />
+    </view>
+
+    <!-- 内容 -->
+    <scroll-view scroll-y="true" class="content_body">
+      <view class="input_content">
+        <block wx:for="{{contents}}" for-index="index">
+          <image id="{{index}}" bindtap="delete" wx:if="{{item.type=='img'}}" src="{{item.text}}" mode="widthFix" style="width:100%;"></image>
+          <text id="{{index}}" style="color:rgb({{item.color}});;font-weight:{{item.weight==true?'bold':'normal'}}" catchtap="con_tap" wx:if="{{item.type=='text'}}">{{item.text}}</text>
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+  <input value="{{test}}" catchblur="ok" placeholder="点击输入文字" bindinput="con_input" />
+
+  <!-- 选择 -->
+  <view class="choose" style="position:relative;">
+    <view class="choose_color" hidden="{{isShowColor}}" bindtap="show_color">
+      <view style="display:flex;" class="point1">
+        <block wx:for="{{color}}" for-index="index">
+          <view bindtap="choose_color" style="background:rgb({{item}});" id="{{index}}" class="point2"></view>
+        </block>
+      </view>
+    </view>
+    <view style="display:flex;">
+      <image src="../images/img.png" bindtap="choose_img" class="icon"></image>
+      <image src="../images/B.png" style="background:#{{isWeight==true?'696969':'eee'}};" class="icon_b icon" bindtap="choose_weight"></image>
+      <image src="../images/AA.png" class="icon"></image>
+      <view style="background:rgb({{point_color}});" class="point" bindtap="show_color"></view>
+    </view>
+    <view class="look">
+      预览
+    </view>
+  </view>
+
+  <!-- list -->
+
+  <!-- -->
+  <view class="list_item" style="margin-top:41rpx;">
+    <picker mode="date" class="picker">
+      <view>
+        活动开始时间
+        <text style="float:right;">2017年12月22日 19:30</text>
+      </view>
+    </picker>
+    <image class="errow" src="../images/right-errow.png"></image>
+  </view>
+
+  <!-- -->
+  <view class="list_item">
+    <picker mode="date" class="picker">
+      <view>
+        活动结束时间
+        <text style="float:right;">2017年12月22日 19:30</text>
+      </view>
+    </picker>
+    <image class="errow" src="../images/right-errow.png"></image>
+  </view>
+
+  <!-- -->
+  <view class="list_item" style="margin-top:41rpx;">
+    <view class="picker">
+      <view>
+        活动地点
+        <text style="float:right;width:310rpx;display:  -webkit-box;-webkit-line-clamp:  1;-webkit-box-orient:  vertical;overflow: hidden;text-overflow: ellipsis;">广东省广州市天河区建工路</text>
+      </view>
+    </view>
+    <image class="errow" src="../images/right-errow.png"></image>
+  </view>
+
+  <!-- -->
+  <view class="list_item">
+    <view class="picker">
+      活动封面
+      <image class="headerImg" src="../images/club_logo.jpg"></image>
+    </view>
+    <image class="errow" src="../images/right-errow.png"></image>
+  </view>
+</view>
+<view class="list_item" style="margin-top:41rpx;">
+  <view class="picker">
+    活动费用
+    <text style="float:right;">免费</text>
+  </view>
+  <image class="errow" src="../images/right-errow.png"></image>
+</view>
+
+<!-- 资料 -->
+<view class="bg">
+  <view class="list_item picker choose_body" style="margin-top:41rpx;">
+    用户报名填写项
+  </view>
+  <view class="choose_user">
+    <block wx:for="{{user_choose_list}}" for-index="index">
+      <view id="{{index}}" bindtap="user_choose" style="color:rgb({{item.isCheck?'256,256,256':'89,215,176'}});background:rgb({{item.isCheck?'89,215,176':'256,256,256'}});" class="choose_user_item">{{item.text}}</view>
+    </block>
+  </view>
+</view>
+<view class="bg" style="margin-top:41rpx;">
+  <view class="list_item">
+    <view class="picker">
+      更多报名设置
+    </view>
+    <view class="triangle">
+      <view class="{{true?'css_icon_true':'css_icon_false'}}">
+      </view>
+    </view>
+  </view>
+  <view class="list_item">
+    <picker class="picker">
+      <view>
+        报名截止时间
+        <text style="float:right;">2017年12月22日 19:30</text>
+      </view>
+    </picker>
+    <image class="errow" src="../images/right-errow.png"></image>
+  </view>
+</view>
+<view class="bg">
+  <view class="list_item">
+    <view class="picker" bindtap="nato_huodongleixing">
+      活动类型
+      <text style="float:right;">公开活动</text>
+    </view>
+    <image class="errow" src="../images/right-errow.png"></image>
+  </view>
+  <view class="list_item">
+    <view class="picker" bindtap="nato_duanxintixing">
+      短信通知
+      <text style="float:right;">活动开始前24小时</text>
+    </view>
+    <image class="errow" src="../images/right-errow.png"></image>
+  </view>
+</view>
+<view class="bg" style="margin-top:41rpx;">
+  <view class="list_item">
+    <picker class="picker">
+      报名人需审核
+    </picker>
+    <switch type="switch" c/>
+  </view>
+  <view class="list_item">
+    <picker class="picker">
+      允许帮人报名
+    </picker>
+    <switch type="switch" checked/>
+  </view>
+</view>
+<view class="bg" style="margin-top:41rpx;">
+  <textarea placeholder-style="font-size: 34rpx;letter-spacing:-0.8rpx;color:rgb(191,191,191);" style="padding:30rpx;" placeholder="填写报名须知" />
+</view>
+<button class="btn" type="primary">
+  发布
+</button>

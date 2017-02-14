@@ -1,0 +1,61 @@
+page {
+  background-color: rgb(246, 246, 246);
+}
+
+.big_view {
+  background-color: rgb(255, 255, 255);
+  font-size: 32rpx;
+  margin-top: 31rpx;
+  border-bottom: 1rpx solid rgb(230, 230, 230);
+  border-top: 1rpx solid rgb(230, 230, 230);
+}
+
+.item_view {
+  border-bottom: 1rpx solid rgb(230, 230, 230);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  line-height: 44rpx;
+}
+
+/*头像图标*/
+
+.img {
+  border-radius: 50%;
+  margin-top: 30rpx;
+  margin-left: 21rpx;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.price_text {
+  font-size: 38rpx;
+  color: rgb(61, 209, 165);
+}
+
+.item_mid_view {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  /*margin-top: 19rpx;*/
+  margin-left: 30rpx;
+  margin-right: 31rpx;
+}
+
+.bigsize_text {
+  color: rgb(26, 26, 26);
+  font-size: 32rpx;
+}
+
+.midsize_text {
+  color: rgb(142, 142, 142);
+  font-size: 28rpx;
+  line-height: 36rpx;
+}
+
+.midsize_text1 {
+  color: rgb(26, 26, 26);
+  font-size: 28rpx;
+  line-height: 36rpx;
+}

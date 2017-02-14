@@ -1,0 +1,11 @@
+
+<!--报名item模版-->
+<template name="applyed">
+  <view class="apply_item paddingLR">
+    <view>
+      <text class="apply_name">{{item.userName}}</text>
+      <text class="help_apply" wx:if="{{item.applyUserType==1}}">{{item.actUserName}}帮报</text>
+    </view>
+    <text class="apply_time">{{item.applyTime}}</text>
+  </view>
+</template>

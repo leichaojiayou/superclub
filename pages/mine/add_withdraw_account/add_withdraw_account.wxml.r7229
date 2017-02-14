@@ -1,0 +1,55 @@
+
+<!--pages/cash4/cash4.wxml-->
+<view class="header_1">
+  <text class="t26rpx">填写本人真实信息并仔细核对银行卡号！如信息提供有误，造成的一切损失自行承担。</text>
+</view>
+<view style="border-bottom:1rpx solid rgb(230,230,230);background-color: rgb(255, 255, 255);">
+
+  <!--收款银行-->
+  <view class="line2" style="border-bottom:1rpx solid rgb(230,230,230);">
+    <text class="t32rpx">收款银行</text>
+    <text class="t32rpx">{{accountName}}</text>
+  </view>
+
+  <!--开户名-->
+  <view class="line2" style="border-bottom:1rpx solid rgb(230,230,230);">
+    <text class="t32rpx">开户名</text>
+    <view style="text-align:right">
+      <input class="t32rpx" value="{{realName}}" placeholder="输入" />
+    </view>
+  </view>
+</view>
+<view style="border-bottom:1rpx solid rgb(230,230,230);background-color: rgb(255, 255, 255);margin-top:39rpx;border-top:1rpx solid rgb(230,230,230);">
+
+  <!--卡号-->
+  <view class="line2" style="border-bottom:1rpx solid rgb(230,230,230);">
+    <text class="t32rpx">卡号</text>
+    <view style="text-align:right">
+      <input placeholder="输入卡号" placeholder-class="t32rpx" type="number"/>
+    </view>
+  </view>
+
+  <!--开户所在地-->
+  <view class="body_1" style="padding-right:49rpx;">
+    <text class="body_txt">开户所在地</text>
+    <view style="text-align:right;margin-right:29rpx;">
+      <picker bindchange="bindPickerChange1" range="{{array1}}" value="{{index1}}">
+        {{array1[index1]}}
+      </picker>
+    </view>
+    <view style="position: absolute;top:23rpx;right: 31rpx;">
+      <image src="{{rightarrow}}" class="img"></image>
+    </view>
+  </view>
+
+  <!--开户支行-->
+  <view class="line2" style="border-bottom:1rpx solid rgb(230,230,230);">
+    <text class="t32rpx">开户支行</text>
+    <view style="text-align:right">
+      <input placeholder="输入" placeholder-class="t32rpx" />
+    </view>
+  </view>
+</view>
+
+
+<button type="primary" style="margin:61rpx 30rpx 0 30rpx;">提交</button>

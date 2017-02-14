@@ -1,0 +1,149 @@
+page {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+}
+
+.mid_item_view {
+  background-color: rgb(246, 246, 246);
+  height: 88rpx;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*分组按钮框*/
+
+.mid_item_mid_view {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+/*组按钮*/
+
+.css_icon_true {
+  border-right: 15rpx solid transparent;
+  border-top: 20rpx solid rgba(26, 26, 26, 0.5);
+  border-left: 15rpx solid transparent;
+}
+
+.css_icon_false {
+  border-top: 15rpx solid transparent;
+  border-bottom: 15rpx solid transparent;
+  border-left: 20rpx solid rgba(26, 26, 26, 0.5);
+}
+
+.text_groud_view {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+/*小字体*/
+
+.small_text {
+  color: rgb(142, 142, 142);
+  font-size: 24rpx;
+}
+.icon_view{
+    width: 50rpx;
+}
+/*中字体*/
+
+.mid_text {
+  color: rgb(26, 26, 26);
+  font-size: 34rpx;
+}
+
+.list_view1 {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  border-bottom: 1rpx solid rgb(230, 230, 230);
+}
+
+.list_view2 {
+  border-bottom: 1rpx solid rgb(230, 230, 230);
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+
+.image_view {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+
+.user_image {
+  margin: 30rpx 27rpx 30rpx 28rpx;
+  width: 80rpx;
+  height: 80rpx;
+}
+.user_image2 {
+  margin: 28rpx 27rpx 0 28rpx;
+  width: 80rpx;
+  height: 80rpx;
+}
+
+
+.user_info_top {
+  width: 78%;
+  margin: 29rpx 30rpx 32rpx 0rpx;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+
+.user_info_top2 {
+  width: 78%;
+  margin: 29rpx 30rpx 0rpx 0rpx;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+
+.user_info_name_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.list_view2_top {
+  display: flex;
+  align-items: flex-start;
+}
+
+
+.user_info_name_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user_foot_view {
+  margin: 50rpx 0rpx 36rpx 0rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list_item_text {
+  justify-content: center;
+  width: 25%;
+  display: flex;
+  align-items: center;
+  border-right: 1rpx solid rgb(229, 229, 229);
+  font-size: 32rpx;
+  color: rgb(61, 209, 164);
+}
+.btn {
+  background-color: rgb(255, 255, 255);
+  color: rgb(61, 209, 164);
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+}

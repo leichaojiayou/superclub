@@ -1,0 +1,146 @@
+/*图片*/
+
+.header {
+  height: 65px;
+  width: 65px;
+  border-radius: 5px;
+  background-color: rgb(249, 248, 248);
+  /*border: 0.5px solid rgb(180, 180, 180);*/
+  margin-left: 4%;
+}
+
+/*.header_img {
+  width: 32.5px;
+  height: 32.5px;
+  margin: 16.5px 16px 16px 16.5px;
+  opacity: 40%;
+}*/
+
+/*俱乐部名字*/
+
+.club_id {
+  font-size: 17px;
+  letter-spacing: -0.4px;
+}
+
+/*中间分类*/
+
+.sort {
+  flex-direction: row;
+  color: rgb(255, 255, 255);
+  margin-top: 1vh;
+}
+
+/*每一类的样式*/
+
+.sort_item {
+  background-color: red;
+  padding: 9rpx 10rpx;
+  margin-right: 3%;
+  border-radius: 3px;
+}
+
+/*有几个活动样式*/
+
+.nums {
+  letter-spacing: -0.3px;
+  color: rgb(142, 142, 142);
+  margin-top: 1vh;
+}
+
+/*以下是第二个模板的样式*/
+
+.nd_header {
+  margin: 0 3.3% 0 3.3%;
+}
+
+.nd_img {
+  background-color: rgb(241, 241, 241);
+  width: 112px;
+  height: 77px;
+  flex-shrink: 0;
+}
+
+/*潍坊市马拉松运动协会2017黄河口东营-国。。样式*/
+
+.nd_name {
+  white-space: normal;
+  letter-spacing: -0.4px;
+  line-height: 22px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/*时间样式*/
+
+.nd_time {
+  color: rgb(191, 191, 191);
+  margin-top: 0.9%;
+}
+
+/*￥￥230.00样式*/
+
+.money {
+  color: rgb(61, 209, 161);
+}
+/*短信*/
+.nofreemsg{
+  background-color:rgb(184,184,184);
+}
+.havefreemsg{
+  background-color:rgb(149,255,223);
+  flex-shrink: 0;
+}
+.freemsg{
+
+  padding: 3px;
+  opacity: 20%;
+  border-radius: 2px;
+}
+/*取消报名 修改报名 去支付 这整一框*/
+
+.it_all {
+  position: absolute;
+  right: 3%;
+}
+
+/*取消报名 修改报名 去支付 每一格的样式*/
+
+.it {
+  border-style: solid;
+  border-width: 1px;
+  height: 30px;
+  width: 72px;
+  border-radius: 3px;
+  justify-content: center;
+}
+
+.it_all, .it, .nd_header, .sort, .nd_time {
+  display: flex;
+   align-items: center;
+}
+
+.sort, .nums, .nd_time, .it {
+  font-size: 13px;
+}
+
+.nd_name, .money {
+  font-size: 15px;
+}
+.common2{
+  border-bottom:1px solid rgb(230,230,230);
+  position:relative;
+  margin-bottom:25px;
+}
+
+
+
+
+.body_item{
+    display: flex;
+    flex-direction: column;
+  align-items: center;
+  width: 33.3%;
+}

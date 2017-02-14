@@ -1,0 +1,114 @@
+.header {
+  width: 689rpx;
+  height: 85rpx;
+  background: #fff;
+  margin-top: 32rpx;
+  padding: 0rpx 30rpx 0rpx 31rpx;
+  display: flex;
+  line-height: 85rpx;
+  justify-content: space-between;
+  border-bottom: 1rpx solid rgb(230, 230, 230);
+  border-top: 1rpx solid rgb(230, 230, 230);
+}
+
+.header_left {
+  font-size: 34rpx;
+  letter-spacing: -0.8rpx;
+  color: rgb(26, 26, 26);
+}
+
+.header_right {
+  color: rgb(191, 191, 191);
+}
+
+.set {
+  margin-top: 48rpx;
+  font-size: 26rpx;
+  color: rgb(142, 142, 142);
+  margin-left: 31rpx;
+}
+
+.center {
+  position: relative;
+  width: 750rpx;
+  height: 268rpx;
+  background: #fff;
+  margin-top: 21rpx;
+  border-bottom: 1rpx solid rgb(230, 230, 230);
+  border-top: 1rpx solid rgb(230, 230, 230);
+}
+
+.icon {
+  width: 48rpx;
+  height: 48rpx;
+  position: absolute;
+  top: 110rpx;
+  left: 40rpx;
+}
+
+.icon2 {
+  width: 48rpx;
+  height: 48rpx;
+  margin-left: 40rpx;
+}
+
+.center_item {
+  display: flex;
+  height: 89rpx;
+  line-height: 89rpx;
+  justify-content: space-between;
+}
+
+.input {
+  margin-right: 32rpx;
+  margin-top: 26rpx;
+  text-align: right;
+}
+
+.center_body {
+  margin-left: 128rpx;
+  height: 268rpx;
+}
+
+.border {
+  border-bottom: 1rpx solid rgb(230, 230, 230);
+  border-top: 1rpx solid rgb(230, 230, 230);
+}
+
+.center2 {
+  height: 88rpx;
+  display: flex;
+  border-bottom: 1rpx solid rgb(230, 230, 230);
+  background: #fff;
+  line-height: 88rpx;
+}
+.icon2{
+    margin-top: 19rpx;
+    margin-right: 39rpx;
+}
+.textarea{
+      border-bottom: 1rpx solid rgb(230, 230, 230);
+  border-top: 1rpx solid rgb(230, 230, 230);
+    margin-top: 41rpx;
+    height: 270rpx;
+    padding: 31rpx;
+    background: #fff;
+}
+.item3{
+  height: 85rpx;
+  background: #fff;
+  margin-top: 71rpx;
+  padding: 0rpx 30rpx 0rpx 31rpx;
+  display: flex;
+  line-height: 85rpx;
+  justify-content: space-between;
+  border-bottom: 1rpx solid rgb(230, 230, 230);
+  border-top: 1rpx solid rgb(230, 230, 230);
+}
+.mar{
+    margin-top: 24rpx;
+}
+.mar1{
+    margin-top: 24rpx;
+    padding-bottom: 730rpx;
+}

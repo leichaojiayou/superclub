@@ -1,0 +1,38 @@
+
+<!--pages/charge_activity/charge_activity.wxml-->
+
+<!--头-->
+<view class="header">
+  <view wx:for="{{titleNames}}"  class="meta_item">
+    <text class="des_txt">{{titleNames[index]}}</text>
+    <text class="sort_num">{{titleDatas[index]}}</text>
+  </view>
+</view>
+
+<!--线-->
+<view style="border-bottom:0.5px solid rgb(230,230,230);margin:0 4% 0 4%;"></view>
+
+<!--body-->
+<view class="body">
+  <view wx:for="{{imageAndTitles}}" for-index="index" id="{{index}}"  class="body_item1" bindtap="skip" style="margin-bottom: 36px;">
+    <image id="{{index}}" src="{{item.img}}" class="list_img1" mode="aspectFill"></image>
+    <text id="{{index}}" class="des_txt2" style="margin-top:2.7vh">{{item.content}}</text>
+    <view class="point" wx:if="{{index==0&count!=0}}">{{count}}</view>
+  </view>
+  <view id="5"  class="body_item1" bindtap="skip" style="margin-bottom: 36px;">
+    <image id="5" src="{{imageTitleDatas.img}}" class="list_img1" mode="aspectFill"></image>
+    <text id="5" class="des_txt2" style="margin-top:2.7vh">{{imageTitleDatas.content}}</text>
+  </view>
+</view>
+
+<!--foot-->
+<view class="foot">
+  <view wx:for="{{item2}}" class="body_item">
+    <image src="{{item.img}}" class="list_img1"></image>
+    <text class="des_txt2" style="margin-top:2.7vh">{{item.content}}</text>
+  </view>
+ <view class="share" style="background-color: rgb(255, 255, 255); justify-content: center;display:flex;">
+ <text >分享到社交平台，邀请更多好友参加 {{titleArray[0]}} </text>
+ </view>
+</view>
+

@@ -1,0 +1,115 @@
+const app = getApp();
+const mineApi = app.api("mineApi");
+
+Page({
+  data: {
+    accountName: '',
+    accountType: 0,
+    realName: '',
+    accountNo: '',
+    bankAddr: '广州',
+    bankSubname: '',
+    array1: ['广州', '香港', '佛山'],
+    index1: 0,
+  },
+  onShow: function () {
+    if (app.globalData.selectAccount) {
+      this.setData({
+        accountName: app.globalData.selectAccount.accountName,
+        accountType: app.globalData.selectAccount.accountType,
+        realName: app.globalData.selectAccount.realName
+      })
+      app.globalData.selectAccount = {};
+    }else{
+      wx.navigateBack();
+    }
+  },
+  submitSetGatherAccount: function () {
+    var that = this;
+    mineApi.setGatherAccount({
+      method: 'POST',
+      data: {
+        real_name: that.data.realName,
+        account_no: that.data.accountNo,
+        account_type: that.data.accountType,
+        bank_addr: that.data.bankAddr,
+        bank_subname: that.data.bankSubname
+      },
+    },
+      function (res) {
+        wx.navigateBack();
+      },
+      function (res) {
+        console.log("fail");
+        wx.hideToast();
+        if (res.data.msg) {
+          wx.showToast({
+            title: res.data.msg,
+            icon: "success"
+          })
+        }
+      },
+      function (res) {
+        app.util.getErrorMsg(res);
+      }
+
+    )
+  },
+  btn_submit() {
+    if (this.data.realName == '') {
+      wx.showToast({
+        title: "请输入开户名",
+        icon: "success"
+      })
+      return;
+    }
+    if (this.data.accountNo == '') {
+      wx.showToast({
+        title: "请输入卡号",
+        icon: "success"
+      })
+      return;
+    }
+    if (this.data.bankAddr == '') {
+      wx.showToast({
+        title: "请选择开户所在地",
+        icon: "success"
+      })
+      return;
+    }
+    if (this.data.bankSubname == '') {
+      wx.showToast({
+        title: "请输入开户支行",
+        icon: "success"
+      })
+      return;
+    }
+    this.submitSetGatherAccount();
+
+  },
+
+  inputRealName(e) {
+    this.data.realName = e.detail.value
+  },
+
+  inputAccountNo(e) {
+    this.data.accountNo = e.detail.value
+  },
+
+  // inputBankAddr(e) {
+  //   this.data.bankAddr = e.detail.value
+  // },
+
+  inputBankSubname(e) {
+    this.data.bankSubname = e.detail.value
+  },
+
+  bindPickerChange1: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      index1: e.detail.value,
+      bankAddr: this.data.array1[e.detail.value]
+    })
+  },
+
+})

@@ -1,0 +1,25 @@
+
+<!--pages/duanxintixing/duanxintixing.wxml-->
+<view style="height:31rpx;border-bottom:1rpx solid rgb(230,230,230)"></view>
+
+<!--时间循环-->
+<view style="background-color: rgb(255, 255, 255);"  >
+  <view class="item" bindtap="setAnyOneJoin" >
+    <text>允许任何人加入</text>
+    <!--if判断-->
+    <view >
+
+      <icon wx:if="{{needJoinCheck==0}}" type="success_no_circle" size="18"  ></icon>
+      <icon wx:else  size="18"  ></icon>
+    </view>
+  </view>
+  <view class="item" bindtap="setLessJoin" >
+    <text>需验证加入</text>
+    <!--if判断-->
+    <view >
+      <icon wx:if="{{needJoinCheck==1}}" type="success_no_circle"size="18"  ></icon>
+      <icon  wx:else size="18"  ></icon>
+    </view>
+  </view>
+</view>
+<button style="margin:60rpx 30rpx 0 30rpx;" type="primary" catchtap="submit">保存</button>

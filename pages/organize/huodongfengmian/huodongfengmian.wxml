@@ -1,0 +1,59 @@
+
+<!--pages/huodongfengmian/huodongfengmian.wxml-->
+<!--徒步-->
+<view class="body">
+  <view class="body_item1">
+    <view class="txt_position">
+      <text class="t34rpx">徒步</text>
+    </view>
+  </view>
+
+  <!--循环体样式-->
+  <view class="body_item">
+
+    <!--循环指令-->
+    <view wx:for="{{item}}">
+
+      <!--开始循环图片-->
+      <image src="{{item.img}}" class="img" mode="aspectFill"></image>
+    </view>
+  </view>
+</view>
+<!--骑行-->
+<view class="body">
+  <view class="body_item1">
+    <view class="txt_position">
+      <text class="t34rpx">骑行</text>
+    </view>
+  </view>
+
+  <!--循环体样式-->
+  <view class="body_item">
+
+    <!--循环指令-->
+    <view wx:for="{{item}}">
+
+      <!--开始循环图片-->
+      <image src="{{item.img}}" class="img" mode="aspectFill"></image>
+    </view>
+  </view>
+</view>
+<!--跑步-->
+<view class="body">
+  <view class="body_item1">
+    <view class="txt_position">
+      <text class="t34rpx">跑步</text>
+    </view>
+  </view>
+
+  <!--循环体样式-->
+  <view class="body_item">
+
+    <!--循环指令-->
+    <view wx:for="{{item}}">
+
+      <!--开始循环图片-->
+      <image src="{{item.img}}" class="img" mode="aspectFill"></image>
+    </view>
+  </view>
+</view>

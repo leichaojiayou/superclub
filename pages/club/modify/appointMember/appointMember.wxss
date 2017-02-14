@@ -1,0 +1,22 @@
+/* pages/dismiss/dismiss.wxss */
+page{
+    white-space: normal;
+}
+.header{
+        display: flex;
+    justify-content: center;
+}
+.header_img{
+    height: 130rpx;
+    width: 130rpx;
+    margin-top: 89rpx;
+
+}
+.header_t{
+    display: flex;
+    justify-content: center;
+    margin-top: 48rpx;
+}
+.header_btn{
+    margin: 60rpx 30rpx 0 30rpx;
+}

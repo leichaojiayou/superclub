@@ -1,0 +1,46 @@
+<scroll-view scroll-y="true" style="height:100vh;">
+  <view hidden="{{false}}">
+    <view style="height:50rpx;"></view>
+    <text class="t26rpx">已设置账户</text>
+    <view style="border-bottom:1rpx solid rgb(229,229,229);border-top:1rpx solid rgb(229,229,229);background-color: rgb(255, 255, 255);margin-top:20rpx;">
+      <view wx:for="{{bindList}}" wx:key="{{index}}" >
+        <view wx:if="{{item.delete}}" class="item1" bindtap="cancelDelete" id="{{index}}">
+          <view>
+            <text class="t32rpx">{{item.accountName}}</text>
+            <text class="t32rpx1">({{item.accountNo}})</text>
+          </view>
+          <view class="del" bindtap="deleteAccount" id="{{index}}">删除</view>
+        </view>
+        <view wx:else class="item" bindtouchstart="mytouchstart" bindtouchend="mytouchend" bindtap="clickAccount" id="{{index}}">
+          <image src="{{item.accountSmallPic}}" style="height:50rpx;width:50rpx;margin-right:28rpx;"></image>
+          <view>
+            <text class="t32rpx">{{item.accountName}}</text>
+            <text class="t32rpx1">({{item.accountNo}})</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!--选择其他账户-->
+  <view style="margin-top:50rpx">
+    <text class="t26rpx">选择其他账户</text>
+  </view>
+  <view style="border-bottom:1rpx solid rgb(229,229,229);border-top:1rpx solid rgb(229,229,229);background-color: rgb(255, 255, 255);margin-top:20rpx;">
+
+    <!--其他银行循环体-->
+    <view class="header" wx:for="{{unbindList}}" wx:key="{{index}}" bindtap="nato_addWithdrawAccount" id="{{index}}">
+
+      <!--银行图标-->
+      <image src="{{item.accountSmallPic}}" style="height:50rpx;width:50rpx;margin-right:28rpx;"></image>
+
+      <!--银行-->
+      <view style="display:flex;justify-content: space-between; align-items: center;">
+        <view>
+          <text class="t32rpx">{{item.accountName}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view style="height:16rpx;"></view>
+</scroll-view>

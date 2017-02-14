@@ -1,0 +1,16 @@
+/* pages/sort_one/sort_one.wxss */
+.header{
+    margin-top: 71rpx;
+}
+.header_input{
+    background-color: rgb(255, 255, 255);
+    opacity: 0.85;
+    height: 88rpx;
+    padding-left: 31rpx;
+}
+.header_btn{
+    margin: 60rpx 29rpx 0 31rpx;
+}
+.header_btn1{
+    margin:30rpx 29rpx 0 31rpx;
+}

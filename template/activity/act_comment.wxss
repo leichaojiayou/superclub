@@ -1,0 +1,35 @@
+.userInfo {
+  padding: 30rpx 30rpx 30rpx 30rpx;
+  background-color: rgb(255, 255, 255);
+}
+
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  border: 2rpx solid rgb(180, 180, 180);
+  float: left;
+}
+
+.nickTime {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 26rpx 0 0 30rpx;
+}
+
+.actComment {
+  word-break: break-all;
+  white-space: normal;
+  background-color: rgb(255, 255, 255);
+  font-size: 15px;
+  letter-spacing: -0.8rpx;
+  text-align: justify;
+  line-height: 44rpx;
+  padding: 0 30rpx 30rpx 140rpx;
+  border-bottom: 2rpx solid rgb(230, 230, 230);
+}
+
+.nick, .postTime {
+  font-size: 28rpx;
+}
