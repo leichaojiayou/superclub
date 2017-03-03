@@ -1,0 +1,22 @@
+const api = require("./request");
+class Manage{
+    constructor(){
+    }
+    /*
+     *管理活动之基本信息 http://doc.iweju.com/FitNesse.WejuBaHttp.V15Doc.ActivityAdminDetail
+     *请求参数:activity_id
+     */
+    getManageActivity(param,...fn){
+        api.wxRequest(param,'/ba/activity/admin/detail',...fn)
+    }
+
+    openApply(param,...fn){
+        api.wxRequest(param,'/ba/activity/admin/open',...fn)
+    }
+
+    closeApply(param,...fn){
+        api.wxRequest(param,'/ba/activity/admin/close',...fn)
+    }
+
+}
+module.exports = Manage

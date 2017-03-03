@@ -1,0 +1,42 @@
+<scroll-view style="height:92vh;" scroll-y="true">
+  <view class="mid_view">
+
+    <!--全选topview-->
+    <view class="checkbox_view">
+
+      <!--全选按钮-->
+      <icon bindtap="bindSelectAll" class="group_icon" size="26" type="{{checkbox_allStatus ? 'success' : 'circle'}}" style="{{statu==2 ? 'opacity:0.4' : ''}}" />
+      <text class="checkbox_text_view">{{page.checkbox_all_text}}</text>
+    </view>
+
+    <!--循环列表-->
+    <view wx:for="{{group_list}}" wx:for-index="item_index" bindtap="" class="checkbox_group_view">
+      <view style="width: 13%;">
+
+        <!--列表按钮-->
+        <icon bindtap="bind_Select" data-item="{{item_index}}" class="item_icon" size="26" type="{{item.check_Status ? 'success' : 'circle'}}" style="{{statu==2 ? 'opacity:0.4' : ''}}" />
+      </view>
+      <view class="item_mid_view" style="width: 87%;{{(num-1)== item_index ? 'border-bottom: 0;':''}}">
+        <view style="width: 10%;">
+          <image class="item_img" src="{{item.img}}"></image>
+        </view>
+        <view class="item_right_view" style="width: 77%;">
+          <view class="user_info_name_top">
+            <text style="font-size: 32rpx;">{{item.user_name}}</text>
+            <text class="smartsize" wx:if="{{item.user_text!=null || item.user_text!=''}}">{{item.user_text}}</text>
+          </view>
+          <text wx:if="{{item.payment!=''}}" class="smart_text_size">{{item.payment}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!--尾部-->
+  <view style="height:150rpx;"></view>
+</scroll-view>
+
+<!--底部按钮view-->
+<view class="foot_view">
+  <text bindtap="btn" class="foot_text" style="color: rgb(26, 26, 26);">不通过</text>
+  <text bindtap="btn1" class="foot_text">通过</text>
+</view>

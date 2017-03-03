@@ -1,0 +1,31 @@
+<template name="common_one">
+  <view style="display:flex;align-items:center;position:relative;margin-bottom:25px" wx:for="{{clubs}}" wx:key="club_index"
+    wx:for-item="club" bindtap="clubHome" data-id="{{club.clubID}}">
+    <!--图片-->
+    <view class="header">
+      <image src="{{club.logo}}" class="header_img" mode="scaleToFill"></image>
+    </view>
+    <!--中间这一框  三列-->
+    <view style="flex-direction: column;display:flex;margin-left:3%;">
+      <!--俱乐部名字-->
+      <text class="club_id">{{club.title}}</text>
+      <!--中间分类-->
+      <view class="sort">
+        <view wx:for="{{club.features}}" wx:key="feature-index" wx:for-item="feature" class="kuangkuang" >
+          <!--<view class="kuangkuang" style="background-color:rgb(145 ,213 ,192);">
+                    <text class="t26rpx_white">{{item.name}}</text>
+                  </view>-->
+          <text wx:if="{{index == 0}}" class="kuangkuang" style="background-color:rgb(145, 213, 192)">{{feature.name}}</text>
+          <text wx:elif="{{index == 1}}" class="kuangkuang" style="background-color:rgb(172, 198, 237)">{{feature.name}}</text>
+          <text wx:else class="kuangkuang" style="background-color:rgb(227, 192, 163)">{{feature.name}}</text>
+        </view>
+      </view>
+      <text class="nums" wx-if="{{club.activityCount != 0}}">{{club.activityCount}}个新活动</text>
+    </view>
+    <!--箭头-->
+    <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right_errow" mode="aspectFill"></image>
+  </view>
+</template>
+<!--引用模板-->
+<template is="common_one" data="{{clubs}}" />
+<template is="common_two" data="{{item3,item4,item5}}" />

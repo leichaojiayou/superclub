@@ -1,0 +1,73 @@
+<scroll-view scroll-y="true" style="height:100vh">
+
+  <!--钱topview-->
+  <view class="top_view">
+    <text class="money_text">{{money}}</text>
+    <text style="margin-top: 36rpx;">可提现金额</text>
+  </view>
+
+  <!--中间4个-->
+  <view class="mid_view">
+    <view class="item_view" bindtap="nato_actProceeds">
+      <image class="img" src="https://cdn.51julebu.com/xiaochengxu/image/activity_collections@2x.png"></image>
+      <view class="item_mid_view">
+        <text>活动收款</text>
+        <view class="text_icon_view">
+          <text class="text_icon">8</text>
+          <image class="icon_img" src="https://cdn.51julebu.com/xiaochengxu/image/right-errow.png"></image>
+        </view>
+      </view>
+    </view>
+    
+    <view class="item_view" bindtap="nato_withdraw">
+      <image class="img" src="https://cdn.51julebu.com/xiaochengxu/image/withdraw@2x.png"></image>
+      <view class="item_mid_view">
+        <text>提现</text>
+        <view class="text_icon_view">
+          <image class="icon_img" src="https://cdn.51julebu.com/xiaochengxu/image/right-errow.png"></image>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{identityStatus==2}}" class="item_view">
+      <image class="img" src="https://cdn.51julebu.com/xiaochengxu/image/authentication@2x.png"></image>
+      <view class="item_mid_view">
+        <text>身份认证</text>
+        <view class="text_icon_view">
+          <icon type="waiting_circle" size="20"></icon>
+          <text class="foot_text">认证中</text>
+        </view>
+      </view>
+    </view>
+    <view wx:elif="{{identityStatus==3}}" class="item_view">
+      <image class="img" src="https://cdn.51julebu.com/xiaochengxu/image/authentication@2x.png"></image>
+      <view class="item_mid_view">
+        <text>身份认证</text>
+        <view class="text_icon_view">
+          <icon type="success" size="20"></icon>
+          <text class="foot_text">已认证</text>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="item_view" bindtap="nato_idverify">
+      <image class="img" src="https://cdn.51julebu.com/xiaochengxu/image/authentication@2x.png"></image>
+      <view class="item_mid_view">
+        <text>身份认证</text>
+        <view class="text_icon_view">
+          <image class="icon_img" src="https://cdn.51julebu.com/xiaochengxu/image/right-errow.png"></image>
+        </view>
+      </view>
+    </view>
+
+    <view class="item_view" bindtap="nato_tradeRecord">
+      <image class="img" src="https://cdn.51julebu.com/xiaochengxu/image/transaction_record@2x.png"></image>
+      <view class="item_mid_view" style="border-bottom: 0;">
+        <text>交易记录</text>
+        <view class="text_icon_view">
+          <image class="icon_img" src="https://cdn.51julebu.com/xiaochengxu/image/right-errow.png"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</scroll-view>

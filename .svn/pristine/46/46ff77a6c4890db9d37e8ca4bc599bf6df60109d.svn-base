@@ -1,0 +1,58 @@
+/**
+ * 报名详情就扣：http://doc.iweju.com/FitNesse.WejuBaHttp.ActivityDoc.ActivityApplyDetail
+ */
+const app = getApp();
+const utils = app.util;
+const actApi = app.api("actApi");
+var applyId = 8376;
+Page({
+    data: {
+        // 1 一行字，2 两行字
+        header_status: 1,
+// 取消报名按状态 true 不可以点击颜色　false 可以点击颜色
+        item7_btn_status: false,
+        // 二维码下的取消报名状态 true 不可以点击颜色　false 可以点击颜色
+        item7_btn_status: true,
+
+        applyStatusIco: '',//报名状态图标
+        applyStatusText: '',//报名状态描述
+        actTitle:'',//活动标题
+        host:'',//主办方
+        actTime:'',//活动时间
+        nickAndPhone:'',//昵称和和手机
+        ticketName:'',//票名
+        ticketCost:'',//票价
+        qrCodeDesc:'',//电子票描述
+    },
+    onLoad: function (options) {
+        let that = this;
+        if (options) {
+            //applyId = options.applyId;
+        }
+        actApi.applyDetail({
+            data: {
+                applyID: applyId,
+            }
+        }, function (res) {
+            console.log(JSON.stringify(res.data));
+            let applyInfo = res.data.data.applyInfo;
+            if (applyInfo.applyStatus == 1)
+                that.setData({});
+        }, function (res) {
+            let errorMsg = utils.getErrorMsg(res);
+            app.wxService.showModal({title: '报名详情加载失败', content: errorMsg.title + '；' + errorMsg.content})
+        }, function (res) {
+            console.log(res)
+        });
+    },
+    nato_apply_page: function (e) {
+        wx.navigateTo({
+            url: '../apply_page/apply_page'
+        })
+    },
+    nato_order_details_page: function (e) {
+        wx.navigateTo({
+            url: '../order_details_page/order_details_page'
+        })
+    }
+})

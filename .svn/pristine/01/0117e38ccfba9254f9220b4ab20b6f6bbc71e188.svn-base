@@ -1,0 +1,27 @@
+<!-- 暂无提现记录 -->
+<view wx:if="{{listCount==0}}" class="item_wu">
+  <view>
+    <image src="https://cdn.51julebu.com/xiaochengxu/image/wtxjl@2x.png" class="no_image"></image>
+    <view class="wu_text">暂无提现记录</view>
+  </view>
+</view>
+
+<scroll-view wx:else scroll-y="true" style="height:100vh;" bindscrolltolower="loadMore" bindscrolltoupper="refresh">
+  <view class="item" wx:for="{{dataList}}" wx:key="{{index}}">
+
+    <!--第一行-->
+    <view class="item_1" bindtap="nato_withdrawDetail" id="{{item.billID}}">
+      <text class="t32rpx">{{item.title}}</text>
+      <text class="t38rpx">{{item.amount}}</text>
+    </view>
+
+    <!--第二行-->
+    <view class="item_1" bindtap="nato_withdrawDetail" id="{{item.billID}}">
+      <text style="color: rgb(142, 142, 142);" class="t24rpx">{{item.createTimeStr}}</text>
+      <text wx:if="{{item.applyStatus==1}}" style="color:rgb(255,112,68)" class="t24rpx">正在审核</text>
+      <text wx:elif="{{item.applyStatus==2}}" style="color:rgb(61,209,165)" class="t24rpx">已打款</text>
+      <text wx:elif="{{item.applyStatus==3}}" style="color:rgb(255,63,49)" class="t24rpx">审核未通过</text>
+      <text wx:elif="{{item.applyStatus==4}}" style="color:rgb(61,209,165)" class="t24rpx">审核通过</text>
+    </view>
+  </view>
+</scroll-view>

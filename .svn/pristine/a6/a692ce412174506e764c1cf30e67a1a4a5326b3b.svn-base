@@ -1,0 +1,94 @@
+Page({
+  data: {
+    count: 1,
+    threelabel: [{
+        txt: '会员',
+        amount: '123'
+      },
+      {
+        txt: '本月活动',
+        amount: '12'
+      },
+      {
+        txt: '本月报名',
+        amount: '999'
+      },
+    ],
+    item: [{
+        img: '../../../assets/images/active.png',
+        content: '发布活动'
+      },
+      {
+        img: '../../../assets/images/member+.png',
+        content: '招募会员'
+      },
+      {
+        img: '../../../assets/images/msg.png',
+        content: '免费信息'
+      },
+      {
+        img: '../../../assets/images/list.png',
+        content: '待办事项'
+      }
+    ],
+    //第二个模板
+    acts: [],
+    item3: [{
+      img: '',
+      name: '潍坊市马拉松运动协会2017黄河口东营-国际马拉松赛报名啊啊啊啊啊啊啊啊啊啊啊啊',
+      time: '2017.12.21 17:30',
+      club_name: '俱乐部俱乐部名称',
+      money: '￥230.00',
+      freemsg: '0',
+      enlistnumber: '3'
+    }],
+    msg: {
+      clubname: '俱乐部名称'
+    }
+  },
+
+  onLoad(params) {
+    let clubId = params.clubId;
+    this.loadActs()
+  },
+
+  loadActs() {
+    let that = this
+    getApp().clubApi.clubActs({
+        data: {
+          user_id: getApp().session.getUserInfo().userID,
+          start: 0,
+          count: 50
+        }
+      },
+      (res) => {
+        let data = res.data;
+        that.setData({
+          acts: data.activities
+        })
+      }
+    )
+  },
+
+  nato: function (e) {
+    switch (e.currentTarget.id) {
+      case '2':
+        wx.navigateTo({
+          url: '../mfdx/mfdx'
+        })
+        break;
+      case '3':
+        wx.navigateTo({
+          url: '../dbsx/dbsx'
+        })
+        break;
+    }
+  },
+
+  tagActDetail: function (e) {
+    let activityId = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '../../manage/manage_activity/manage_activity?actId=' + activityId
+    })
+  }
+})

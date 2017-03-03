@@ -1,0 +1,14 @@
+
+<!-- pages/summary/summary.wxml -->
+  <view style="position: relative;margin-top:41rpx;">
+  <view style="background: rgb(255, 255, 255);height:2vh"></view>
+  <view style="padding:0 32rpx;background:#fff;">
+    <textarea name="description" placeholder="俱乐部简介" class="textarea textarea-height" placeholder-class="head_name"
+              placeholder-style="color:rgb(191,191,191);" maxlength="3000" value="{{newDescription}}" bindinput="changeText"  />
+  </view>
+</view>
+<button wx:if="{{!type}}" type="primary" style="margin:61rpx 30rpx;background:rgb(61, 209, 164);" catchtap="submit">保存</button>
+
+
+
+  

@@ -1,0 +1,93 @@
+
+Page({
+  data: {
+    count: 1,
+    activity:{},
+    item: [
+      { sort: '报名', num: '0' },
+      { sort: '点赞', num: '0' },
+      { sort: '评论', num: '0' },
+      { sort: '分享', num: '0' },
+    ],
+
+
+    item1: [
+      { img: '../../../assets/images/manage.png', content: '报名管理' },
+      { img: '../../../assets/images/msg.png', content: '免费短信' },
+      { img: '../../../assets/images/edit.png', content: '编辑活动' },
+      { img: '../../../assets/images/active.png', content: '查看活动' },
+      { img: '../../../assets/images/onemore.png', content: '再发一个' },
+      { img: '../../../assets/images/close.png', content: '关闭报名' },
+    ],
+    item2: [
+      { img: '../../../assets/images/link.png', content: '复制活动链接' },
+      { img: '../../../assets/images/qrcode.png', content: '下载活动二维码' },
+    ]
+  },
+  skip: function (e) {
+    console.log(e.target);
+    switch (e.target.id) {
+      case '0':
+      //报名管理
+        wx.navigateTo({
+          url: '../activity_Manage_page/activity_Manage_page'
+        })
+        break;
+      case '1':
+        wx.navigateTo({
+          url: '../freemsg/freemsg'
+        })
+        break;
+         case '3':
+        wx.navigateTo({
+          url: '../apply_paged/apply_paged'
+        })
+        break;
+    }
+    // if (e.target.id == 1) {
+    //   wx.navigateTo({
+    //     url: '../freemsg/freemsg'
+    //   })
+    // }
+    // if (e.target.id == 1) {
+    //   wx.navigateTo({
+    //     url: '../freemsg/freemsg'
+    //   })
+    // }
+  },
+  onLoad:function(options){
+    // 生命周期函数--监听页面加载
+    let actId = options.actId
+    console.log('活动id = '+actId)
+    this.requestMangeActivity(actId)
+  },
+
+  requestMangeActivity:function(activityID){
+    var that = this
+    getApp().manageApi.getManageActivity({
+      data:{
+        activity_id:activityID
+      }},
+      function success(res) {
+        console.log('管理活动成功');
+        console.log(res);
+        let activity = res.data.activity;
+
+
+        that.setData({
+          item: [
+            { sort: '报名', num: activity.applyCount},
+            { sort: '点赞', num: activity.likeCount },
+            { sort: '评论', num: activity.commentCount },
+            { sort: '分享', num: activity.shareCount },
+          ],
+        })
+      },
+      function fail(res){
+        console.log('管理活动失败');
+      },
+      function complete(res){
+        console.log('管理活动完成');
+      })
+  }
+})

@@ -1,0 +1,156 @@
+page {
+  background-color: rgb(246, 246, 246);
+}
+
+.big_view {
+  background-color: rgb(255, 255, 255);
+  font-size: 32rpx;
+  margin-top: 31rpx;
+  border-bottom: 1rpx solid rgb(230, 230, 230);
+  border-top: 1rpx solid rgb(230, 230, 230);
+}
+
+.item_view {
+  border-bottom: 1rpx solid rgb(230, 230, 230);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  line-height: 44rpx;
+}
+
+.item_top_view {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 29rpx;
+  margin-left: 29rpx;
+  margin-right: 30rpx;
+}
+
+.item_mid_view {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  /*margin-top: 19rpx;*/
+  margin-left: 30rpx;
+  margin-right: 29rpx;
+}
+
+.item_bottom_view {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  /*margin-top: 21rpx;*/
+  margin-left: 30rpx;
+  margin-bottom: 28rpx;
+  margin-right: 30rpx;
+}
+
+.bigsize_text {
+  color: rgb(26, 26, 26);
+  font-size: 32rpx;
+}
+
+.midsize_text {
+  color: rgb(142, 142, 142);
+  font-size: 26rpx;
+  line-height: 34rpx;
+}
+
+.midsize_text3 {
+  color: rgb(142, 142, 142);
+  font-size: 28rpx;
+  line-height: 34rpx;
+  margin-top: 22rpx;
+}
+
+.price_text {
+  font-size: 38rpx;
+}
+
+.date_text {
+  color: rgb(191, 191, 191);
+  font-size: 22rpx;
+}
+
+/*提现*/
+
+.t32rpx{
+    font-size: 32rpx;
+    line-height: 44rpx;
+    letter-spacing: -0.8rpx;
+}
+.t38rpx{
+    font-size: 38rpx;
+    line-height: 56.6rpx;
+    letter-spacing: -1rpx;
+}
+
+.t28rpx{
+    font-size: 28rpx;
+    line-height: 36rpx;
+    letter-spacing: -1rpx;
+    color: rgb(142, 142, 142);
+}
+.t22rpx{
+    font-size: 22rpx;
+    line-height: 36rpx;
+    letter-spacing: -0.6rpx;
+    color: rgb(191, 191, 191);
+}
+/*header*/
+.header{
+    height: 134rpx;
+    background-color: rgb(255, 255, 255);
+    padding: 0 34rpx 0 29rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/*body*/
+.body{
+    margin: 20rpx 0 21rpx 0;
+      padding: 25rpx 34rpx 25rpx 29rpx;
+    height: 260rpx;
+    background-color: rgb(255, 255, 255);
+}
+.body_item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 25%;
+}
+/*foot*/
+.foot{
+    height: 300rpx;
+    background-color: rgb(255, 255, 255);
+    padding: 44rpx 0 48rpx 120rpx;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+/*绿色线条*/
+.greenline{
+    position: absolute;
+    height: 170rpx;
+    left: 74rpx;
+    top: 77rpx;
+    border-right: 1rpx solid rgb(61,209,165);
+
+    
+}
+.greenpoint{
+    position:absolute;
+    left: 69rpx;
+    top:68rpx;
+    height: 12rpx;
+    width: 12rpx;
+    border-radius: 6rpx;
+    background-color: rgb(61,209,165);
+}
+.icon{
+    position: absolute;
+    left: 50rpx;
+    top: 225rpx;
+}

@@ -1,0 +1,13 @@
+class WxService {
+    constructor() { }
+
+    //页面跳转
+    navigateTo(page_url) {
+        if (page_url) {
+            wx.navigateTo({
+                url: page_url
+            })
+        }
+    }
+}
+module.exports = WxService

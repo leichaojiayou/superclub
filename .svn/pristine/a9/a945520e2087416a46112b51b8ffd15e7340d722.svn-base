@@ -1,0 +1,30 @@
+import storage from 'storage.js'
+
+var key
+var user
+
+function getUserKey() {
+    if (key) {
+        return key
+    }
+    key = storage.getSync("key", "")
+    return key
+}
+
+
+function getUserInfo() {
+    return storage.getSync("user", {})
+}
+
+function saveUserInfo(user, key) {
+    this.user = user;
+    this.key = key
+    storage.saveSync("user", user)
+    storage.saveSync("key", key)
+}
+
+module.exports = {
+    getUserKey,
+    getUserInfo,
+    saveUserInfo
+}

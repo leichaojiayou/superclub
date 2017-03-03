@@ -1,0 +1,52 @@
+<!--pages/index_empty/index_empty.wxml-->
+<template name="foot">
+    <!--模版-->
+    <view bindtap="actDetails" data-id="{{item.activityID}}" style="background-color: rgb(255, 255, 255);">
+        <!--swiper-->
+        <!--<view style="">-->
+        <image src="{{item.cover}}" class="swiper" mode="widthFix" />
+        <!--文字-->
+        <view class="item_css">
+            <text class="item_text">{{item.title}}</text>
+            <view class="item_time">
+                <text>{{item.formatTime}} 开始线上活动</text>
+            </view>
+            <view style="display:flex;align-items:center;margin-top:21rpx;position: relative;">
+                <image src="{{item.clubInfo.logo}}" class="item_img"></image>
+                <text class="item_text_ab">{{item.clubInfo.title}}</text>
+                <text class="item_price">{{item.price}}</text>
+            </view>
+            <text class="sw_txt" style="background-color:rgb(61,209,164)">{{item.actStatusText}}</text>
+        </view>
+    </view>
+</template>
+<!--如果用户没加入任何俱乐部，没有管理的俱乐部，没访问过任何俱乐部，显示该页面-->
+<template name="index_empty">
+    <scroll-view scroll-y="true" style="height:100vh;" bindscrolltolower="loadMoreActs" bindscrolltoupper="refreshActs">
+        <!--body-图片-->
+        <view style="display:flex;justify-content: center;margin-top:45rpx;">
+            <image src="https://cdn.51julebu.com/xiaochengxu/image/empty@2x.png" class="body_img">
+            </image>
+        </view>
+        <!--body-文字-->
+        <view>
+            <text style="display:flex;justify-content:center;margin-top:45rpx;" class="body_txt">未加入任何俱乐部，您可以参加其他</text>
+        </view>
+        <view style="display:flex;justify-content:center;margin-top:18rpx;">
+            <text class="body_txt">俱乐部活动，或创建俱乐部！</text>
+        </view>
+        <!--body-按钮-->
+        <view style="display:flex;align-items:center;margin:32rpx 0 46rpx 0;">
+            <button size="mini" style="border:1rpx solid #000;" bindtap="manageClub">创建俱乐部</button>
+        </view>
+        <view class="fun_item" style="background:#fff;">
+            <view class="fun_line"></view>
+            <text class="fun_txt">俱乐部活动</text>
+        </view>
+        <!--活动列表数据-->
+        <view wx:for="{{hotActs}}" wx:key="key_act">
+            <template is="foot" data="{{item}}" />
+        </view>
+        <view style="height:200rpx;"></view>
+    </scroll-view>
+</template>

@@ -1,0 +1,82 @@
+<import src="../../../template/toasts/toasts.wxml" />
+<!--报名页面-->
+<form bindsubmit="greenButton" report-submit="true">
+<!--头框-->
+<view class="bigview" wx:if="{{tickets&&tickets.length>0}}">
+
+  <!--票价-->
+  <view class="itemView" style="border-bottom:none" bindtap="setModalStatus" data-status="1">
+    <text style="width:100px">费用</text>
+    <view class="itemView_foot">
+        <view class="foot_text_view">
+          <text class="bigsize" style="margin-bottom: 5px;">¥{{selectTicket.cost/100}}</text>
+          <text class="smartsize">{{selectTicket.name}}</text>
+        </view>
+      <image style="width:18rpx;height:31rpx" src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png"></image>
+    </view>
+  </view>
+</view>
+
+<!--中框-->
+<view class="bigview">
+  <view wx:for="{{fields}}" wx:key="item">
+    <view class="itemView">
+      <text style="width:100px">{{item.fieldName}}</text>
+      <view wx:if="{{item.fieldType==2}}" class="itemView_foot">
+        <picker bindchange="pickerEvent" value="{{item.select}}" range="{{item.option}}" data-item="{{item}}" data-index="{{index}}">
+          <view class="foot_text_view">
+            <text class="bigsize"> {{item.option[item.select]}} </text>
+          </view>
+        </picker>
+        <image style="width:18rpx;height:31rpx" src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png"></image>
+      </view>
+      <view wx:else class="itemView_foot">
+        <input bindinput="inputEvent" data-item="{{item}}" data-index="{{index}}" type="{{item.inputType}}" maxlength="{{item.maxText}}" value="{{item.defaultValue}}" placeholder="{{item.placeHolder}}" placeholder-class="psection" />
+      </view>
+    </view>
+  </view>
+  <!--自定义-->
+<view class="help-apply">
+    <view class="help-apply-title">是否开始开发方式开发分三份是否开始开发方式开发分三份</view>
+    <input placeholder="输入" placeholder-class="help-apply-placeholder" />
+</view>
+
+</view>
+
+<!--按钮框-->
+<view class="buttonview">
+  <button form-type="submit" class="button1">{{needPayCost}}{{type==0||type==4?'马上报名':'保存'}}</button>
+  <button wx:if="{{type==0||type==4}}" bindtap="helpApply" class="button2">帮人报名</button>
+</view>
+
+<!--临时用户绑定手机号码-->
+<template is="sendNum" data="{{authDialog,countDown}}" />
+<template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}"/>
+
+  <!--费用选择器-->
+  <view class="drawer_screen" bindtap="setModalStatus" data-status="0" wx:if="{{showModalStatus}}"></view>
+  <view animation="{{animationData}}" class="drawer_attr_box" wx:if="{{showModalStatus}}">
+    <view class="drawer_attr_content">
+      <view class="text_center">
+        <view style="height:65rpx;border-bottom:1rpx solid rgb(230,230,230)"></view>
+
+        <!--时间循环-->
+        <view style="background-color: rgb(255, 255, 255);" bindtap="changehidden">
+          <view class="item" wx:for="{{tickets}}" wx:for-item="ticket" wx:for-index="item_index" id="{{item_index}}">
+
+            <view style="flex-flow:wrap" class="{{ticket.remain==0?'blur':''}}">
+              <view style="font-size:28rpx">{{ticket.name}}</view>
+              <view style="color:gray;font-size:24rpx;padding-top:20rpx">剩余名额 {{ticket.remain}}</view>
+            </view>
+            <text class="{{ticket.remain==0?'blur':''}}" style="position: absolute;right:120rpx;color:#20bb21;top:30rpx">¥{{ticket.cost/100}}</text>
+
+            <!--if判断-->
+            <view wx:if="{{ticket.isDefault==1}}">
+              <icon type="success_no_circle" size="18"></icon>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</form>

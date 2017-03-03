@@ -1,0 +1,60 @@
+
+<!--pages/cash5/cash5.wxml-->
+
+<!--图标-->
+<view style="margin-top:80rpx;display:flex;justify-content: center">
+  <icon type="success" size="70" color="rgb(61,209,164)"></icon>
+</view>
+
+<!--提现申请已提交-->
+<view style="margin-top:26rpx;margin-bottom:42rpx;display:flex;justify-content: center">
+  <text class="t40rpx">提现申请已提交</text>
+</view>
+
+<!--白色背景内容-->
+<view class="body">
+
+  <!--白色背景内容上半部分-->
+  <view class="body_item1">
+
+    <!--申请提现-->
+    <view class="item">
+      <text class="r28rpx">申请提现</text>
+      <text class="r28rpxb">230.00</text>
+    </view>
+
+    <!--手续费-->
+    <view class="item">
+      <text class="r28rpx">手续费</text>
+      <text class="r28rpx">优惠期间全部减免</text>
+    </view>
+
+    <!--实际到账-->
+    <view class="item">
+      <text class="r28rpx">实际到账</text>
+      <text style="font-size:38rpx;Line-height:39rpx;color:rgb(61,209,165)">230.00</text>
+    </view>
+  </view>
+
+  <!--收款方式-->
+  <view style="height:200rpx;padding-top:25rpx;">
+    <view class="item">
+      <text class="r28rpx">收款方式</text>
+      <text class="r28rpxb">微信支付</text>
+    </view>
+
+    <!--提现账户-->
+    <view class="item">
+      <text class="r28rpx">提现账户</text>
+      <text class="r28rpxb">18825030000</text>
+    </view>
+
+    <!--申请时间-->
+    <view class="item">
+      <text class="r28rpx">申请时间</text>
+      <text class="r28rpxb">2015-07-12 20:34:23</text>
+    </view>
+  </view>
+</view>
+<!--完成按钮-->
+<button type="primary" style="margin:61rpx 30rpx 0 30rpx;">完成</button>

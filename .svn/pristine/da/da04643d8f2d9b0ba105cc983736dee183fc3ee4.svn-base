@@ -1,0 +1,45 @@
+Page({
+  data: {
+    count: 1,
+    threelabel: [{
+      txt: '会员', amount: '123'
+    },
+    { txt: '本月活动', amount: '12' },
+    { txt: '本月报名', amount: '999' },
+    ],
+    item: [
+      { img: '../../../assets/images/active.png', content: '发布活动' },
+      { img: '../../../assets/images/member+.png', content: '招募会员' },
+      { img: '../../../assets/images/msg.png', content: '免费信息' },
+      { img: '../../../assets/images/list.png', content: '待办事项' }
+    ],
+    //第二个模板
+    item3: [
+      { img: '', name: '潍坊市马拉松运动协会2017黄河口东营-国际马拉松赛报名啊啊啊啊啊啊啊啊啊啊啊啊', time: '2017.12.21 17:30', club_name: '俱乐部俱乐部名称', money: '￥230.00', freemsg: 'null', enlistnumber: 'null' }
+    ],
+    msg: {
+      clubname: '俱乐部名称'
+    }
+  },
+  nato: function (e) {
+
+    switch (e.currentTarget.id) {
+      case '2':
+        wx.navigateTo({
+          url: '../mfdx/mfdx'
+        })
+        break;
+      case '3':
+          wx.navigateTo({
+          url: '../dbsx/dbsx'
+        })
+       break;
+    }
+  },
+  nato_charge_activity: function (e) {
+    console.log(e)
+    wx.navigateTo({
+      url: '../charge_activity/charge_activity'
+    })
+  }
+})

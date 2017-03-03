@@ -1,0 +1,48 @@
+<import src="../../../template/toasts/toasts.wxml" />
+<form bindsubmit="apply" report-submit="true">
+<scroll class="scroll" scroll-y="true" style="padding-bottom:116rpx;">
+  <view wx:for="{{applyList}}">
+    <view class="container" style="position:relative ">
+      <view class="batten" style="padding-top:17px;">
+        <text class="txtmargin">昵称</text>
+        <text>{{item.userName}}</text>
+      </view>
+      <view class="batten">
+        <text class="txtmargin">手机</text>
+        <text>{{item.mobile}}</text>
+      </view>
+      <view class="batten" wx:if="{{item.ticketID>0}}" style="display:flex;">
+        <view class="txtmargin" style="white-space: nowrap;">费用</view>
+        <view>
+              <text>{{item.feiyong}}</text>
+              <text class="payText">({{item.payText}})</text>
+        </view>
+      </view>
+      <view class="batten">
+        <text class="txtmargin">性别</text>
+        <text>{{item.gender}}</text>
+      </view>
+      <view wx:for="{{item.extraDatas}}" wx:for-index="idx" wx:for-item="data">
+        <view class="batten">
+          <text class="txtmargin">{{data.name}}</text>
+          <text>{{data.value}}</text>
+        </view>
+      </view>
+      <view class="btn des_txt">
+        <text class="txtmargin" bindtap="editApply" data-index="{{index}}" data-item="{{item}}">编辑</text>
+        <text bindtap="deleteApply" data-index="{{index}}" data-item="{{item}}">删除</text>
+      </view>
+    </view>
+  </view>
+  <block>
+    <view class="batten" wx:if="{{type==1||type==2}}">
+      <button class="botbtn" form-type="submit" >{{greenButtonText}}</button>
+    </view>
+    <view class="batten" wx:if="{{type==1}}">
+      <button bindtap="helpAplly">帮人报名</button>
+    </view>
+  </block>
+</scroll><!--临时用户绑定手机号码-->
+    <template is="sendNum" data="{{authDialog,countDown}}"/>
+    <template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}"/>
+</form>

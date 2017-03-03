@@ -1,0 +1,13 @@
+const saveSync = (key, value) => {
+    wx.setStorageSync(key, value)
+}
+
+const getSync = (key, defaultValue) => {
+    let value = wx.getStorageSync(key)
+    if (value) return value
+    return defaultValue
+}
+
+module.exports = {
+    saveSync, getSync
+}

@@ -1,0 +1,62 @@
+function formatTime(date) {
+    var year = date.getFullYear()
+    var month = date.getMonth() + 1
+    var day = date.getDate()
+
+    var hour = date.getHours()
+    var minute = date.getMinutes()
+    var second = date.getSeconds()
+
+
+    return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+}
+
+function formatMonthDay(ts){
+    let time = new Date(ts),month = time.getMonth() + 1,day = time.getDate()
+     return [month, day].map(formatNumber).join('/');
+}
+
+function formatNumber(n) {
+    n = n.toString()
+    return n[1] ? n : '0' + n
+}
+
+
+/**
+ * 获取网络错误信息描述
+ * @param res
+ * @returns {*}
+ */
+function getErrorMsg(res) {
+    const statusCode = res.statusCode;
+    const status = res.data.status;
+    const code = res.data.code;
+    const msg = res.data.msg;
+    if (statusCode < 200 && statusCode > 299) {
+        let errorContent = '';
+        if (statusCode < 200) {
+            errorContent = '指示信息，表示请求已接收，继续处理';
+        } else if (statusCode < 400) {
+            errorContent = '重定向，要完成请求必须进行更进一步的操作';
+        } else if (statusCode < 500) {
+            errorContent = '请求有语法错误、无法连接服务器或服务器拒绝服务';
+        } else {
+            errorContent = '服务器端错误，服务器未能实现合法的请求';
+        }
+        return {title: statusCode + '错误', content: errorContent};
+    } else if (status != 1) {
+        if (msg) {
+            return {title: '错误代码：' + code, content: msg};
+        } else {
+            return {title: '错误代码：' + code, content: '服务器未返回错误描述'};
+        }
+    } else {//请求成功
+        return {title: '' + code, content: ''};
+    }
+}
+
+module.exports = {
+    formatTime: formatTime,
+    getErrorMsg: getErrorMsg,
+    formatMonthDay:formatMonthDay
+}

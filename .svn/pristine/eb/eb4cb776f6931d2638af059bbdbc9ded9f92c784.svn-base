@@ -1,0 +1,23 @@
+<view class="topview">
+  <text wx:if="{{status==1}}">输入手机号码</text>
+  <text wx:else>已向您手机{{phone}}发送了4位验证码， 输入即可绑定。</text>
+</view>
+<view class="input_view">
+  <input wx:if="{{status==1}}" bindinput="contentInput" type="number" maxlength="11" placeholder="输入" placeholder-class="psection"
+  />
+  <input wx:else bindinput="contentInput" type="number" maxlength="11" placeholder="输入" placeholder-class="psection" />
+  <block wx:if="{{status==2}}">
+    <text wx:if="{{timing}}" class="text_style">重新发送{{time}}s</text>
+    <text wx:else bindtap="sendCode" class="text_style1">重新发送</text>
+  </block>
+</view>
+<view class="text_view">
+  <view class="text_view_1">
+    <text>温馨提示：未注册超级俱乐部账号的手机号，绑定后将自动注册，且代表您已同意</text>
+    <text class="text">《超级俱乐部服务协议》</text>
+    <text>。</text>
+  </view>
+</view>
+<button bindtap="sendCode" wx:if="{{status==1}}" class="botton">发送验证码</button>
+<button bindtap="checkCode" wx:if="{{status==2}}" class="botton">绑定</button>
+<button loading="true" wx:if="{{status==3}}" class="botton">正在验证</button>

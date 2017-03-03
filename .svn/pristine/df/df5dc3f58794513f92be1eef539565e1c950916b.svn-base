@@ -1,0 +1,10 @@
+/**
+ * Created by liujinqiang on 2017/2/6.
+ * 常量
+ */
+
+var BASE_URL = "https://api.51julebu.com";
+
+module.exports = {
+    BASE_URL: BASE_URL
+}

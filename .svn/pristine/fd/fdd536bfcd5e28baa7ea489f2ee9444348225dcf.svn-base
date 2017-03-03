@@ -1,0 +1,81 @@
+
+<!--pages/index_empty/index_empty.wxml-->
+<view class="header">
+  <image src="{{header_img}}" class="header_img"></image>
+  <view class="header_item">
+    <text style="font-size:34rpx;letter-spacing: -0.8rpx;">{{username}}</text>
+    <image src="{{arrowright}}" class="arrowright"></image>
+  </view>
+</view>
+
+<!--body-图片-->
+<view style="display:flex;justify-content: center;margin-top:45rpx;">
+  <image src="{{body_img}}" class="body_img">
+  </image>
+</view>
+
+<!--body-文字-->
+<view>
+  <text style="display:flex;justify-content:center;margin-top:45rpx;" class="body_txt">未加入任何俱乐部，您可以参加其他</text>
+</view>
+<view style="display:flex;justify-content:center;margin-top:18rpx;">
+  <text class="body_txt">俱乐部活动，或创建俱乐部！</text>
+</view>
+
+<!--body-按钮-->
+<view style="display:flex;align-items:center;margin:32rpx 0 46rpx 0;">
+  <button size="mini">创建俱乐部</button>
+</view>
+<view class="fun_item">
+  <view class="fun_line"></view>
+  <text class="fun_txt">俱乐部活动</text>
+</view>
+
+<template name="foot">
+<!--模版-->
+<view style="background-color: rgb(255, 255, 255);">
+<!--swiper-->
+<!--<view style="">-->
+<swiper indicator-dots="true" autoplay="true" interval="3000" duration="1000" class="swiper">
+  <block wx:for="{{imgUrls}}">
+    <swiper-item>
+      <image  src="{{item}}" class="swiper" mode="aspectFill"/>
+    </swiper-item>
+  </block>
+</swiper>
+
+
+
+<!--文字-->
+<view wx:for="{{item}}" class="item_css">
+<text class="item_text">{{item.text}}</text>
+
+<view class="item_time">
+<text>{{item.time}}开始线上活动</text>
+</view>
+
+<view style="display:flex;align-items:center;margin-top:21rpx;position: relative;">
+<image src="{{item.img}}" class="item_img"></image>
+<text class="item_text_ab">{{item.text_ab}}</text>
+<text class="item_price">{{item.price}}</text>
+</view>
+
+
+<text class="sw_txt" style="background-color:{{item.color}}">{{item.txt_a}}</text>
+</view>
+
+
+
+
+
+</view>
+</template>
+
+
+<template is="foot" data="{{imgUrls,item}}"/>
+<template is="foot" data="{{imgUrls,item}}"/>
+<template is="foot" data="{{imgUrls,item}}"/>
+<template is="foot" data="{{imgUrls,item}}"/>
+
+
+<view style="height:200rpx;"></view>

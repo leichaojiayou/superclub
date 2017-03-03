@@ -1,0 +1,317 @@
+<scroll-view scroll-y="true" style="height:100vh">
+
+  <!--头框-->
+  <view class="bigview">
+
+    <!--名称  会长 副会长-->
+    <view class="itemView" wx:if="{{statu==1 || statu==2}}">
+      <text>{{page.club_name_text}}</text>
+      <view class="itemView_foot">
+        <view class="foot_text_view">
+          <text  class="bigsize_1">{{page.club_name}}</text>
+        </view>
+        <image class="icon_image" src="{{page.img}}"></image>
+      </view>
+    </view>
+
+    <!--名称  管理员 会员 非会员-->
+    <view wx:else class="itemView1">
+      <view class="itemView_hear">
+        <text>{{page.club_name_text}}</text>
+      </view>
+      <view class="itemView_foot1">
+        <text class="bigsize ">{{page.club_name}}</text>
+      </view>
+    </view>
+
+    <!--ID 会长 副会长-->
+    <view class="itemView" wx:if="{{statu==1 || statu==2}}">
+      <text>{{page.club_ID_text}}</text>
+      <view class="itemView_foot">
+        <view class="foot_text_view">
+          <text class="bigsize">{{page.club_ID}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!--ID  管理员 会员 非会员-->
+    <view wx:else class="itemView1">
+      <view class="itemView_hear">
+        <text>{{page.club_ID_text}}</text>
+      </view>
+      <view class="itemView_foot1">
+        <text class="bigsize ">{{page.club_ID}}</text>
+      </view>
+    </view>
+
+    <!--logo 会长 副会长-->
+    <view class="itemView " style="height:190rpx" wx:if="{{statu==1 || statu==2}}">
+      <text>{{page.club_logo_text}}</text>
+      <view class="itemView_foot ">
+        <view class="foot_text_view ">
+          <image class="logo_image " src="{{page.club_logo_img}} "></image>
+        </view>
+        <image class="icon_image " src="{{page.img}} "></image>
+      </view>
+    </view>
+
+    <!--logo  管理员 会员 非会员-->
+    <view wx:else class="itemView1" style="height:190rpx">
+      <view class="itemView_hear">
+        <text>{{page.club_logo_text}}</text>
+      </view>
+      <view class="itemView_foot1">
+        <image class="logo_image " src="{{page.club_logo_img}}"></image>
+      </view>
+    </view>
+
+    <!--星级 会长 副会长-->
+    <view class="itemView " wx:if="{{statu==1 || statu==2}}" style="border-bottom: 0;">
+      <text>{{page.club_start_text}}</text>
+      <view class="itemView_foot ">
+        <view class="foot_text_view ">
+          <image class="start_image " src="{{page.club_start_img}} "></image>
+          <text class="bigsize ">{{page.club_start_score}}</text>
+        </view>
+        <image class="icon_image " src="{{page.img}} "></image>
+      </view>
+    </view>
+
+    <!--星级  管理员 会员 非会员-->
+    <view wx:else class="itemView1">
+      <view class="itemView_hear">
+        <text>{{page.club_start_text}}</text>
+      </view>
+      <view class="itemView_foot1" style="width: 539rpx;">
+        <view>
+          <image class="start_image" src="{{page.club_start_img}} "></image>
+          <text class="bigsize">{{page.club_start_score}}</text>
+        </view>
+        <view style="margin-right: 30rpx;">
+          <image class="icon_image " src="{{page.img}} "></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!--成立时间之类资料框-->
+  <view class="bigview ">
+
+    <!--地点 会长 副会长-->
+    <view class="itemView" wx:if="{{statu==1 || statu==2}}">
+      <text>{{page.club_location_text}}</text>
+      <view class="itemView_foot ">
+        <view class="foot_text_view ">
+          <text class="bigsize ">{{page.club_location}}</text>
+        </view>
+        <image class="icon_image " src="{{page.img}} "></image>
+      </view>
+    </view>
+
+    <!--地点  管理员 会员 非会员-->
+    <view wx:else class="itemView1">
+      <view class="itemView_hear">
+        <text>{{page.club_location_text}}</text>
+      </view>
+      <view class="itemView_foot1">
+        <text class="bigsize ">{{page.club_location}}</text>
+      </view>
+    </view>
+
+    <!--成立时间 会长 副会长-->
+    <view class="itemView" wx:if="{{statu==1 || statu==2}}">
+      <text>{{page.club_creattime_text}}</text>
+      <view class="itemView_foot">
+        <view class="foot_text_view">
+          <text class="bigsize">{{page.club_creattime}}</text>
+        </view>
+        <image class="icon_image " src="{{page.img}} "></image>
+      </view>
+    </view>
+
+    <!--成立时间  管理员 会员 非会员-->
+    <view wx:else class="itemView1">
+      <view class="itemView_hear">
+        <text>{{page.club_creattime_text}}</text>
+      </view>
+      <view class="itemView_foot1">
+        <text class="bigsize ">{{page.club_creattime}}</text>
+      </view>
+    </view>
+
+    <!--主打项目 会长 副会长-->
+    <view class="itemView" wx:if="{{statu==1 || statu==2}}" style="border-bottom: 0;">
+      <text>{{page.club_MainProject_text}}</text>
+      <view class="itemView_foot">
+        <view class="foot_text_view">
+          <text wx:for="{{page.club_MainProject}}" class="icon_text" style="background-color:{{item.color}}">{{item.text}}</text>
+        </view>
+        <image class="icon_image " src="{{page.img}} "></image>
+      </view>
+    </view>
+
+    <!--主打项目  管理员 会员 非会员-->
+    <view wx:else class="itemView1" style="border-bottom: 0;">
+      <view class="itemView_hear">
+        <text>{{page.club_MainProject_text}}</text>
+      </view>
+      <view class="itemView_foot1">
+        <text wx:for="{{page.club_MainProject}}" class="icon_text1" style="background-color:{{item.color}}">{{item.text}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!--俱乐部设置框-->
+  <view class="bigview" wx:if="{{statu==1 || statu==2 || statu==3}}">
+
+    <!--设置加入方式-->
+    <view class="itemView" wx:if="{{statu==1 || statu==2}}">
+      <text>{{page.club_Settings_text}}</text>
+      <view class="itemView_foot ">
+        <view class="foot_text_view ">
+          <text class="bigsize ">{{page.club_Settings}}</text>
+        </view>
+        <image class="icon_image " src="{{page.img}} "></image>
+      </view>
+    </view>
+
+    <!--验证消息-->
+    <view class="itemView" wx:if="{{statu==1 || statu==2 }}">
+      <text>{{page.club_validity_text}}</text>
+      <view class="itemView_foot ">
+        <view class="foot_text_view ">
+          <text class="mgs_text ">{{page.club_validity}}</text>
+        </view>
+        <image class="icon_image " src="{{page.img}} "></image>
+      </view>
+    </view>
+
+    <!--收款账户-->
+    <view class="itemView " style="border-bottom: 0; ">
+      <text>{{page.club_receivable_text}}</text>
+      <view class="itemView_foot ">
+        <view class="foot_text_view ">
+          <text class="bigsize ">{{page.club_receivable}}</text>
+        </view>
+        <image class="icon_image " src="{{page.img}} "></image>
+      </view>
+    </view>
+  </view>
+
+  <!--俱乐部管理员成员-->
+  <view class="bigview" wx:if="{{statu==1 || statu==2 || statu==3}}">
+
+    <!--任免副会长-->
+    <view wx:if="{{statu==1}}" class="itemView">
+      <text>{{page.club_chairman_text}}</text>
+      <view class="itemView_foot ">
+        <view class="foot_text_view ">
+          <image class="admin_text " src="{{page.club_admin_img[0]}} "></image>
+        </view>
+        <image class="icon_image " src="{{page.img}} "></image>
+      </view>
+    </view>
+
+    <!--任免管理员-->
+    <view class="itemView" wx:if="{{statu==1 || statu==2}}">
+      <text>{{page.club_admin_text}}</text>
+      <view class="itemView_foot ">
+        <view class="foot_text_view ">
+          <image class="admin_text " src="{{page.club_admin_img[0]}} "></image>
+          <image class="admin_text " src="{{page.club_admin_img[1]}} "></image>
+          <image class="admin_text " src="{{page.club_admin_img[2]}} "></image>
+          <text class="admin_text " style="border: 0 ">+{{page.club_admin_imglength-3}}</text>
+        </view>
+        <image class="icon_image " src="{{page.img}} "></image>
+      </view>
+    </view>
+
+    <!--移除成员-->
+    <view class="itemView " style="border-bottom: 0; ">
+      <text>{{page.club_memberremove_text}}</text>
+      <view class="itemView_foot ">
+        <image class="icon_image " src="{{page.img}} "></image>
+      </view>
+    </view>
+  </view>
+
+  <!--俱乐部简介-->
+  <view class="bigview">
+
+    <!--宣言  会长 副会长-->
+    <view class="itemView" wx:if="{{statu==1 || statu==2}}">
+      <text>{{page.club_declaration_text}}</text>
+      <view class="itemView_foot ">
+        <view class="foot_text_view ">
+          <text class="bigsize_2">{{page.club_declaration}}</text>
+        </view>
+        <image class="icon_image " src="{{page.img}} "></image>
+      </view>
+    </view>
+
+    <!--宣言  管理员 会员 非会员-->
+    <view wx:else class="itemView2">
+      <view class="itemView_hear">
+        <text>{{page.club_declaration_text}}</text>
+      </view>
+      <text class="bigsize1">{{page.club_declaration}}</text>
+    </view>
+
+    <!--简介   会长 副会长-->
+    <view class="itemView" style="border-bottom: 0;" wx:if="{{statu==1 || statu==2}}">
+      <text>{{page.club_Introduction_text}}</text>
+      <view class="itemView_foot ">
+        <view class="foot_text_view ">
+          <text class="bigsize_2">{{page.club_Introduction}}</text>
+        </view>
+        <image class="icon_image " src="{{page.img}} "></image>
+      </view>
+    </view>
+
+    <!--简介  管理员 会员 非会员-->
+    <view wx:else class="itemView2" style="border-bottom: 0;">
+      <view class="itemView_hear">
+        <text>{{page.club_Introduction_text}}</text>
+      </view>
+      <text class="bigsize1">{{page.club_Introduction}}</text>
+    </view>
+  </view>
+
+  <!--俱乐部成员统计-->
+  <view class="bigview ">
+
+    <!--俱乐部成员统计-->
+    <view class="itemView" style="margin-right:30rpx;height:128rpx;{{statu==2||statu==3||statu==4||statu==5? 'border-bottom: 0': ''}}">
+      <view style=" display: flex;align-items: center ; ">
+        <image class="statistics_icon " src="{{page.club_statistics_icon}} "></image>
+        <text wx:if="{{statu==1}}">{{page.club_statistics_text1}}</text>
+        <text wx:else>{{page.club_statistics_text2}}</text>
+      </view>
+      <view class="itemView_foot" style="margin-right: 0; ">
+        <view class="foot_text_view">
+          <text class="bigsize">{{page.club_statistics_number}}人</text>
+        </view>
+        <image class="icon_image" src="{{page.img}}"></image>
+      </view>
+    </view>
+
+    <!--俱乐部活动统计-->
+    <view class="itemView " wx:if="{{statu==1}}" style="justify-content:space-around;border-bottom: 0;height:192rpx;">
+      <view class="last_foot_view" style="border-right: 1rpx solid rgb(230, 230, 230);">
+        <text style="font-size: 24rpx;color: rgb(142, 142, 142);">{{page.club_activities_text}}</text>
+        <text style="font-size:38rpx;margin-top:21rpx;">{{page.club_activities}} 场</text>
+      </view>
+      <view class="last_foot_view " style="border-left: 1rpx solid rgb(230, 230, 230); ">
+        <text style="font-size:24rpx;color: rgb(142, 142, 142);">{{page.club_activitiesNumber_text}}</text>
+        <text style="font-size:38rpx;margin-top:20rpx;">{{page.club_activitiesNumber}} 次</text>
+      </view>
+    </view>
+  </view>
+
+  <!--按钮框-->
+  <view class="buttonview ">
+    <button wx:if="{{statu==1}}">{{page.button_text1}}</button>
+    <button wx:elif="{{statu==2 || statu==3 || statu==4}}">{{page.button_text2}}</button>
+    <button wx:else style="border: 1rpx solid rgb(61, 209, 164);background-color: rgb(61, 209, 164);">{{page.button_text3}}</button>
+  </view>
+</scroll-view>

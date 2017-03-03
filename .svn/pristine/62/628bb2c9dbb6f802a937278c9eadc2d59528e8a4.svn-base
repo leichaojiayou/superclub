@@ -1,0 +1,125 @@
+/**
+ * 报名详情就扣：http://doc.iweju.com/FitNesse.WejuBaHttp.ActivityDoc.ActivityApplyDetail
+ */
+const app = getApp();
+const utils = app.util;
+const actApi = app.api("actApi");
+var applyId = 8376;
+Page({
+    data: {
+        // 1 一行字，2 两行字
+        header_status: 1,
+// 取消报名按状态 true 不可以点击颜色　false 可以点击颜色
+        item7_btn_status: false,
+        // 二维码下的取消报名状态 true 不可以点击颜色　false 可以点击颜色
+        item7_btn_status: true,
+
+
+        applyStatusIco: '',//报名状态图标
+        applyStatusText: '',//报名状态描述
+        actTitle: '',//活动标题
+        host: '',//主办方
+        actTime: '',//活动时间
+        nickAndPhone: '',//昵称和和手机
+        ticketName: '',//票名
+        ticketCost: '',//票价
+        qrCodeDesc: '',//电子票描述
+        /**
+         * 详情类型
+         * 1、报名成功-非帮报名
+         * 2、报名成功-帮报名
+         * 3、报名审核中
+         * 4、待付款
+         * 5、报名取消-超时未付款
+         * 6、报名取消-主办方审核不通过
+         * 7、报名取消-主办方拒绝
+         * 8、报名取消-报名者取消
+         */
+        detailType: 0,
+    },
+    onLoad: function (options) {
+        let that = this;
+        if (options) {
+            applyId = options.applyId;
+        }
+        actApi.applyDetail({
+                data: {
+                    applyID: applyId,
+                }
+            }, function (res) {
+                console.log(JSON.stringify(res.data));
+                let detailType = 0;
+                let applyInfo = res.data.data.applyInfos[0];
+                let actInfo = res.data.data.actInfo;
+                let clubInfo = res.data.data.clubInfo;
+                let orderInfo = res.data.data.orderInfo;
+                let payee = res.data.data.payee;
+                if (applyInfo.applyStatus == 1 && applyInfo.applyUserType == 0) {//自己报名成功
+                    detailType = 1;
+                    that.data.applyStatusIco = '';
+                    that.data.applyStatusText = '报名成功';
+                } else if (applyInfo.applyStatus == 1 && applyInfo.applyUserType == 1) {//帮人报名成功
+                    detailType = 2;
+                    that.data.applyStatusIco = '';
+                    that.data.applyStatusText = '报名成功';
+                } else if ((actInfo.howToPay == 2 && applyInfo.payStatus == 2 && applyInfo.applyStatus == 0)
+                    || (actInfo.howToPay != 2 && applyInfo.applyStatus == 0)) {//待审核
+                    detailType = 3;
+                    that.data.applyStatusIco = '';
+                    that.data.applyStatusText = '报名审核中';
+                } else if (actInfo.howToPay == 2 && applyInfo.payStatus == 1) {//待付款
+                    detailType = 4;
+                    that.data.applyStatusIco = '';
+                    that.data.applyStatusText = '待付款';
+                } else if (actInfo.howToPay == 2 && applyInfo.payStatus == 6) {
+                    detailType = 5;
+                    that.data.applyStatusIco = '';
+                    that.data.applyStatusText = '报名取消';
+                } else if (applyInfo.applyStatus == 4) {//审核不通过
+                    detailType = 6;
+                    that.data.applyStatusIco = '';
+                    that.data.applyStatusText = '报名取消';
+                } else if (applyInfo.applyStatus == 3) {//主办方拒绝
+                    detailType = 7;
+                    that.data.applyStatusIco = '';
+                    that.data.applyStatusText = '报名取消';
+                } else if (applyInfo.applyStatus == 2) {//报名者取消
+                    detailType = 8;
+                    that.data.applyStatusIco = '';
+                    that.data.applyStatusText = '报名取消';
+                }
+                that.setData({
+                    applyStatusIco: that.data.applyStatusIco,
+                    applyStatusText: that.data.applyStatusText,
+                    actTitle: actInfo.actTitle,
+                    host: "主办方：" + clubInfo.clubTitle,
+                    actTime: actInfo.activityTime,
+                    nickAndPhone: applyInfo.userName + "-" + applyInfo.mobile,
+                    ticketName: actInfo.howToPay == 2 ? applyInfo.ticketName : "免费体验票",
+                    ticketCost: actInfo.howToPay == 2 ? "¥" + applyInfo.ticketCost / 100 : "免费",
+                })
+                ;
+            },
+            function (res) {
+                let errorMsg = utils.getErrorMsg(res);
+                app.wxService.showModal({title: '报名详情加载失败', content: errorMsg.title + '；' + errorMsg.content})
+            }
+            ,
+            function (res) {
+                console.log(res)
+            }
+        )
+        ;
+    },
+    nato_apply_page: function (e) {
+        wx.navigateTo({
+            url: '../apply_page/apply_page'
+        })
+    }
+    ,
+    nato_order_details_page: function (e) {
+        wx.navigateTo({
+            url: '../order_details_page/order_details_page'
+        })
+    }
+})

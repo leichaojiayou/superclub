@@ -1,0 +1,75 @@
+<view class="top">
+{{activityTitle}}
+</view>
+
+<block wx:key="1" wx:for="{{groupUnits}}" wx:for-item="group"  wx:for-index="idx">
+<!-- 最外层循环 -->
+
+<!-- 组名 -->
+<view class="item">
+  <view class="text">
+    {{group.groupName}}
+  </view>
+</view>
+
+<view>
+  <scroll-view scroll-x scroll-y>
+    <view class="body">
+       <!-- 表格头部-->
+       <view class="body_item">
+        <block wx:key="1" wx:for="{{title}}" for-index="index">
+          <view wx:if="{{index%2==0}}" class="body_item_1" style="  background: rgb(255, 255, 255);">
+            {{item}}
+          </view>
+          <view wx:else class="body_item_1" style="background: rgb(247, 255, 253);">
+            {{item}}
+          </view>
+        </block>
+      </view>
+
+      <!-- 表格内容 -->
+      <block wx:key="1" wx:for="{{group.applyUnits}}" wx:for-item="apply">
+
+          <view class="body_item">
+          <block wx:key="2" wx:for="{{apply.contents}}" wx:for-item="value" for-index="index">
+              <view wx:if="{{index%2==0}}" class="body_item_1" style="  background: rgb(255, 255, 255);">
+                {{value}}
+              </view>
+              <view wx:else class="body_item_1" style="background: rgb(247, 255, 253);">
+                {{value}}
+              </view>
+           </block>
+           </view>
+
+      </block>
+
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 最外层循环 -->
+</block>
+
+<view class="header_btn">
+<button bindtap="tapSendEmail" type="primary" >发送到邮箱</button>
+</view>
+
+
+<!--发送到邮箱弹框-->
+
+  <view class="email" hidden="{{hiddenEmail}}" style="opacity:1;pointer-events:auto;">
+  <view class="email-dialog">
+    <view class="email-text">
+      发送到邮箱
+    </view>
+    <view class="email-box">
+      <input class="email-input" focus="{{getFocus2}}" bindinput="titleInput" value="{{emailNum}}" placeholder="输入邮箱地址" placeholder-style="font-size:28rpx;letter-spacing:1rpx;"></input>
+    </view>
+    <view class="email-button">
+      <view class="email-hehe">
+        <button class="email-btn email-cancel" bindtap="touchCancel">取消</button>
+        <button class="email-btn email-canadd" bindtap="touchAddNew">确定</button>
+      </view>
+    </view>
+  </view>
+  </view>

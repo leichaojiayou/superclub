@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "俱乐部主页",
+    "navigationBarBackgroundColor": "#252525",
+    "window":{
+        "enablePullDownRefresh":"true"
+    }
+}

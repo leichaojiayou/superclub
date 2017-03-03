@@ -1,0 +1,97 @@
+<view bindscrolltolower="lower"
+             bindscrolltoupper='reload' data-clubid="{{clubId}}">
+  <!-- topview -->
+  <view class="topview" bindtap="toClubInformation">
+    <view class="left_img_view">
+      <image mode="aspectFill" wx:if="{{!modifyLogo}}" src="{{clubHome.logo}}" class="club_img"></image>
+      <image mode="aspectFill" wx:else src="{{modifyLogo}}" class="club_img"></image>
+      <image src="{{clubHome.gradeImg}}" class="stars_img"></image>
+    </view>
+    <view class="right_view">
+      <text class="txt-overflow-one">{{clubHome.title}}</text>
+      <view class="right_view_1">
+        <view class="right_view_1_1">
+          <view class="top_view1">
+            <block wx:for="{{clubHome.features}}" wx:key='index'>
+              <text wx:if="{{index == 0&&item.name}}" class="icon_text master-project-overflow" style="background-color:rgb(145, 213, 192)">{{item.name}}</text>
+              <text wx:elif="{{index == 1&&item.name}}" class="icon_text master-project-overflow" style="background-color:rgb(172, 198, 237)">{{item.name}}</text>
+              <text wx:elif="{{index == 2&&item.name}}" class="icon_text master-project-overflow" style="background-color:rgb(227, 192, 163)">{{item.name}}</text>
+            </block>
+          </view>
+          <view class="top_view2">
+            <view style="white-space: nowrap">ID : {{clubHome.clubNo}} {{clubHome.city.province}} {{clubHome.city.cityName}}</view>
+            <text class="bigsize1 txt-overflow-two">{{clubHome.slogan}}</text>
+          </view>
+        </view>
+        <view class="clubHome-right">
+          <image class="clubHome-option-right" src="{{img.imgRight}}"  />
+          <view class="clubHome-qrcode-tap" catchtap="showQrcode">
+            <image class="clubHome-qrcode" src="{{img.imgQrcode}}"  />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- midview -->
+  <view class="midview" style="{{staut==1 ? 'height: 914rpx;':''}}">
+    <view class="midview_top_1">
+      <view class="midview_top_1_1">
+        <image mode="aspectFill" class="midview_img" src="{{img.imgMember}}"></image>
+        <text class="midview_text">会员{{clubHome.memberCount}}</text>
+      </view>
+      <view class="midview_top_1_1">
+        <image class="midview_img" src="{{img.imgAct}}"></image>
+        <text class="midview_text">活动{{clubHome.activityCount}}</text>
+      </view>
+    </view>
+    <view class="border_1" style="padding-bottom:40rpx;">
+      <view class="border_1_1"></view>
+      <text style="margin:0 20rpx;">俱乐部活动</text>
+      <view class="border_1_1"></view>
+    </view>
+    <view wx:for="{{activity}}" wx:key='index' class="midview_list">
+      <!-- 每条---报名中 -->
+      <view class="midview_item_1" catchtap="actDetail" data-actid="{{item.actID}}">
+        <view class="midview_item_img_view">
+          <view class=" midview_item_1_text1" wx:if="{{item.flag === 1}}">报名中</view>
+          <view class=" midview_item_1_text2" wx:elif="{{item.flag === 2}}">活动中</view>
+          <view class=" midview_item_1_text3"wx:else>已结束</view>
+          <image mode="scaleToFill" class=" midview_item_1_img" src="{{item.cover}}"></image>
+        </view>
+        <view class="midview_item_2">
+          <view class="activity-title">
+            <text class="bigsize txt-overflow-two">{{item.title}}</text>
+          </view>
+          <text class="smalltext" style="bottom:13rpx">时间 {{item.begin}} 至 {{item.end}}</text>
+          <view class="midview_item_2_1">
+            <text class="smalltext">报名 {{item.applyCount}}</text>
+            <text class="pricetext" wx:if="{{item.isProxyAct == 1}}"></text>
+            <text class="pricetext" wx:elif="{{item.cost != 0 &&item.ticketCount == 0}}">￥{{item.cost}}</text>
+            <text class="pricetext" wx:elif="{{item.ticketCount!=0}}">￥{{item.cost}}起</text>
+            <text class="pricetext" wx:else>免费</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{activity.length>0}}" class="theend_text_view">
+      <text class="theend_text">THE END</text>
+    </view>
+    <view wx:else class="noimg_view">
+      <image src="{{img.noimgAct}}" class="noimg" mode="aspectFit"></image>
+      <text>暂无活动</text>
+    </view>
+  </view>
+  <form bindsubmit="joinClub" report-submit="true">
+    <view style="margin-top: 66rpx" wx:if="{{clubHome.roleType == 0 }}">
+      <view class="culb-manage">
+        <button class="button" form-type="submit">加入俱乐部</button>
+      </view>
+    </view>
+  </form>
+</view>
+<import src="../../../template/toasts/toasts.wxml"  />
+<template is="sendCheckCode" data="{{param,status,time}}"  />
+<template is="clubCode" data="{{club}}"  />
+<template is="joinCheck" data="{{joinShowStyle,join}}"  />
+<template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}"  />
+ 

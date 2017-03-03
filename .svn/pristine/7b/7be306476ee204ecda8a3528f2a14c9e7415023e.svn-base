@@ -1,0 +1,43 @@
+<!--group_list循环 状态1-->
+<view wx:for="{{membersList}}" wx:if="{{statu==1}}" class="border" for-index="index" wx:key="i">
+  <view class="mid_item_view" wx:if="{{item.list.length>0}}">
+    <view bindtap="bindgroup_button" data-id="{{index}}" class="mid_item_mid_view">
+      <view class="icon_view">
+        <view class="{{item.click_status ? 'css_icon_true':'css_icon_false'}}" style="{{item.click_status ? 'margin-left:30rpx':'margin-left:35rpx'}}"></view>
+      </view>
+      <view class="text_groud_view">
+        <text class="mid_text" style="margin-left:22rpx;">{{item.text}}</text>
+        <text class="small_text">{{item.num}}人</text>
+      </view>
+    </view>
+  </view>
+  <block wx:if="{{item.click_status}}" wx:for-index="idx" wx:for="{{item.list}}" wx:for-item="obj" wx:key="index">
+    <view wx:if="{{!obj.check_Status}}" bindtap="bind_Select" data-item="{{idx}}" data-id="{{index}}" class="list_view1">
+      <image class="user_image" src="{{obj.avatar}}"></image>
+      <view class="user_info_top" style="{{idx==0?'border-top: 0':''}}">
+        <image class="user_icon" src="{{item.ioc}}"></image>
+        <text class="mid_text">{{obj.nick}}</text>
+        <text class="{{obj.grade_text=='会长'|| obj.grade_text=='副会长' ?  'text_icon' :''}}{{obj.grade_text=='管理员' ?  'text_icon1' :''}}" wx:if="{{obj.grade_text!=null || obj.grade_text!='' }}">{{obj.grade_text}}</text>
+      </view>
+    </view>
+  </block>
+</view>
+
+<!--group_list循环 状态2-->
+<view class="border1" wx:if="{{statu==2}}">
+  <block wx:for-index="idx" wx:for="{{list2}}" wx:for-item="obj">
+    <view wx:if="{{!obj.check_Status}}" bindtap="bind_Select" data-item="{{idx}}" data-id="{{index}}" class="list_view1">
+      <image class="user_image" src="{{obj.img}}"></image>
+      <view class="user_info_top" style="{{idx==0?'border-top: 0':''}}">
+        <image class="user_icon" src="{{obj.icon}}"></image>
+        <text class="mid_text">{{obj.name_text}}</text>
+        <text class="{{obj.grade_text=='会长'|| obj.grade_text=='副会长' ?  'text_icon' :''}}{{obj.grade_text=='管理员' ?  'text_icon1' :''}}" wx:if="{{obj.grade_text!=null || obj.grade_text!='' }}">{{obj.grade_text}}</text>
+      </view>
+    </view>
+  </block>
+</view>
+
+<!--状态3 无结果-->
+<view class="statu3_view" wx:if="{{statu==3}}">
+无结果
+</view>

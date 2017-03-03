@@ -1,0 +1,83 @@
+const storage = require('./storage')
+
+var key
+var user
+var rencentClubs
+
+function getUserKey() {
+    if (key) {
+        return key
+    }
+    key = storage.getSync("key", "")
+    return key
+}
+
+/**
+ * userID
+ * userNum, 
+ * nick, 
+ * avatar,
+ * gender,
+ * status
+ */
+function getUserInfo() {
+    return storage.getSync("user", {})
+}
+
+function saveUserInfo(user, key) {
+    this.user = user;
+    this.key = key
+    storage.saveSync("user", user)
+    storage.saveSync("key", key)
+}
+
+/**
+ * 是否小程序临时用户
+ */
+function isTempUser() {
+    if (user == null) {
+        user = getUserInfo()
+    }
+    if (user.status) {
+        return user.status == 6
+    }
+    return true
+}
+
+/**
+ * 最近访问的俱乐部列表
+ */
+function recentClubs() {
+    if (recentClubs == null) {
+        recentClubs = storage.getSync("recentClubs", [])
+    }
+    return recentClubs;
+}
+
+function addAccessClub(clubId) {
+    let clubs = recentClubs()
+    if (clubs.length != 0) {
+        for (var i = 0; i < clubs.length; i++) {
+            let id = clubs[i];
+            if (id == clubId) {
+                //最近访问过该俱乐部，移除
+                clubs.splice(i, 1)
+            }
+        }
+    }
+    clubs.unshift(clubId)
+    if (clubs.length >= 6) {
+        //保留最近5个访问过的俱乐部
+        clubs.pop()
+    }
+    storage.saveSync("recentClubs", rencentClubs)
+}
+
+module.exports = {
+    getUserKey,
+    getUserInfo,
+    saveUserInfo,
+    isTempUser,
+    recentClubs,
+    addAccessClub,
+}

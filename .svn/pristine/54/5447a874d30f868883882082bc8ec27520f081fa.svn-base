@@ -1,0 +1,31 @@
+/* pages/removes/removes.wxss */
+
+
+
+.item {
+  display: flex;
+justify-content: space-around;
+flex-flow: wrap;
+}
+.header {
+    width: 33.3%;
+    margin: 28rpx 0 49rpx 0;
+}
+.item_img {
+  height: 130rpx;
+  width: 130rpx;
+  border-radius: 10rpx;
+  border: 1rpx solid rgb(180, 180, 180);
+}
+
+.item_txt {
+  margin-top: 43rpx;
+  font-size: 32rpx;
+  letter-spacing: -0.8rpx;
+  width: 182rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+/*按钮*/

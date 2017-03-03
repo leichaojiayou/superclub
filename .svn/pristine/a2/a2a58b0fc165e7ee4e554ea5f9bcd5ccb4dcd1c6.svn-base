@@ -1,0 +1,14 @@
+
+<!-- header -->
+<!-- textarea框 -->
+<form bindsubmit="sbmitForm">
+  <view style="position: relative;margin-top:41rpx;">
+    <view style="background: rgb(255, 255, 255);height:2vh"></view>
+    <view style="padding:0 32rpx;background:#fff;">
+      <textarea name="slogan" placeholder="俱乐部宣言" class="textarea" placeholder-class="head_name"
+                placeholder-style="color:rgb(191,191,191);" maxlength="99" value="{{slogan}}"  />
+    </view>
+    <text class="num_txt des_txt">99</text>
+  </view>
+  <button type="primary" style="margin:61rpx 30rpx;background:rgb(61,209,164);" form-type="submit">保存</button>
+</form>

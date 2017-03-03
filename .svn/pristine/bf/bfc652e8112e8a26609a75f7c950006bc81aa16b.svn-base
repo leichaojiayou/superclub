@@ -1,0 +1,21 @@
+<scroll-view style="height:100vh;" scroll-y="true"  bindscrolltolower="loadMore" bindscrolltoupper="refresh">
+  <view class='big_view'>
+
+    <view class='item_view' wx:for="{{dataList}}" wx:key="{{index}}" bindtap="nato_tradeDetail" id="{{item.tradeID}}">
+      <view class='item_top_view'>
+        <text class='bigsize_text'>{{item.tradeTypeName}}</text>
+        <text wx:if="{{item.tradeType==1 || item.tradeType==2}}" class='price_text' style="color: rgb(27, 27, 27);">{{item.tradeMoney}}</text>
+        <text wx:elif="{{item.tradeType==3}}" class='price_text' style="color: rgb(61, 209, 164);">{{item.tradeMoney}}</text>
+        <text wx:else class='price_text' style="color: rgb(255, 126, 86);">{{item.tradeMoney}}</text>
+      </view>
+      <view class='item_mid_view'>
+        <text class='midsize_text'>{{item.tradeInfo}}</text>
+        <text style="font-size: 22rpx;color: rgb(26, 26, 26);">{{item.tradeMoneyRemark}}</text>
+      </view>
+      <view class='item_bottom_view'>
+        <text class='date_text'>{{item.createTimeStr}}</text>
+      </view>
+    </view>
+
+  </view>
+</scroll-view>

@@ -1,0 +1,256 @@
+page {
+  background-color: rgb(246, 246, 246);
+  color: rgb(0, 0, 0);
+}
+
+/*管理活动-无人*/
+
+.nobody {
+  text-align: center;
+  font-size: 26rpx;
+  color: rgb(142, 142, 142);
+  padding-top: 358rpx;
+}
+
+/*搜索view*/
+.t{
+ background-color: rgb(255, 255, 255);
+ display: flex;
+ justify-content: center; 
+}
+.header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height:60rpx;
+  width: 690rpx;
+  border-radius: 8rpx;
+margin-bottom: 10rpx;
+  background-color: rgb(240, 240, 240);
+}
+.t28rpx{
+  margin-left: 9rpx;
+  font-size: 28rpx;
+  letter-spacing: -0.6rpx;
+  color: rgb(142, 142, 142);
+}
+
+
+
+
+.input {
+  background-color: rgb(240, 240, 240);
+  text-align: center;
+}
+
+
+
+.top_view {
+  background-color: rgb(255, 255, 255);
+  padding-left: 35rpx;
+}
+
+.top_item_view {
+  height: 89rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mid_item_view {
+  background-color: rgb(246, 246, 246);
+  height: 88rpx;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top_item_foot_view {
+  display: flex;
+  align-items: center;
+}
+
+/*分组按钮框*/
+
+.mid_item_mid_view {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.text_groud_view {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+/*按钮*/
+
+.button {
+  margin-right: 35rpx;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  font-size: 25rpx;
+  color: rgb(61, 209, 164);
+  border: 1rpx solid rgba(61, 209, 164, 0.8);
+  width: 150rpx;
+}
+
+/*小字体*/
+
+.small_text {
+  color: rgb(142, 142, 142);
+  font-size: 24rpx;
+}
+
+/*中字体*/
+
+.mid_text {
+  color: rgb(26, 26, 26);
+  font-size: 26rpx;
+}
+
+/*大字体*/
+
+.big_text {
+  color: rgb(26, 26, 26);
+  font-size: 34rpx;
+}
+
+/*图片框*/
+
+.icon_image {
+  margin-right: 30rpx;
+  width: 32rpx;
+  height: 40rpx;
+  opacity: 0.4;
+}
+
+/*点击图标*/
+
+.check_icon {
+  margin-left: 32rpx;
+  width: 32rpx;
+  height: 40rpx;
+  opacity: 0.5;
+}
+
+/*组按钮*/
+
+.css_icon_true {
+  border-right: 15rpx solid transparent;
+  border-top: 20rpx solid rgba(26, 26, 26, 0.5);
+  border-left: 15rpx solid transparent;
+}
+
+.css_icon_false {
+  border-top: 15rpx solid transparent;
+  border-bottom: 15rpx solid transparent;
+  border-left: 20rpx solid rgba(26, 26, 26, 0.5);
+}
+
+.list_view1 {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  border-bottom: 1rpx solid rgb(230, 230, 230);
+}
+
+.list_view2 {
+  background-color: rgb(255, 255, 255);
+  border-bottom: 1rpx solid rgb(230, 230, 230);
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+
+.list_view2_top {
+  display: flex;
+  align-items: flex-start;
+}
+
+.user_image {
+  margin: 29rpx 27rpx 29rpx 29rpx;
+  width: 80rpx;
+  height: 80rpx;
+}
+
+/*300rpx*/
+
+.user_image2 {
+  margin: 29rpx 27rpx 0 29rpx;
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.image_view {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+
+.user_info_top {
+  width: 78%;
+  margin: 29rpx 30rpx 32rpx 0rpx;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+
+.user_info_top2 {
+  width: 78%;
+  margin: 29rpx 30rpx 0rpx 0rpx;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+
+.user_info_name_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon_view {
+  width: 50rpx;
+}
+
+.user_foot_view {
+  margin: 50rpx 0rpx 36rpx 0rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list_item_text {
+  justify-content: center;
+  width: 25%;
+  display: flex;
+  align-items: center;
+  border-right: 1rpx solid rgb(229, 229, 229);
+  font-size: 32rpx;
+  color: rgb(61, 209, 164);
+}
+.foot_view {
+   height: 8vh;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: space-between;
+}
+
+.list_item_text1 {
+  margin-top: 35rpx;
+  height: 31rpx;
+  width: 33.3%;
+  color: rgb(61, 209, 164);
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  font-size: 32rpx;
+  border-right: 1rpx solid rgb(229, 229, 229);
+}

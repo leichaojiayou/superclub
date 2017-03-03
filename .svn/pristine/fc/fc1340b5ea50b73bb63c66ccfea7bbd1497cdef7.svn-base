@@ -1,0 +1,218 @@
+//index.js
+//获取应用实例
+const app = getApp()
+const userApi = app.api("userApi")
+const clubApi = app.api("clubApi")
+const actApi = app.api("actApi")
+const systemApi = app.api("systemApi")
+
+Page({
+  data: {
+    clubs: [],
+    statu: '1',
+    myClub: {},
+    hotActs: [],
+    index_empty: false
+  },
+
+  onLoad() {
+    if (app.session.getUserKey() && app.session.getUserKey() != "") {
+      //已经登录了。
+      this.loadClubs()
+      return
+    }
+
+    this.login()
+  },
+
+  login: function (userRes) {
+    //调用微信登录，获取微信code
+    let that = this
+    wx.login({
+      success: (res) => {
+        if (res.code) {
+          // 检查用户是否已经绑定超级俱乐部账号
+          //https://mp.weixin.qq.com/debug/wxadoc/dev/api/open.html#wxgetuserinfoobject
+          //获取微信用户信息, 获取encryptedData和iv
+          wx.getUserInfo({
+            success: (userRes) => {
+              userApi.login({
+                data: {
+                  encryptedData: userRes.encryptedData,
+                  iv: userRes.iv,
+                  code: res.code
+                }
+              }, (res) => {
+                that.validateBind(res)
+              }, (res) => {
+                wx.showToast({
+                  title: 'cuowu'
+                })
+              })
+            },
+            fail: (res) => {
+              console.log(res)
+            }
+          })
+        }
+      }
+    });
+  },
+
+  validateBind: function (res) {
+    let data = res.data;
+    var that = this
+    if (data.status != 1) {
+      let errorCode = data.code;
+      if (errorCode == 20001) {
+        //未绑定手机号码
+        wx.redirectTo({
+          url: '../bind/bind'
+        })
+      }
+    } else {
+      //已经绑定了超级俱乐部账号ß
+      app.session.saveUserInfo(data.user, data._key)
+      that.loadClubs();
+    }
+  },
+
+  loadClubs: function () {
+    //请求我加入的俱乐部列表
+    let that = this
+    userApi.myClubs({}, (res) => {
+      let status = 1
+      let clubName = ""
+      let data = res.data;
+      let clubList = data.clubs;
+      let len = clubList.length;
+      let clubs = []
+      for (var i = 0; i < len; i++) {
+        let club = clubList[i];
+        if (club.status == 0) {
+          //俱乐部创建审核中
+          status = 2
+          clubName = club.title
+          that.setData({
+            myClub: club
+          })
+        } else if (club.roleType >= 2) {
+          //担任管理级别
+          status = 3
+          clubName = club.title
+          that.setData({
+            myClub: club
+          })
+        } else {
+          clubs.push(club)
+        }
+      }
+
+
+      let index_empty = clubs.length == 0 &&
+        app.session.recentClubs().length == 0 &&
+        !that.data.myClub.title
+
+      //index_empty = true
+
+      that.setData({
+        //渲染UI
+        statu: status,
+        clubname: clubName,
+        clubs: clubs,
+        index_empty: index_empty
+      })
+
+      if (index_empty) {
+        //如果是首页为空，请求热门活动
+        that.emptyHandle()
+      }
+    })
+  },
+
+  emptyHandle: function () {
+    let that = this
+    wx.getLocation({
+      success: res => {
+        systemApi.locationConvert({
+          data: {
+            lat: Number.parseInt(res.latitude * 1000000),
+            lng: Number.parseInt(res.longitude * 1000000),
+          }
+        }, res => {
+          let city = res.data.City
+          actApi.hotActs({
+            data: {
+              type: 2, //最热活动
+              start: 0,
+              count: 30,
+              location: city
+            }
+          }, res => {
+            let hotActs = res.data.activities
+            if (hotActs == null) return
+            hotActs.forEach(e => {
+              e.formatTime = app.util.formatTime2(e.begin)
+              e.price = app.util.formatMoney(e.cost)
+              //actStatus:活动状态 0报名中，1报名关闭，2活动结束
+              if (e.actStatus == 1) {
+                e.actStatusText == "报名关闭"
+              } else if (e.actStatus == 2) {
+                e.actStatusText == "活动结束"
+              } else {
+                e.actStatusText == "报名中"
+              }
+            })
+            that.setData({
+              hotActs: hotActs
+            })
+          })
+        })
+      }
+    })
+  },
+
+  actDetails(e) {
+    // 查看活动详情
+    let activityId = e.currentTarget.dataset.id
+    app.wxService.navigateTo('activity/act_detail/act_detail', {
+      activityID: activityId
+    })
+  },
+
+  manageClub: function (e) {
+    let myClub = this.data.myClub;
+    let status = this.data.statu;
+    if (status == 1) {
+      clubApi.createClubCheck({}, res => {
+        if(res.data.check == 0) {
+          app.wxService.showToast(res.data.msg)
+          return
+        }
+        //创建俱乐部
+        wx.navigateTo({
+          url: '../cjjlb/cjjlb'
+        })
+      }, res => {
+        let errorData = app.wxService.util.getErrorMsg(res)
+        app.wxService.showToast(errorData.errorContent)
+      })
+    } else if (status == 2) {
+      //俱乐部审核中
+    } else if (status == 3) {
+      //进入管理页面
+      //todo fixme
+      // app.wxService.navigateTo("../gljlb/gljlb", {
+      //   clubId: myClub.clubID
+      // })
+      app.wxService.navigateTo("../cjjlb/cjjlb")
+    }
+  },
+
+  clubHome: function (e) {
+    let clubId = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '../../club/clubhome/clubhome?clubId=' + clubId,
+    })
+  },
+})

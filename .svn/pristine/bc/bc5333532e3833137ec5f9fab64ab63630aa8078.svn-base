@@ -1,0 +1,378 @@
+@import "../../../template/toasts/toasts.wxss";
+
+.topview {
+  height: 300rpx;
+  background-color: #252525;
+  display: flex;
+}
+
+/*左边图标*/
+
+/*俱乐部图标*/
+
+.left_img_view {
+  width: 25%;
+  padding-top: 29rpx;
+  padding-left: 39rpx;
+  position: relative;
+}
+
+.club_img {
+  height: 138rpx;
+  width: 138rpx;
+  border-radius: 10rpx;
+}
+
+.stars_img {
+  position: absolute;
+  height: 31rpx;
+  width: 32rpx;
+  top: 150rpx;
+  left: 158rpx;
+}
+
+/*文字类似图标*/
+
+.icon_text {
+  font-size: 26rpx;
+  text-align: center;
+  line-height: 42rpx;
+  margin-right: 20rpx;
+  width: 85rpx;
+  height: 42rpx;
+  color: white;
+  border-radius: 6rpx;
+}
+
+.top_view1 {
+  padding-top: 35rpx;
+  display: flex;
+  align-items: center;
+  white-space:nowrap;
+}
+
+.top_view2 {
+  display: flex;
+  margin-top: 10rpx;
+  color: rgb(142, 142, 142);
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 26rpx;
+  width: 400rpx;
+}
+
+.right_view_1 {
+  display: flex;
+  /*align-items: flex-start;*/
+  justify-content: center;
+}
+
+.right_view_1_1 {
+  width: 460rpx;
+}
+
+.right_view_1_2 {
+  position: relative;
+  height: 170rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+/*右边图标*/
+
+.right_view {
+  height: 300rpx;
+  padding-top: 20rpx;
+  padding-right: 30rpx;
+  font-size: 34rpx;
+  width: 75%;
+  color: rgb(255, 255, 255);
+}
+
+.right_img {
+  padding-top: 40rpx;
+  padding-left: 35rpx;
+  width: 18rpx;
+  height: 31rpx;
+  opacity: 0.8;
+}
+
+.right_img1 {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+/*字体*/
+
+.bigsize1 {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  width: 417rpx;
+  line-height: 32rpx;
+}
+
+.bigsize {
+  /*line-height: 22rpx;*/
+  font-size: 30rpx;
+  width: 100%;
+  color: #000;
+}
+
+.smalltext {
+  font-size: 26rpx;
+  color: rgb(191, 191, 191);
+}
+
+.pricetext {
+  font-size: 30rpx;
+  color: rgb(61, 209, 164);
+}
+
+/*--------*/
+
+.midview {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.midview_top_1 {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  height: 157rpx;
+}
+
+.midview_top_1_1 {
+  height: 39rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  border-right: 1rpx solid rgb(230, 230, 230);
+}
+
+/*图标*/
+
+.midview_img {
+  margin-right: 20rpx;
+  width: 67rpx;
+  height: 67rpx;
+}
+
+.midview_text {
+  font-size: 34rpx;
+  color: rgb(26, 26, 26);
+}
+
+.border_1 {
+  font-size: 24rpx;
+  color: rgb(142, 142, 142);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.border_1_1 {
+  border-bottom: 1rpx solid rgb(230, 230, 230);
+  width: 130rpx;
+}
+
+.midview_list {
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+  background: #fff;
+}
+
+.midview_item_img_view {
+  position: relative;
+}
+
+/*图片*/
+
+.midview_item_1_img {
+  background-color: rgb(230, 230, 230);
+  width: 224rpx;
+  height: 154rpx;
+  margin-left: 15rpx;
+}
+
+.midview_item_1_text1 {
+  line-height: 23rpx;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 10rpx;
+  left: 0rpx;
+  width: 61rpx;
+  height: 23rpx;
+  font-size: 18rpx;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: rgb(61, 209, 164);
+}
+
+.midview_item_1_text2 {
+  line-height: 23rpx;
+  border-radius: 2rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 10rpx;
+  left: 0rpx;
+  width: 61rpx;
+  height: 23rpx;
+  font-size: 18rpx;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: rgb(255, 197, 86);
+}
+
+.midview_item_1_text3 {
+  line-height: 23rpx;
+  border-radius: 2rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 10rpx;
+  left: 0rpx;
+  width: 61rpx;
+  height: 23rpx;
+  font-size: 18rpx;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: rgb(166, 179, 204);
+}
+
+.midview_item_1 {
+  height: 154rpx;
+  display: flex;
+  padding-left: 15rpx;
+  padding-bottom: 50rpx;
+}
+
+.midview_item_2 {
+  height: 154rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 24rpx;
+  width: 447rpx;
+}
+
+.midview_item_2_1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.theend_text_view {
+  height: 33rpx;
+  margin-top: 57rpx;
+  padding-bottom: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theend_text {
+  font-size: 24rpx;
+  color: rgb(191, 191, 191);
+}
+
+/*按钮*/
+
+.culb-manage {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.button {
+  width: 100%;
+  border-radius: 0;
+  padding: 4rpx;
+  color: rgb(255, 255, 255);
+  background-color: rgb(61, 209, 164);
+}
+
+.noimg_view {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 80rpx;
+}
+
+.noimg {
+  /*width: 141rpx;*/
+  height: 115rpx;
+  margin-top: 70rpx;
+}
+
+.noimg_view text {
+  margin-top: 29rpx;
+  color: rgb(142, 142, 142);
+  font-size: 28rpx;
+}
+
+.clubHome-qrcode-tap {
+  padding: 20rpx;
+  margin-left: -20rpx;
+  margin-top: 56rpx;
+  position: relative;
+}
+
+.clubHome-qrcode {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.clubHome-option-right {
+  padding-top: 50rpx;
+  padding-left: 25rpx;
+  width: 18rpx;
+  height: 31rpx;
+  opacity: 0.8;
+}
+
+.clubHome-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-show-removeBroder {
+  border-bottom: '';
+}
+
+
+.master-project-overflow{
+  overflow : hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.txt-overflow-one{
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.txt-overflow-two {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;/*行数*/
+  -webkit-box-orient: vertical;
+}
+
+.activity-title{
+  height: 90rpx;
+}

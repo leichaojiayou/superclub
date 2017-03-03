@@ -1,0 +1,53 @@
+Page({
+  data: {
+    button_Status: false,
+    click_Status: true,
+    input_placeholder_text: '输入报名项，10字以内',
+    input_placeholder_text1: '输入选项',
+    text1: '候选项',
+    text2: '注：候选项只提供单选',
+    botton_text: '保存',
+  },
+  onLoad: function (options) {
+    // 页面初始化 options为页面跳转所带来的参数
+  }
+  ,
+  // input当用户输入时
+  inputHandle(e) {
+    var value = e.detail.value;
+    var Status = false;
+    value.replace(/(^\s*)|(\s*$)/g, "");
+    if (value != '') {
+      Status = true;
+    }
+    this.setData({
+      button_Status: Status
+    });
+  }
+  ,
+  binditem_button(e) {
+    var Click_Status = this.data.click_Status;
+    Click_Status = !Click_Status;
+    this.setData({
+      click_Status: Click_Status
+    });
+  }
+  ,
+  // 保存按钮事件
+  button(e) {
+
+  }
+  ,
+  onReady: function () {
+    // 页面渲染完成
+  },
+  onShow: function () {
+    // 页面显示
+  },
+  onHide: function () {
+    // 页面隐藏
+  },
+  onUnload: function () {
+    // 页面关闭
+  }
+})

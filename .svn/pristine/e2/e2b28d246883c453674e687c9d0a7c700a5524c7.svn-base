@@ -1,0 +1,13 @@
+/* pages/summary/summary.wxss */
+.header{
+    margin-top:41rpx;
+    
+    background-color: rgb(255, 255, 255);
+    padding: 26rpx 32rpx 0 32rpx;
+}
+.textarea{
+   width: 100%;
+}
+.btn{
+    margin: 61rpx 15rpx 0 30rpx;
+}

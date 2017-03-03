@@ -1,0 +1,78 @@
+
+  <view class="header">
+    <view class="header_left">活动总名额
+    </view>
+      <input placeholder-style="font-size: 34rpx;letter-spacing:-0.8rpx;color: rgb(191, 191, 191);" class="input" placeholder="默认不限" value="{{maxApplyCountTxt}}" bindblur="setMaxApplyCount"/>
+  </view>
+
+  <!-- 1 -->
+  <view class="set">费用设置</view>
+
+  <!--循环指令-->
+  <view wx:for="{{tickets}}" wx:for-item="ticket" wx:for-index="item_index">
+
+    <!--开始循环图片-->
+    <view class="center">
+     <image class="icon" src="https://cdn.51julebu.com/xiaochengxu/image/delet@2x.png"></image>
+      <view id="item_{{item_index}}" bindtap="removeItem" style="width:67px;height:268rpx;position:absolute;">
+       
+      </view>
+      <view class="center_body">
+        <view class="center_item">
+          <view class="header_left">费用名称 </view>
+          <input id="name_{{item_index}}" placeholder-style="font-size: 34rpx;letter-spacing:-0.8rpx;color: rgb(191, 191, 191);" class="input" placeholder="20字内" value="{{ticket.name}}" bindinput="setItemInfo"/>
+        </view>
+        <view class="center_item  border">
+          <view class="header_left">金额 </view>
+          <input id="cost_{{item_index}}" placeholder-style="font-size: 34rpx;letter-spacing:-0.8rpx;color: rgb(191, 191, 191); "  class="input" placeholder="有人报名后不可修改" value="{{ticket.cost}}" bindinput="setItemInfo"/>
+        </view>
+        <view class="center_item">
+          <view class="header_left">名额</view>
+          <input id="memberCount_{{item_index}}" placeholder-style="font-size: 34rpx;letter-spacing:-0.8rpx;color: rgb(191, 191, 191);" class="input" placeholder="默认不限" value="{{ticket.memberCount==-1?'':ticket.memberCount}}" bindinput="setItemInfo"/>
+        </view>
+      </view>
+    </view>
+  </view>
+
+
+  <!-- 2 -->
+  <view class="center2" bindtap="addItem">
+    <image class="icon2" src="https://cdn.51julebu.com/xiaochengxu/image/add@2x.png"></image>
+    <view class="header_left">添加费用</view>
+  </view>
+
+  <!-- textarea-->
+  <view class="textarea">
+    <textarea style="width:100%;" placeholder-style="font-size: 34rpx;letter-spacing:-0.8rpx;color: rgb(191, 191, 191);" placeholder="费用说明" value="{{costDesc}}" bindblur="setCostDesc"/>
+  </view>
+
+  <!-- 3 -->
+  <view class="item3">
+    <view class="header_left">在线付费
+    </view>
+    <block wx:if="{{howToPay == 2 || howToPay == 3}}">
+       <switch type="switch" id="ni" checked  bindchange="onlinePay"/>
+    </block>
+     <block wx:if="{{howToPay == 1}}">
+       <switch type="switch" id="n2" bindchange="onlinePay"/>
+    </block>
+  </view>
+  <view class="set mar mar1">
+    <view>收款账户：{{payeeCount}}</view>
+    <view>活动发布后金额不可更改，有人付费后活动无法删除。</view>
+  </view>
+
+  <!-- 4 -->
+  <!--<view class="item3">
+    <view class="header_left">其他支付方式
+    </view>
+     <block wx:if="{{howToPay == 3}}">
+       <switch type="switch" checked bindchange="otherPay"/>
+    </block>
+     <block wx:if="{{howToPay != 3}}">
+       <switch type="switch"  bindchange="otherPay"/>
+    </block>
+  </view>
+  <view class="set mar  mar1">
+    开启后将允许支付宝.微信以外的支付方式，例如线下当面付款或通过网银支付
+  </view>-->

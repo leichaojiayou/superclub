@@ -1,0 +1,56 @@
+// pages/charge_activity/charge_activity.js
+Page({
+  data: {
+    count: 1,
+    item: [
+      { sort: '报名', num: '12346' },
+      { sort: '点赞', num: '9999' },
+      { sort: '评论', num: '123' },
+      { sort: '分享', num: '0' },
+    ],
+
+
+    item1: [
+      { img: '../images/manage.png', content: '报名管理' },
+      { img: '../images/msg.png', content: '免费短信' },
+      { img: '../images/edit.png', content: '编辑活动' },
+      { img: '../images/active.png', content: '查看活动' },
+      { img: '../images/onemore.png', content: '再发一个' },
+      { img: '../images/close.png', content: '关闭报名' },
+    ],
+    item2: [
+      { img: '../images/link.png', content: '复制活动链接' },
+      { img: '../images/qrcode.png', content: '下载活动二维码' },
+    ]
+  },
+  skip: function (e) {
+    console.log(e.target);
+    switch (e.target.id) {
+      case '0':
+        wx.navigateTo({
+          url: '../activity_Manage_page/activity_Manage_page'
+        })
+        break;
+      case '1':
+        wx.navigateTo({
+          url: '../freemsg/freemsg'
+        })
+        break;
+         case '3':
+        wx.navigateTo({
+          url: '../apply_paged/apply_paged'
+        })
+        break;
+    }
+    // if (e.target.id == 1) {
+    //   wx.navigateTo({
+    //     url: '../freemsg/freemsg'
+    //   })
+    // }
+    // if (e.target.id == 1) {
+    //   wx.navigateTo({
+    //     url: '../freemsg/freemsg'
+    //   })
+    // }
+  }
+})

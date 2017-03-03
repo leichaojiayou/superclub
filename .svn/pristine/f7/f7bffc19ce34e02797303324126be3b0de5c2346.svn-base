@@ -1,0 +1,76 @@
+<import src="../../../template/index/index.wxml" />
+<import src="../../../template/index/index_empty.wxml" />
+<view>
+  <template is="index_empty" wx:if="{{index_empty}}" data="{{hotActs}}"></template>
+  <scroll-view wx:else style="height:100vh" scroll-y="true">
+    <view style="background:#fff;position:relative">
+      <view class="mycharge">
+        <text class="mycharge_txt">我管理的</text>
+        <view bindtap="manageClub" wx:if="{{statu==3}}" class="mangage-club-btn">管理俱乐部</view>
+      </view>
+      <view style="position:relative">
+
+        <!--状态 1 未管理任何俱乐部-->
+        <text bindtap="manageClub" wx:if="{{statu==1}}" class="des_txt">您未管理任何俱乐部，点击创建俱乐部
+          <image src="https://cdn.51julebu.com/xiaochengxu/image/right-errow.png" class="right_errow" mode="aspectFill"></image>
+        </text>
+
+        <!--状态 2 审核状态-->
+        <text wx:elif="{{statu==2}}" class="des_txt">您创建的俱乐部"{{clubname}}"正在审核中，请耐心等待
+          <image src="https://cdn.51julebu.com/xiaochengxu/image/right-errow.png" class="right_errow" mode="aspectFill"></image>
+        </text>
+
+        <!--状态 3 管理的俱乐部-->
+        <view bindtap="clubHome" data-id="{{myClub.clubID}}" wx:elif="{{statu==3}}" >
+          <view style="margin-left:4%;display:flex;align-items:center;">
+            <image src="https://cdn.51julebu.com/club/img/160813115354/53507588fede445d9218efba50dda67a.wj" style="width:50rpx;border-radius:50%;margin-right:10rpx" mode="widthFix"></image>
+            <text style="font-size:28rpx;color:#8e8e8e">担任{{myClub.roleTypeText}}职务</text>
+          </view>
+          <view class="mangage-club-content">
+            <view class="header">
+              <image src="{{myClub.logo}}" class="header_img" mode="widthFix"></image>
+            </view>
+            <view style="flex-direction: column;display:flex;margin-left:3%">
+              <text class="club_id">{{myClub.title}}</text>
+              <view class="sort">
+                <view wx:for="{{myClub.features}}">
+                  <view class="kuangkuang" style="background-color:rgb(145 ,213 ,192);">
+                    <text class="t26rpx_white">{{item.name}}</text>
+                  </view>
+                </view>
+              </view>
+              <text class="nums" wx-if="{{myClub.activityCount != 0}}">{{myClub.activityCount}}个新活动</text>
+            </view>
+            <image src="https://cdn.51julebu.com/xiaochengxu/image/right-errow.png" class="right_errow" mode="aspectFill"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!--底部容器-->
+
+    <!--我加入的-->
+    <view class="container">
+      <view class="container_title">
+        <text>我加入的</text>
+      </view>
+      <view>
+        <template is="common_one" data="{{clubs}}" />
+      </view>
+    </view>
+
+    <!--最近访问-->
+    <view class="container">
+      <view class="container_title">
+        <text>最近访问</text>
+      </view>
+      <view bindtap="nato_clubhome">
+        <template is="common_one" data="{{item,item1}}" />
+      </view>
+      <view bindtap="nato_clubhome">
+        <template is="common_one" data="{{item,item1}}" />
+      </view>
+    </view>
+    <view style="height:4.5vh;background-color:rgb(246,246,246)"></view>
+  </scroll-view>  
+</view>

@@ -1,0 +1,159 @@
+// pages/create_club/create_club.js
+var app = getApp()
+var clubApi = app.api("clubApi")
+var systemApi = app.api("systemApi")
+
+Page({
+  data: {
+    choose: '请选择',
+    input: '输入',
+    txt: '写一段简介描述你的俱乐部吧',
+
+    logo: "",
+    remoteLogo: "",
+    name: "",
+    location: "",
+    cityId: "",
+    setupTime: "",
+    feature: "",
+    slogan: "",
+    desc: "",
+    charger: "",
+    phone: ""
+  },
+
+  //俱乐部logo
+  clickLogo() {
+    let that = this
+    wx.chooseImage({
+      count: 1, // 默认9
+      sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        var tempFilePaths = res.tempFilePaths
+        that.setData({
+          logo: tempFilePaths[0]
+        })
+      }
+    })
+  },
+
+  //俱乐部名称
+  clickName() {
+    app.wxService("club/modify/clubName/clubName")
+  },
+
+  //所在地
+  clickLocation() {
+    app.wxService("club/modify/")
+  },
+
+  //创立时间
+  clickSetupTime() {
+    //app.wxService("club/modify/")
+  },
+
+  //主打项目
+  clickFeature() {
+    app.wxService("club/modify/masterProjects/masterProjects")
+  },
+
+  //宣言
+  clickSlogan() {
+    app.wxService("club/modify/declaretion/declaretion")
+  },
+
+  //简介
+  clickDesc() {
+    app.wxService("club/modify/description/description")
+  },
+  //负责人
+  inputCharger(e) {
+    this.data.charger = e.detail.value
+  },
+  //联系方式
+  inputPhone(e) {
+    this.data.phone = e.detail.value
+  },
+
+  validate() {
+    //校验通过
+    return true
+  },
+
+  createClub() {
+    if (app.session.isTempUser()) {
+      //临时用户，需要先绑定手机
+      return
+    }
+
+    if (this.validate() == false) {
+      //缺少必填项
+      return
+    }
+    const data = this.data
+
+    //todo remove test data 
+    // let testlogo = "https://cdn.51julebu.com/club/img/170212/c00135e941674ea79901a4c86f15f200.jpg"
+    // data.remoteLogo = testlogo
+    data.name = "小程序俱乐部而"
+    //data.logo = data.remoteLogo
+    data.desc = "哈哈哈"
+    data.slogan = "这是是咯共"
+    data.cityId = "351"
+    data.need_join_check = "0"
+    data.charger = "温嘉辉"
+    data.phone = "15692004550"
+    data.feature = '1001'
+
+    if (data.remoteLogo === '') {
+      //先上传logo到服务器
+      this.uploadLogo()
+      return
+    }
+
+    clubApi.createClub({
+        method: 'POST',
+        data: {
+          title: data.name,
+          logo: data.remoteLogo,
+          description: data.desc,
+          slogan: data.slogan,
+          city_id: data.cityId,
+          need_join_check: "0",
+          contact_name: data.charger,
+          contact_tel: data.phone,
+          feature: data.feature
+        }
+      }, res => {
+        //成功
+        app.wxService.showModal({
+          title: "创建申请已提交",
+          content: "申请已提交，工作人员将在3个工作日内联系您，请耐心等候并保持电话畅通",
+          showCancel: false,
+        }, res => {
+          if (res.confirm) {
+            app.wxService.navigateBack(1)
+          }
+        })
+      },
+      res => {
+        //失败
+        let errorData = app.util.getErrorMsg(res)
+        app.wxService.showToast(errorData.title + "," + errorData.content)
+      })
+  },
+
+  uploadLogo() {
+    let localPath = this.data.logo
+    systemApi.uploadImage(localPath, res => {
+      console.log(res)
+      let remoteUrl = res.data.url
+
+    }, res => {
+      //上传图片失败
+    })
+
+  }
+})

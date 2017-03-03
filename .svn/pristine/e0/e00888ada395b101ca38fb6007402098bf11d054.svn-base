@@ -1,0 +1,153 @@
+//index.js
+//获取应用实例
+const App = getApp();
+const clubApi = App.api('clubApi');
+const wxService = App.wxService
+Page({
+  data: {
+    items: [
+      {
+        "name": "徒步",
+        "id": 1
+      },
+      {
+        "name": "跑步",
+        "id": 2
+      },
+      {
+        "name": "骑行",
+        "id": 3
+      },
+      {
+        "name": "登山",
+        "id": 4
+      },
+      {
+        "name": "野营",
+        "id": 5
+      },
+      {
+        "name": "钓鱼",
+        "id": 6
+      },
+      {
+        "name": "球类",
+        "id": 7
+      },
+      {
+        "name": "摄影",
+        "id": 8
+      },
+      {
+        "name": "潜水",
+        "id": 9
+      },
+      {
+        "name": "自驾",
+        "id": 10
+      }
+    ]
+  },
+  //copy object
+  __copyObj: function (obj) {
+    let copy = {}
+    if (typeof obj === 'object') {
+      copy = JSON.parse(JSON.stringify(obj))
+    }
+    return copy;
+  },
+
+  __judge: function () {
+    let items = this.data.items, i = 0, count = 0;
+    for (; i < items.length; i++) {
+      if (items[i].isOn == true) {
+        count++;
+      }
+    }
+    return count;
+  },
+
+  onLoad: function (e) {
+    if (!e.type) {
+      const that = this;
+      let param = { data: {} };
+      param.data.club_id = this.data.clubID;
+      clubApi.masterProjects(param, res => {
+        console.log(res);
+        let items = res.data.data, i = 0, j = 0, features = e.features.split(',');
+        wx.setStorageSync('masterProject', items);
+        for (let k = 0; k < items.length; k++) {
+          items[k].isOn = false;
+        }
+        for (; i < features.length; i++) {
+          for (; j < items.length; j++) {
+            if (features[i] === items[j].name) {
+              items[j].isOn = true;
+              break;
+            }
+          }
+        }
+        this.setData({
+          items: items,
+          clubID: e.clubID,
+          type: e.type
+        })
+      })
+    } else {
+      this.data.type = e.type
+    }
+  },
+
+  selectProject: function (e) {
+    let items = this.data.items, i = 0, count = 0, index = e.currentTarget.dataset.index - 1;
+    const itemz = this.__copyObj(this.data)
+    items[index].isOn = !items[index].isOn
+    count = this.__judge();
+    if (count > 3) {
+      wxService.showToast('最多选择3个主打项目')
+      this.setData({
+        items: itemz.items
+      })
+    } else {
+      this.setData({
+        items: items
+      })
+    }
+  },
+
+  submit: function () {
+    let count = this.__judge(), projects = [], items = this.data.items, i = 0, param = { data: {} },
+      pages = getCurrentPages(), prevPage = pages[pages.length - 2], tempFeatures = [];
+    if (count < 4) {
+      for (; i < items.length; i++) {
+        if (items[i].isOn == true) {
+          projects.push(items[i].id);
+          tempFeatures.push({
+            id: items[i].id,
+            name: items[i].name
+          })
+        }
+      }
+      param.data.club_id = this.data.clubID;
+      param.data.features = projects.join(',')
+      if (!this.data.type) {
+        clubApi.modifyClub(param, res => {
+          if (res.data.status === 1) {
+            prevPage.setData({
+              tempFeatures: tempFeatures
+            })
+            wxService.navigateBack();
+          }
+        })
+      } else {//创建俱乐部
+        prevPage.setData({
+          features: tempFeatures
+        })
+        wxService.navigateBack();
+      }
+
+    }
+
+  }
+
+})

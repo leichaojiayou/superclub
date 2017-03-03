@@ -1,0 +1,40 @@
+
+<!-- item2-->
+
+<view class="item2" bindtap="nato_shoukuanxiangqing">
+  <view class="item2_top">
+    <view class="item2_title">
+      红石梁徒步登山赏雪
+    </view>
+    <view class="money">+150.00</view>
+  </view>
+  <view class="item2_bottom">
+    <view class="header_time2">活动时间 : 07月12日 20:34 - 07月12日24:00</view>
+    <view class="pay">3人付款</view>
+  </view>
+</view>
+
+<!-- item1-->
+
+<view class="header" bindtap="nato_shoukuanxiangqing">
+  <view class="header_top">
+    <view class="header_title">
+      红石梁徒步登山赏雪一日游红石梁徒步登山赏雪一日游
+    </view>
+    <view class="isno">暂无收款</view>
+  </view>
+  <view class="header_time">
+    活动时间 : 07月12日 20:34 - 07月12日24:00
+  </view>
+  <view class="header_msg header_time">
+    <view wx:if="{{isClub}}" class="header_btn">俱乐部活动</view> 收款账户：谢谢谢谢-1234567
+  </view>
+</view>
+
+<!-- wu -->
+<view class="item_wu">
+  <view>
+    <image src="../../../assets/images/empty@2x.png" class="no_image"></image>
+    <view class="wu_text">暂无收款</view>
+  </view>
+</view>

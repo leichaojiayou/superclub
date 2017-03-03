@@ -1,0 +1,108 @@
+<scroll-view style="height:100vh;" scroll-y="true">
+
+  <!--头框-->
+  <view class="bigview">
+
+    <!--票价-->
+    <view class="itemView">
+      <text>{{page.ticket_text}}</text>
+      <view class="itemView_foot">
+        <view class="foot_text_view">
+          <text class="bigsize" style="margin-bottom: 5px;">{{page.ticket.price}}</text>
+          <text class="smartsize">{{page.ticket.text}}</text>
+        </view>
+        <picker bindchange="" value="" range="">
+          <image src="{{page.img}}"></image>
+        </picker>
+      </view>
+    </view>
+
+    <!--保险-->
+    <view class="itemView" style="border-bottom: 0px;">
+      <text>{{page.insurance_text}}</text>
+      <view class="itemView_foot">
+        <view class="foot_text_view">
+          <text class="bigsize">{{page.insurance_msg}}</text>
+        </view>
+        <picker bindchange="" value="" range="">
+          <image src="{{page.img}}"></image>
+        </picker>
+      </view>
+    </view>
+  </view>
+
+  <!--中框-->
+  <view class="bigview">
+
+    <!--昵称-->
+    <view class="itemView">
+      <text>{{page.name_text}}</text>
+      <view class="itemView_foot">
+        <input type="text" maxlength="16" placeholder="{{page.nameinput_placeholder_text}}" placeholder-class="psection" />
+      </view>
+    </view>
+
+    <!--性别-->
+    <view class="itemView">
+      <text>{{page.sex_text}}</text>
+      <view class="itemView_foot">
+        <view class="foot_text_view">
+          <text class="bigsize">{{sex_array[sex_index]}}</text>
+        </view>
+        <picker bindchange="sex_bindPickerChange" value="{{sex_index}}" range="{{sex_array}}">
+          <image src="{{page.img}}"></image>
+        </picker>
+      </view>
+    </view>
+
+    <!--手机-->
+    <view class="itemView">
+      <text>{{page.phone_text}}</text>
+      <view class="itemView_foot">
+        <input type="text" maxlength="16" class="bigsize" value="{{page.phone_number}}" placeholder="{{page.phoneinput_placeholder_text}}" placeholder-class="psection" />
+      </view>
+    </view>
+
+    <!--真实姓名-->
+    <view class="itemView">
+      <text>{{page.realname_text}}</text>
+      <view class="itemView_foot">
+        <input type="text" maxlength="16" class="bigsize" value="{{page.realname_msg}}" placeholder="{{page.realnameinput_placeholder_text}}" placeholder-class="psection" />
+      </view>
+    </view>
+
+    <!--身份证号-->
+    <view class="itemView">
+      <text>{{page.IDnumber_text}}</text>
+      <view class="itemView_foot">
+        <input type="text" maxlength="16" placeholder="{{page.input_text}}" placeholder-class="psection" />
+      </view>
+    </view>
+
+    <!--骑行服码数-->
+    <view class="itemView">
+      <text>{{page.clother_text}}</text>
+      <view class="itemView_foot">
+        <view class="foot_text_view">
+          <text class="bigsize">{{clother_array[clother_index]}}</text>
+        </view>
+        <picker bindchange="clother_bindPickerChange" value="{{clother_index}}" range="{{clother_array}}">
+          <image src="{{page.img}}"></image>
+        </picker>
+      </view>
+    </view>
+
+    <!--紧急联系人-->
+    <view class="last_view">
+      <text>{{page.contacts_text}}</text>
+      <textarea type="text" placeholder="{{page.input_text}}" placeholder-style="color: rgb(191, 191, 191);" />
+    </view>
+  </view>
+
+  <!--按钮框-->
+  <view class="buttonview">
+    <button bindtap="helpapply" class="button1" bindtap="nato_helpenlist">{{page.button1}}</button>
+    <button bindtap="helpapply" class="button2" wx:if="{{statu==1}}">{{page.button2}}</button>
+    <button bindtap="helpapply" class="button1">保存</button>
+  </view>
+</scroll-view>

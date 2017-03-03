@@ -1,0 +1,50 @@
+/* pages/cash4/cash4.wxss */
+page{
+      word-wrap: break-word;
+  white-space: normal;
+}
+.t26rpx{
+    font-size: 26rpx;
+    line-height: 36rpx;
+    color: rgb(216, 132, 81);
+}
+.t32rpx{
+    font-size: 32rpx;
+    line-height: 36rpx;
+    letter-spacing: -0.8rpx;
+}
+/*header橙色背景提示*/
+.header_1{
+    background-color: rgb(255, 246, 225);
+    height: 102rpx;
+    padding: 19rpx 20rpx 19rpx 28rpx;
+}
+
+.line2{
+    height: 88rpx;
+    padding-right: 33rpx;
+    margin-left: 29rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.body_1{
+    position: relative;
+    justify-content: space-between;
+    height: 88rpx;
+    display: flex;
+    align-items: center;
+    border-bottom: 1rpx solid rgb(229, 229, 229);
+    margin-left: 30rpx;
+}
+.body_txt{
+    font-size: 30rpx;
+    line-height: 14.4rpx;
+    letter-spacing: -0.8rpx;
+}
+.img {
+  height: 31rpx;
+  width: 18rpx;
+  opacity: 0.2;
+}

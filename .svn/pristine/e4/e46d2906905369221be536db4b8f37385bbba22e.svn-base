@@ -1,0 +1,21 @@
+// pages/dismiss/dismiss.js
+Page({
+  data: {
+    //status==0任免会长 status==1任免副会长 status==2副会长任免
+    status: 1,
+    header_img: '../images/user@2x.png',
+    status3_name: '副会长昵称'
+  },
+  onLoad: function (e) {
+    if (this.data.status == 2) {
+      wx.setNavigationBarTitle({
+        title: '副会长任免'
+      })
+    }
+  },
+  nato_removes:function(e){
+      wx.navigateTo({
+      url: '../removes/removes'
+    })
+  }
+})

@@ -1,0 +1,229 @@
+<import src="../../../template/toasts/toasts.wxml" />
+
+<view class="topview">
+  <view bindtap="tapTabButton" id="0" class="topview_1">
+    <view>
+      <text class="{{(tabIndex == 0)?'topview_1_1':'topview_1_2'}}">详细信息</text>
+    </view>
+  </view>
+  <view bindtap="tapTabButton" id="1" class="topview_1">
+    <view>
+      <text class="{{(tabIndex == 1)?'topview_1_1':'topview_1_2'}}">报名管理</text>
+    </view>
+  </view>
+</view>
+
+<view>
+
+<block wx:if="{{tabIndex == 0}}">
+<!--————————————————————————详细信息———————————————————————————————-->
+    <!--头-->
+<view class="header" style="margin-top:100rpx;">
+      <view wx:for="{{titleNames}}" wx:key="1" class="meta_item">
+      <text class="des_txt">{{titleNames[index]}}</text>
+      <text class="sort_num">{{titleDatas[index]}}</text>
+      </view>
+</view>
+
+<!--线-->
+<view style="border-bottom:1rpx solid rgb(230,230,230);margin:0 4% 0 4%;"></view>
+
+<!--body-->
+<view class="body">
+  <view wx:for="{{imageAndTitles}}" wx:key="1" for-index="index" id="{{index}}" class="body_item1" bindtap="skip" style="margin-bottom: 36px;">
+    <image id="{{index}}" src="{{item.img}}" class="list_img1" mode="aspectFill"></image>
+    <text id="{{index}}" class="des_txt2" style="margin-top:28rpx;">{{item.content}}</text>
+  </view>
+  <view id="5" class="body_item1" bindtap="skip" style="margin-bottom: 36px;">
+    <image id="5" src="{{lastIcon.img}}" class="list_img1" mode="aspectFill"></image>
+    <text id="5" class="des_txt2" style="margin-top:28rpx;">{{lastIcon.content}}</text>
+  </view>
+</view>
+
+<!--————————————————————————详细信息End———————————————————————————————-->
+</block>
+
+<block wx:else style="padding-bottom:100rpx;">
+<!--————————————————————————报名管理———————————————————————————————-->
+<view>
+    <!--topviews-->
+  <view class="top_view">
+    <view class="top_item_view">
+      <text class="mid_text">共{{allApplyCount}}人报名</text>
+      <view class="top_item_foot_view1" wx:if="{{howToPay > 1}}">
+          <block wx:if="{{currentState == 1}}">
+             <text class="button_text1" style="border-top-right-radius: 6rpx;border-bottom-right-radius: 6rpx;"  bindtap="tapCommomGroup">普通分组</text>
+              <text class="button_text" bindtap="tapCostGroup">费用分组</text>
+          </block>
+          <block wx:else>
+            <text class="button_text" bindtap="tapCommomGroup">普通分组</text>
+            <text class="button_text1"  style="border-top-left-radius: 6rpx;border-bottom-left-radius: 6rpx;" bindtap="tapCostGroup">费用分组</text>
+          </block> 
+      </view>
+    </view>
+  </view>
+
+
+ 
+
+ 
+  <block wx:if="{{currentState == 1}}">
+<!--————————————————————————普通分组———————————————————————————————-->
+
+ <!--服务器下发的组-->
+    <view class="top_view">
+    <view wx:for="{{groups}}" wx:key="1" for-index="index" id="{{index}}" class="top_item_view" style="border-bottom: 1rpx solid rgb(230, 230, 230);" bindtap="tapDidGrouped">
+      <text id="{{index}}" class="big_text">{{item.groupName}}</text>
+      <view id="{{index}}" class="top_item_foot_view">
+        <text id="{{index}}" class="small_text" style="margin-right:60rpx;">{{item.applys.length}}人</text>
+        <image id="{{index}}" class="right-arrow-absolute" src="{{icon_img}}"></image>
+      </view>
+    </view>
+
+  </view>
+
+<!--通过处理applys得到的组-->
+  <block wx:for="{{resultArray}}" wx:key="1" wx:for-index="indexX" wx:for-item="group">
+    <view id="{{indexX}}" bindtap="tapOpenOrCloseGroup"  class="mid_item_view">
+      <view id="{{indexX}}" class="mid_item_mid_view" >
+        <view id="{{indexX}}" class="icon_view">
+          <view id="{{indexX}}" class="{{group.open ? 'css_icon_true':'css_icon_false'}}" style="{{group.open ? 'margin-left:30rpx':'margin-left:35rpx'}}" ></view>
+        </view>
+        <view id="{{indexX}}" class="text_groud_view">
+          <text id="{{indexX}}" class="mid_text" style="margin-left:22rpx;" >{{group.text}}</text>
+          <text id="{{indexX}}" class="small_text" style="margin-left:9rpx;"  >{{group.count}}人</text>
+        </view>
+      </view>
+      <view id="{{indexX}}" class="top_item_foot_view">
+        <button wx:if="{{group.haveButton}}" id="{{indexX}}" catchtap="tapForGroupButton" class="button">{{group.button_text}}</button>
+      </view>
+    </view>
+
+    <!--未点击的列-->
+    <block wx:if="{{group.open}}" wx:key="1" wx:for-index="indexY" wx:for="{{group.applys}}" wx:for-item="obj">
+      <view wx:if="{{!obj.open}}" bindtap="tapRowForDisplay" data-x="{{indexX}}" data-y="{{indexY}}" class="list_view1">
+        <view class="image_view">
+          <image class="user_image" src="{{obj.user.userImg}}"></image>
+        </view>
+        <view class="user_info_top">
+          <view class="user_info_name_top">
+            <text style="font-size: 32rpx;">{{obj.user.nick}}</text>
+            <text class="small_text" wx:if="{{obj.helper}}">{{obj.helper.nick}}帮报</text>
+          </view>
+          <text wx:if="{{howToPay>1}}" style="font-size: 26rpx;margin-top: 11rpx;">{{obj.ticketName}}￥{{obj.price}}</text>
+        </view>
+      </view>
+
+      <!--点击后的列-->
+      <view wx:if="{{obj.open}}" class="list_view2">
+        <view bindtap="tapRowForDisplay" data-x="{{indexX}}" data-y="{{indexY}}" class="list_view2_top">
+          <view class="image_view">
+            <image class="user_image2" src="{{obj.user.userImg}}"></image>
+          </view>
+          <view class="user_info_top2">
+            <view class="user_info_name_top">
+              <text style="font-size: 32rpx;">{{obj.user.nick}}</text>
+              <text class="small_text" wx:if="{{obj.helper}}">{{obj.helper.nick}}帮报</text>
+            </view>
+            <text wx:if="{{howToPay>1}}" style="font-size: 26rpx;margin-top: 11rpx;">{{obj.ticketName}}￥{{obj.price}}</text>
+            <text wx:if="{{howToPay>1}}" class="small_text" style="margin-top: 11rpx;">{{obj.payString}}</text>
+            <text class="small_text" style="font-size: 26rpx;margin-top: 37rpx;">{{obj.baseString}}</text>
+
+            <!--<text class="small_text" style="font-size: 26rpx;margin-top: 20rpx;">{{obj.people_id}}</text>-->
+            <text class="small_text" style="white-space:normal;font-size: 26rpx;margin-top: 19rpx;">{{obj.fieldString}}</text>
+          </view>
+        </view>
+        <view class="user_foot_view">
+          <picker wx:if="{{group.text =='未分组' && groupNameArray.length > 0}}" data-x="{{indexX}}" data-y="{{indexY}}" bindchange="tapGroupPickerChanged" value="{{index}}" range="{{groupNameArray}}" class="list_item_text">
+          分组
+          </picker>
+          <text wx:else bindtap="tapApplySmallButton" data-x="{{indexX}}" data-y="{{indexY}}" data-tag="0" class="list_item_text" style="{{group.small_button_title=='审核' ? 'color: rgb(255, 126, 86);':''}}">{{group.small_button_title}}</text>
+          <text bindtap="tapApplySmallButton" data-x="{{indexX}}" data-y="{{indexY}}" data-tag="1" class="list_item_text">编辑</text>
+          <text bindtap="tapApplySmallButton" data-x="{{indexX}}" data-y="{{indexY}}" data-tag="2" class="list_item_text">电话</text>
+        </view>
+      </view>
+    </block>
+  </block>
+<!--————————————————————————————————————————————————————————-->
+    </block>
+
+    <block wx:else>
+<!--——————————————————————费用分组——————————————————————————————————-->
+ <block wx:for="{{costsArray}}" wx:key="1" wx:for-index="indexX">
+    <view id="{{indexX}}" bindtap="tapCostGroupForDisplay" class="mid_item_view">
+      <view   class="mid_item_mid_view">
+        <view class="icon_view">
+          <view class="{{item.open ? 'css_icon_true':'css_icon_false'}}" style="{{item.open ? 'margin-left:30rpx':'margin-left:35rpx'}}"></view>
+        </view>
+        <view class="text_groud_view">
+          <text class="mid_text" style="margin-left:22rpx;">{{item.ticket.name}}￥{{item.ticket.cost/100.0}}</text>
+          <text class="small_text" style="margin-left:18rpx;">{{item.count}}人</text>
+        </view>
+      </view>
+    </view>
+
+    
+    <block wx:if="{{item.open}}" wx:key="2" wx:for-index="indexY" wx:for="{{item.applys}}" wx:for-item="obj">
+       
+      <!--未点击的列-->
+      <view wx:if="{{!obj.open}}" bindtap="tapCostRowForDisplay" data-x="{{indexX}}" data-y="{{indexY}}" class="list_view1">
+        <view class="image_view">
+          <image class="user_image" src="{{obj.user.userImg}}"></image>
+        </view>
+        <view class="user_info_top">
+          <view class="user_info_name_top">
+            <text style="font-size: 32rpx;">{{obj.user.nick}}</text>
+            <text class="small_text" wx:if="{{obj.isManagerHelp}}">{{obj.helper.nick}}帮报</text>
+          </view>
+          <text class="small_text" style="margin-top: 23rpx;">{{obj.payString}}</text>
+        </view>
+      </view>
+
+      <!--点击后的列-->
+      <view wx:if="{{obj.open}}" class="list_view2">
+        <view bindtap="tapCostRowForDisplay" data-x="{{indexX}}" data-y="{{indexY}}" class="list_view2_top">
+          <view class="image_view">
+            <image class="user_image2" src="{{obj.user.userImg}}"></image>
+          </view>
+          <view class="user_info_top2">
+            <view class="user_info_name_top">
+              <text style="font-size: 32rpx;">{{obj.user.nick}}</text>
+              <text class="small_text" wx:if="{{obj.isManagerHelp}}">{{obj.helper.nick}}帮报</text>
+            </view>
+            <text class="small_text" style="margin-top: 23rpx;">{{obj.payString}}</text>
+            <text class="small_text" style="font-size: 26rpx;margin-top: 71rpx;">{{obj.baseString}}</text>
+            <text class="small_text" style="font-size: 26rpx;margin-top: 20rpx;">{{obj.fieldString}}</text>
+            <text class="small_text" style="white-space:normal;font-size: 26rpx;margin-top: 19rpx;">{{obj.content}}</text>
+          </view>
+        </view>
+        <view class="user_foot_view">
+          <text class="list_item_text"></text>
+          <text bindtap="tapCostSmallButton" data-x="{{indexX}}" data-y="{{indexY}}" data-tag="1" class="list_item_text">编辑</text>
+          <text bindtap="tapCostSmallButton" data-x="{{indexX}}" data-y="{{indexY}}" data-tag="2" class="list_item_text">电话</text>
+      
+        </view>
+      </view>
+    </block>
+  </block>
+  
+<!--————————————————————————————————————————————————————————-->
+  </block> 
+<view class="fill_Height">
+</view>
+</view>
+
+<view class="apply-mangage-footer">
+    <view class="foot_view">
+      <text bindtap="tapAddApply" class="list_item_text1">添加报名</text>
+      <text bindtap="tapGetExcel" class="list_item_text1">导出表格</text>
+    </view>
+</view>
+<!--————————————————————————报名管理End———————————————————————————————-->
+</block>
+
+</view>
+
+<template is="fillInfo" data="{{emailShowStyle,alertTitle,placeHolder}}" />
+<template is="activity-Code" data="{{activityCode, activity}}" />
+<template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}"/>
+<template is="applyCheck" data="{{applyCheckStyle,applyTitle}}" />

@@ -1,0 +1,148 @@
+<scroll-view scroll-y="true" style="height:90vh;position: relative">
+
+  <!--头图像-->
+  <image src="../images/logo.png" class="detail_img" mode="aspectFit"></image>
+  <view class="detail_con">
+
+    <!--title文字-->
+    <view class="detail_title detail_title_lay">
+      <text>{{item.title}}</text>
+    </view>
+
+    <!--信息-->
+    <view class="des_txt detail_msg">
+      <text>{{item.name}}</text>
+      <view>
+        <text style="margin-right:12px;">{{item.pudata}}</text>
+        <text style="margin-right:12px;">阅读{{item.readed}}</text>
+        <text>分享{{item.like}}</text>
+      </view>
+    </view>
+
+    <!--详细信息-->
+    <view class="detail_input">
+      <text class="des_txt detail_txt">活动地点</text>
+      <view class="detail_row_right">
+
+        <!--地点-->
+        <text>{{item.place}}</text>
+
+        <!--线-->
+        <view class="detail_linev"></view>
+        <view class="detail_lineh"></view>
+      </view>
+      <view class="detail_map">
+        <image src="../images/map.png" style="width:14px;height:17px"></image>
+        <text class="des_txt">地图</text>
+      </view>
+    </view>
+    <view class="detail_input">
+      <text class="des_txt detail_txt">活动时间</text>
+      <view class="detail_row_right">
+
+        <!--时间-->
+        <text>{{item.activity_data}}</text>
+        <view class="detail_lineh"></view>
+      </view>
+    </view>
+    <view class="detail_input">
+      <text class="des_txt detail_txt">活动费用</text>
+      <view class="detail_row_right">
+
+        <!--费用-->
+        <text class="green_txt">{{item.cost}}</text>
+        <view class="detail_lineh"></view>
+      </view>
+    </view>
+    <view class="detail_input">
+
+      <!--主办方-->
+      <text style="letter-spacing:0.4em;" class="des_txt detail_txt">主办方</text>
+      <view class="detail_row_right">
+        <text>{{item.sponsor}}</text>
+      </view>
+
+      <!--箭头-->
+      <image src="../images/right-errow.png" style="width:14px;height:17px" class="detail_map"></image>
+    </view>
+  </view>
+
+  <!--详情 报名须知 费用循环-->
+  <view class="sort">
+    <text class="sort1" bindtap="changecolor" id="0" style="border-bottom:4px solid {{status==0?'rgb(61, 209, 164)':'rgb(246, 246, 246)'}};">详情</text>
+    <text class="sort1" bindtap="changecolor" id="1" style="border-bottom:4px solid {{status==1?'rgb(61, 209, 164)':'rgb(246, 246, 246)'}};">报名须知</text>
+    <text class="sort1" bindtap="changecolor" id="2" style="border-bottom:4px solid {{status==2?'rgb(61, 209, 164)':'rgb(246, 246, 246)'}};">费用</text>
+  </view>
+
+  <!--textarea-->
+  <view class="textarea" wx:if="{{status==0}}">
+
+    <!--详情-->
+    <view class="textarea1" wx:if="{{detail_msg.content}}">
+      <text>{{detail_msg.content}}</text>
+    </view>
+    <view class="textarea1_case">
+
+      <!--报名人数-->
+      <text class="textarea1_case_titxt">已报名</text>
+      <text class="textarea1_case_titxt2">剩余名额 {{detail_msg.remain}}</text>
+    </view>
+
+    <!--最近报名的人-->
+    <block wx:for="{{detail_msg.alreadyregistered}}">
+      <view class="textarea1_case textarea1_case_com">
+        <text class="textarea1_case_destxt">{{item.name}}</text>
+        <text class="textarea1_case_destxt" style="color:rgb(191,191,191)">{{item.time}}</text>
+      </view>
+    </block>
+    <view style="text-align:center;background-color: rgb(255, 255, 255);">
+      <image src="../images/right-errow.png" mode="aspectFit" bindtap="showmore" class="textarea1_case_com_img"></image>
+    </view>
+
+    <!--评论-->
+    <view class="textarea1_case">
+      <text class="textarea1_case_titxt">评论</text>
+      <text class="green_txt">我要评论</text>
+    </view>
+
+    <!--评论块-->
+    <block wx:for="{{comment}}">
+      <template is="comment" data="{{item}}" />
+    </block>
+  </view>
+  <view class="textarea" wx:if="{{status==1}}">
+  </view>
+  <view class="textarea" wx:if="{{status==2}}">
+  </view>
+
+  <!--模版-->
+  <template name="comment">
+    <view class="textarea_com">
+      <view>
+        <image src="{{item.img}}" class="textarea1_case_img" mode="aspectFit"></image>
+      </view>
+      <view class="textarea_com_right">
+        <text class="textarea1_case_destxt">{{item.name}}</text>
+        <text class="textarea1_case_destxt" style="color:rgb(191,191,191)">{{item.time}}</text>
+      </view>
+    </view>
+    <text class="textarea_com_right_text">{{item.content}}</text>
+  </template>
+</scroll-view>
+
+
+<!--我要报名-->
+<view class="bottom">
+
+  <!--money为0则免费-->
+  <text class="textarea1_case_money" wx:if="{{detail_msg.money =='0'}}">免费</text>
+
+  <!--money不为0则显示价格-->
+  <view wx:elif="{{detail_msg.money !='0'}}" class="textarea1_case_money">
+      <text>¥{{detail_msg.money}}<text class="textarea1_case_titxt2" style="margin-left:15rpx;">起</text></text>
+  </view>
+
+  <view class="textarea1_case_sign btn1">我要报名</view>
+
+  <!--scr e-->
+</view>

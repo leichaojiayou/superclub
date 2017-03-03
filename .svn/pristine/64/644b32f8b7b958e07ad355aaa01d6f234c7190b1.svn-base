@@ -1,0 +1,89 @@
+//index.js
+//获取应用实例
+var app = getApp()
+Page({
+  data: {
+     // item item1是第一个模板的
+    item: [
+      { header_img: '../../../assets/images/club.png', club: 'xxxxxxxx俱乐部', nums: 3 },
+    ],
+    item1: [
+      { sort: '骑行', color: 'rgb(145 ,213 ,192)' },
+      { sort: '徒步', color: 'rgb(172 ,198 ,237)' },
+    ],
+    msg: {
+      name: '黄丽燕',
+      head_img: '../../../assets/images/user.png',
+      head_signname: '我是简介简介简介',
+    },
+    clubname:'俱乐部名称俱乐部名称',
+    statu: '1'
+  },
+  navme:function(e){
+    wx.navigateTo({
+      url: '../../mine/me',
+      success: function(res){
+        // success
+      },
+      fail: function() {
+        // fail
+      },
+      complete: function() {
+        // complete
+      }
+    })
+  },
+  addClub:function(e){
+    var changestatu = this.data.statu;
+    console.log(changestatu);
+     wx.navigateTo({
+        url: '../cjjlb/cjjlb'
+      })
+   if(changestatu == 1){
+     
+   }else if(changestatu == 2){
+
+   }else if(changestatu == 3){
+     
+   }
+  },
+  manageClub:function(e){
+    var changestatu = this.data.statu;
+    console.log(changestatu);
+     wx.navigateTo({
+        url: '../gljlb/gljlb'
+      })
+   if(changestatu == 1){
+     
+   }else if(changestatu == 2){
+
+   }else if(changestatu == 3){
+     
+   }
+  },
+  clubhome:function(e){
+    console.log(e);
+    wx.navigateTo({
+      url: '../../clubhome/clubhome',
+      success: function(res){
+        // success
+      },
+      fail: function() {
+        // fail
+      },
+      complete: function() {
+        // complete
+      },
+    })
+  },
+    nato_myaccount: function (e) {
+    wx.navigateTo({
+      url: '../../myaccount/myaccount'
+    })
+  },
+  nato_clubhome:function(e){
+    wx.navigateTo({
+      url: '../../clubhome/clubhome'
+    })
+  }
+})

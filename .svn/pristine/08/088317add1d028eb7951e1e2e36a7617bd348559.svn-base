@@ -1,0 +1,377 @@
+/*引用报名列表模版css*/
+@import "../../../template/activity/applyed.wxss";
+@import "../../../template/activity/act_comment.wxss";
+@import "/template/toasts/toasts.wxss";
+.dialog {
+  /*透明蒙层*/
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.2;
+  z-index: 1000;
+  color: #fff;
+}
+
+.dialog_content {
+  /*评论输入框内容*/
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.header_imgss {
+  width: 100%;
+  height: 350rpx;
+  opacity: 85%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imgss {
+  width: 348rpx;
+  height: 85rpx;
+}
+
+.detail_title_lay {
+  white-space: normal;
+  padding: 30rpx 0 30rpx 0;
+}
+
+.detail_con, .detail_map {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail_con {
+  background-color: #fff;
+  padding: 0 34rpx 0 34rpx;
+}
+
+.detail_msg, .detail_input {
+  display: flex;
+  flex-direction: row;
+}
+
+.detail_msg {
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.detail_input {
+  /*活动地点、活动时间等item*/
+  position: relative;
+  align-items: center;
+  padding-bottom: 10px;
+  margin-top: 10px;
+}
+
+.detail_txt {
+  /*item左侧描述*/
+  margin-right: 15px;
+  width: 80px;
+  flex-shrink: 0;
+  font-size: 28rpx;
+}
+
+.detail_map {
+  /*查看地图按钮*/
+  position: absolute;
+  right: 0px;
+  align-items: center;
+}
+
+.detail_row_right {
+  /*item右侧详情*/
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 28rpx;
+}
+
+.detail_lineh {
+  position: absolute;
+  bottom: 0rpx;
+  width: 80%;
+  border-bottom: 2rpx solid rgb(230, 230, 230);
+}
+
+.detail_linev {
+  /*地图按钮与地址描述之间的丨线*/
+  position: absolute;
+  border-left: 2rpx solid rgb(230, 230, 230);
+  height: 40rpx;
+  width: 2rpx;
+  top: 0;
+  right: 80rpx;
+}
+
+.sort {
+  /*详情 报名须知 费用循环属性*/
+  display: flex;
+  height: 98rpx;
+  align-items: center;
+  font-size: 28rpx;
+  letter-spacing: -0.6rpx;
+  justify-content: space-around;
+  background-color: rgb(245, 245, 245);
+  bottom: 0rpx;
+}
+
+.sort1 {
+  /*详情 报名须知 费用循环各个item属性*/
+  padding: 8rpx;
+  margin-top: 10rpx;
+  border-radius: 4rpx;
+  text-align: center;
+}
+
+.actDetail, .applyKnow, .cost {
+  /*活动详情、报名须知、费用 页面*/
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 40rpx;
+}
+
+/*textarea里面的样式*/
+
+.textarea1 {
+  white-space: normal;
+  /*height: 116.5px;*/
+  width: 90%;
+  overflow: scroll;
+  font-size: 17px;
+  line-height: 25px;
+  letter-spacing: -0.4px;
+  color: rgb(17, 17, 17);
+}
+
+.all_scr {
+  height: 90vh;
+  background-color: white;
+}
+
+.textarea_foot {
+  /*已报名 ,修改报名大框*/
+  display: flex;
+  letter-spacing: -0.4px;
+  color: rgb(142, 142, 142);
+  font-size: 17px;
+  position: relative;
+  bottom: 0px;
+  justify-content: space-between;
+  border-top: 0.5px solid rgb(230, 230, 230);
+  opacity: 0.95;
+  align-items: center;
+  height: 10vh;
+  background-color: rgb(255, 255, 255);
+}
+
+.txt_textarea {
+  padding-left: 5%;
+}
+
+.btn_textarea {
+  position: absolute;
+  right: 5%;
+  margin-top: 4rpx;
+}
+
+.detailPicture {
+  /*详情图片*/
+  width: 690rpx;
+}
+
+.actAddress {
+  /*活动地点文字*/
+  padding: 0 90rpx 0 0;
+}
+
+.paddingLR {
+  /*padding左右各30rpx*/
+  padding: 0 30rpx 0 30rpx;
+}
+
+.act_contents {
+  /*活动内容解析样式*/
+  margin-bottom: 10rpx;
+}
+
+.applyed_title, .comment_title {
+  /*已报名title*/
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 15px;
+  align-items: center;
+  background-color: rgb(245, 245, 245);
+}
+
+.applyed, .comment_text, .comment_button {
+  /*“已报名”、“评论”文字样式*/
+  font-size: 34rpx;
+  letter-spacing: -0.8rpx;
+}
+
+.surplus_apply {
+  /*剩余名额 样式*/
+  color: rgb(142, 142, 142);
+  font-size: 26rpx;
+  letter-spacing: -0.6rpx;
+}
+
+.deadlineTime {
+  /*报名截止时间*/
+  font-size: 24rpx;
+  letter-spacing: -0.6rpx;
+  color: rgb(142, 142, 142);
+  text-align: center;
+  padding: 30rpx 0 30rpx 0;
+}
+
+.textarea1_case_money {
+  font-size: 49rpx;
+  letter-spacing: -1rpx;
+  color: rgb(61, 209, 164);
+  margin-left: 44rpx;
+}
+
+/*底部按钮*/
+
+.bottom {
+  display: flex;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,.5);
+  border-top: 1rpx solid #e6e6e6;
+}
+
+.btn1 {
+  margin: 10rpx 22rpx 10rpx 0;
+}
+
+.textarea1_case_titxt2 {
+  font-size: 26rpx;
+  letter-spacing: -0.6rpx;
+  color: rgb(142, 142, 142);
+}
+
+.textarea1_case_sign {
+  font-size: 38rpx;
+  letter-spacing: -1rpx;
+  color: rgb(255, 255, 255);
+  background-color: rgb(61, 209, 164);
+  padding: 26rpx 50rpx 25rpx 50rpx;
+  border-radius: 10rpx;
+}
+
+
+.textarea_com{
+  padding: 15px 15px 5px 15px;
+  background-color: rgb(255, 255, 255);
+}
+.textarea_com_right{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 13px 0 0 15px;
+}
+.textarea_com_right_text{
+  word-break:break-all;
+  white-space: normal;
+  background-color: rgb(255, 255, 255);
+  font-size: 15px;
+  letter-spacing: -0.4px;
+  text-align: justify;
+  line-height: 22px;
+  padding: 0 15px 15px 70px;
+  border-bottom: 1px solid rgb(230, 230, 230);
+}
+/*费用样式*/
+.line1{
+  display: flex;
+  align-items: center;
+}
+.heidian{
+ margin-right: 18rpx;
+  height: 32rpx;
+  width: 12rpx;
+  border-radius: 6rpx;
+  border: 2rpx solid rgb(229, 229, 229);
+  background-color: rgb(26, 26, 26);
+}
+.t34rpx{
+  font-size: 34rpx;
+  line-height:14.4rpx;
+  letter-spacing: -0.8rpx;
+}
+.t24rpx{
+  font-size: 24rpx;
+  line-height: 14.4rpx;
+  letter-spacing: -0.6rpx;
+  color: rgb(142, 142, 142);  
+}
+.money{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.t44rpx{
+  font-size: 44rpx;
+  line-height: 14.4rpx;
+  letter-spacing: -1rpx;
+  color: rgb(61, 209, 164);
+}
+.line2_item{
+  display: flex;
+  justify-content: space-between;
+  margin-left:21rpx;
+}
+.line2{
+  /*margin-top: 42rpx;*/
+  padding: 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-left: 12rpx solid rgb(61, 209, 164);
+}
+.line3{
+  display: flex;
+
+  margin-top: 89rpx;
+  flex-direction: column;
+}
+.txt{
+  white-space: normal;
+  display: flex;
+  margin-top: 37rpx;
+}
+.t34rpx_1{
+  font-size: 34rpx;
+  line-height: 50rpx;
+  letter-spacing: -0.8rpx;
+
+}
+.font-underline{
+  text-decoration: underline
+}
+.font-bold{
+  font-weight:bold;
+}

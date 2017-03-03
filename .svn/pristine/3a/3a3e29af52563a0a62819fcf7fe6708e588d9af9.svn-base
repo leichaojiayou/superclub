@@ -1,0 +1,17 @@
+
+<!--pages/duanxintixing/duanxintixing.wxml-->
+<view style="height:31rpx;border-bottom:1rpx solid rgb(230,230,230)"></view>
+
+<!--时间循环-->
+<view style="background-color: rgb(255, 255, 255);" bindtap="changehidden">
+  <view class="item" wx:for="{{item}}"  id="{{item.id}}">
+    <text>{{item.time}}</text>
+
+    <!--if判断-->
+    <view wx:if="{{hidden==item.id}}">
+      <icon type="{{item.icontype}}" size="18"  ></icon>
+    </view>
+
+  </view>
+</view>
+<button style="margin:60rpx 30rpx 0 30rpx;" type="primary">保存</button>

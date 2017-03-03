@@ -1,0 +1,128 @@
+@import "../../../template/toasts/toasts.wxss";
+/*一个大框*/
+
+.bigview {
+  font-size: 16px;
+  margin: 15px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: white;
+  border-top: 0.5px solid rgb(229, 229, 229);
+  border-bottom: 0.5px solid rgb(229, 229, 229);
+}
+
+/*大框里面item框*/
+
+.itemView {
+  margin-left: 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 55px;
+  border-bottom: 0.5px solid rgb(229, 229, 229);
+}
+
+/*item框中的脚*/
+
+.itemView_foot {
+  margin-right: 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.foot_text_view {
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.itemView_foot input {
+  margin-right: 5%;
+  text-align: right;
+}
+
+/*大框里面foot框*/
+
+.itemView_foot input {
+  text-align: right;
+}
+
+/*大框里面最后一个foot框*/
+
+.last_view {
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 115px;
+  margin-top: 20px;
+}
+
+.last_view textarea {
+  margin-top: 8px;
+  width: 80%;
+}
+
+/*按钮框*/
+
+.buttonview {
+  width: 100%;
+  height: 200px;
+  margin-top: 30px;
+}
+
+.buttonview button {
+  height: 44px;
+  width: 90%;
+}
+
+.button1 {
+  background-color: rgb(61, 209, 164);
+  color: rgb(255, 255, 255);
+}
+
+.button2 {
+  border: 0.5px solid rgb(214, 213, 214);
+  background-color: rgb(251, 250, 252);
+  color: rgb(26, 26, 26);
+  margin-top: 15px;
+}
+
+/*图片框*/
+
+.itemView_foot image {
+  width: 21px;
+  height: 21px;
+  opacity: 0.5;
+}
+
+/*占位字符样式*/
+
+.psection {
+  text-align: right;
+  color: rgb(191, 191, 191);
+}
+
+/*大字体*/
+
+.bigsize {
+  font-size: 17px;
+}
+
+/*小字体*/
+
+.smartsize {
+  font-size: 12px;
+  color: rgb(141, 141, 141);
+}
+
+.picker{
+  display: flex;
+  flex-direction: row;
+}

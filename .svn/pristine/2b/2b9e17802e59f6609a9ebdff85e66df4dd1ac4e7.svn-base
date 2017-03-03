@@ -1,0 +1,87 @@
+<import src="../../../template/index/index.wxml" />
+<import src="../../../template/index/index_empty.wxml" />
+<import src="../../../template/toasts/toasts" />
+
+<view>
+  <template is="index_empty" wx:if="{{index_empty}}" data="{{hotActs}}"></template>
+  <scroll-view wx:else style="height:100vh" scroll-y="true">
+    <view bindtap="manageClub" style="background:#fff;position:relative;margin-top:31rpx;">
+    <!--箭头-->
+      <image wx:if="{{statu==1}}" src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow-absolute" mode="aspectFill" style="top:45%"></image>
+
+      <view class="mycharge">
+        <text class="mycharge_txt">我管理的</text>
+        <view hover-class="hover-btn" wx:if="{{statu==3}}" class="mangage-club-btn">管理俱乐部</view>
+      </view>
+      <view style="position:relative;padding:0 30rpx 30rpx;border-bottom:1rpx solid #e6e6e6;margin-bottom:42rpx">
+
+        <!--状态 1 未管理任何俱乐部-->
+        <text wx:if="{{statu==1}}" class="des_txt">您未管理任何俱乐部，点击创建俱乐部
+        </text>
+
+        <!--状态 2 审核状态-->
+        <text wx:elif="{{statu==2}}" class="des_txt">您创建的俱乐部"{{clubname}}"正在审核中，请耐心等待
+        </text>
+
+        <!--状态 3 管理的俱乐部-->
+        <view catchtap="clubHome" data-club="{{myClub}}" data-type="0" wx:elif="{{statu==3}}">
+          <view style="display:flex;align-items:center;padding-bottom:20rpx;">
+            <image src="{{myClub.roleIcon}}" style="width:36rpx;height:31rpx;border-radius:50%;margin-right:10rpx" mode="aspectFill"></image>
+            <text style="font-size:28rpx;color:#8e8e8e">担任{{myClub.roleTypeText}}职务</text>
+          </view>
+          <view class="mangage-club-content">
+            <view class="header" style="margin-left:0rpx;">
+              <image src="{{myClub.logo}}" class="header_img" mode="aspectFill"></image>
+            </view>
+            <view style="flex-direction: column;display:flex;margin-left:24rpx;">
+              <view class="club-index-title">
+                <text class="club_id txt-overflow">{{myClub.title}}</text>
+              </view>
+              
+              <view class="sort" style="padding-top:8rpx;margin-top:0;">
+                <view class="items-tap">
+                  <block wx:for="{{myClub.features}}" wx:key="key_feature"> 
+                    <text wx:if="{{index == 0}}" class="kuangkuang master-project-overflow" style="background-color:rgb(145, 213, 192)">{{item.name}}</text>
+                    <text wx:elif="{{index == 1}}" class="kuangkuang master-project-overflow" style="background-color:rgb(172, 198, 237)">{{item.name}}</text>
+                    <text wx:else class="kuangkuang master-project-overflow" style="background-color:rgb(227, 192, 163)">{{item.name}}</text>
+                  </block>
+                </view>
+              </view>
+              <text class="nums" wx-if="{{myClub.newActCount != 0}}">{{myClub.newActCount}}个新活动</text>
+            </view>
+            <view style="display:flex;align-items:center;justify-content: flex-end;">
+              <view wx-if="{{myClub.newActCount != 0}}" class="index-tip">{{myClub.newActCount}}</view>
+                                     <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow-absolute" mode="aspectFill" style="right:0"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!--底部容器-->
+
+    <!--我加入的-->
+    <view class="container">
+      <view class="container_title" style="padding-top: 42rpx">
+        <text>我加入的</text>
+      </view>
+      <view wx:for="{{clubs}}" wx:key="club_index" wx:for-item="club">
+        <template is="common_one" data="{{club}}" />
+      </view>
+      <text wx:if="{{clubs.length==0}}" class="des_txt" style="padding: 0 0 25rpx 32rpx">暂无已加入俱乐部</text>
+    </view>
+
+    <!--最近访问-->
+    <view class="container">
+      <view class="container_title">
+        <text>最近访问</text>
+      </view>
+      <view wx:for="{{recentClubs}}" wx:key="club_index" wx:for-item="club">
+        <template is="common_one" data="{{club}}" />
+      </view>
+      <text wx:if="{{recentClubs.length==0}}" style="padding: 0 0 25rpx 32rpx" class="des_txt">暂无访问俱乐部</text>
+    </view>
+    <view style="height:4.5vh;background-color:rgb(246,246,246)"></view>
+  </scroll-view>
+</view>
+
+<template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}" />

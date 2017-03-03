@@ -1,0 +1,23 @@
+<import src="../../../template/toasts/toasts.wxml"/>
+<template is="sendNum" data="{{authDialog}}"/>
+<view class="batten batten_head">
+  <text class="batten_txt">您的报名信息已提交，活动名额将为您保留30分钟，剩余时间{{countDown}}</text>
+</view>
+<view class="container batten">
+  <text class="des_txt2" style="margin-bottom:10px;">{{activityName}}</text>
+  <text class="des_txt batten_mag">开始时间：{{startTime}}</text>
+  <text class="des_txt batten_mag">报名信息：{{applyInfo}}</text>
+  <text class="des_txt batten_mag" >报名费用：<text class="green_txt2">{{sumNeedPayMoney}}</text>
+  </text>
+</view>
+<view class="container batten paymoney">
+  <text class="head_name">实付金额</text>
+  <text class="green_txt">¥{{sumNeedPayMoney}}</text>
+</view>
+<view class="batten" bindtap="agreenbtn">
+  <image src="{{agreenstatu?'https://cdn.51julebu.com/xiaochengxu/image/rectcheck.png':'https://cdn.51julebu.com/xiaochengxu/image/rectnotcheck.png'}}" style="width:12px;height:12px;margin-right:10px;"></image>
+  <text class="des_txt">同意<text class="green_txt4">《超级俱乐部服务协议》</text>，并确认活动真实性，同意支付报名费</text>
+</view>
+<view class="batten" bindtap="payAction">
+  <button class="botbtn">确认支付</button>
+</view>

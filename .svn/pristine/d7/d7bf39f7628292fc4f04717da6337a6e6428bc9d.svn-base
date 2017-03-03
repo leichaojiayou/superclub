@@ -1,0 +1,12 @@
+<!-- pages/julebumingcheng/julebumingcheng.wxml -->
+<form bindsubmit="formSubmit">
+    <view class="header" style="margin-bottom:62rpx;">
+        <input name="title" placeholder="俱乐部名称15字以内" maxlength="15" placeholder-class="t" value="{{title}}" bindinput="change"  />
+        <icon type="clear" size="18" bindtap="cleanValue"></icon>
+    </view>
+    <button style="margin:60rpx 30rpx 0 30rpx;" type="primary" style="background:rgb(61, 209, 164);margin:0 30rpx;" form-type="submit" wx:if="{{title}}">保存</button>
+    <button style="margin:60rpx 30rpx 0 30rpx;" type="primary" style="background:rgb(61, 209, 164);margin:0 30rpx;" disabled="true" wx:else>保存</button>
+</form>
+
+<import src="../../../../template/toasts/toasts.wxml" />
+<template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}" />

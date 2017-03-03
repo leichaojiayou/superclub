@@ -1,0 +1,61 @@
+<import src="../../../template/toasts/toasts.wxml" />
+<form bindsubmit="apply" report-submit="true">
+  <scroll class="scroll" scroll-y="true" style="padding-bottom:116rpx;">
+    <view wx:for="{{applyList}}">
+      <view class="container" style="position:relative ">
+        <view class="batten" style="padding-top:17px;">
+          <text class="txtmargin">昵称</text>
+          <text>{{item.userName}}</text>
+        </view>
+        <view class="batten">
+          <text class="txtmargin">手机</text>
+          <text>{{item.mobile}}</text>
+        </view>
+        <view class="batten" wx:if="{{item.ticketID>0}}" style="display:flex;">
+          <view class="txtmargin" style="white-space: nowrap;">费用</view>
+          <view>
+            <text class="feiyong">{{item.feiyong}}</text>
+          </view>
+        </view>
+        <view class="batten">
+          <text class="txtmargin">性别</text>
+          <text>{{item.gender}}</text>
+        </view>
+        <view wx:for="{{item.extraDatas}}" wx:for-index="idx" wx:for-item="data">
+          <view class="batten">
+            <text class="txtmargin">{{data.name}}</text>
+            <text>{{data.value}}</text>
+          </view>
+        </view>
+        <view class="btn des_txt">
+          <view class="txtmargin btn-item" bindtap="editApply" data-index="{{index}}" data-item="{{item}}">
+            <image src="https://cdn.51julebu.com/xiaochengxu/image/edit2@2x.png" class="btn-icon"></image>
+            编辑
+          </view>
+          <view class="btn-line"></view>
+          <view class="btn-item" bindtap="deleteApply" data-index="{{index}}" data-item="{{item}}">
+            <image src="https://cdn.51julebu.com/xiaochengxu/image/delet2@2x.png" class="btn-icon"></image>
+            删除
+          </view>
+        </view>
+        <view class="apply-status">{{item.payText}}</view>
+      </view>
+    </view>
+    <block>
+      <view class="help-apply-box" bindtap="helpAplly" wx:if="{{type==1}}">帮人报名</view>
+      <view class="apply-agree" bindtap="agreeButton">
+      <!--<image src="https://cdn.51julebu.com/xiaochengxu/image/yswgx@2x.png" class="apply-aggree-img"></image>-->
+        <image src="https://cdn.51julebu.com/xiaochengxu/image/ysygx@2x.png" class="apply-aggree-img"></image>
+        我同意
+        <text style="color:#3dd1a5">《超级俱乐部活动报名协议》</text>
+      </view>
+      <view class="batten" wx:if="{{type==1||type==2}}">
+        <button class="botbtn" form-type="submit">{{greenButtonText}}</button>
+      </view>
+    </block>
+  </scroll>
+
+  <!--临时用户绑定手机号码-->
+  <template is="sendNum" data="{{authDialog,countDown}}" />
+  <template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}" />
+</form>

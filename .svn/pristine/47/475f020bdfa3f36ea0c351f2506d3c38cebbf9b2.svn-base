@@ -1,0 +1,136 @@
+Page({
+    data: {
+        search_text: '搜索',
+        people: 345,
+        statu: '1',
+        icon_img: '../images/right-errow.png',
+        list: [{
+            button_text: "批量分组", group_Status: true, index: 0, text: "未分组", people_num: 3, group_list: [{
+                img: '../images/user.png', check_Status: true, index: 0, user_name: "用户昵称", ticket: "成人票", price: "130.00", payment: "微信支付", club_neme: "李慧珍帮报", user_real_name: "李慧珍 / 女 / 手机 18824148989", people_id: "身份证 230602199611011109",
+                content: "其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/",
+                button_text1: "分组", button_text2: "编辑", button_text3: '电话', button_text4: "短信"
+            }, {
+                img: '../images/user.png', check_Status: false, index: 1, user_name: "用户昵称", ticket: "成人票", price: "130.00", payment: "微信支付", club_neme: "", user_real_name: "李慧珍 / 女 / 手机 18824148989", people_id: "身份证 230602199611011109",
+                content: "其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/",
+                button_text1: "分组", button_text2: "编辑", button_text3: '电话', button_text4: "短信"
+            }, {
+                img: '../images/user.png', check_Status: false, index: 2, user_name: "用户昵称", ticket: "成人票", price: "130.00", payment: "微信支付", club_neme: "李慧珍帮报", user_real_name: "李慧珍 / 女 / 手机 18824148989", people_id: "身份证 230602199611011109",
+                content: "其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/",
+                button_text1: "分组", button_text2: "编辑", button_text3: '电话', button_text4: "短信"
+            }]
+        },
+        {
+            button_text: "批量审核", group_Status: false, index: 1, text: "待审核", people_num: 1, group_list: [{
+                img: '../images/user.png', check_Status: false, index: 0, club_neme: "李慧珍帮报", user_name: "用户昵称", ticket: "成人票", price: "130.00", payment: "微信支付", user_real_name: "李慧珍 / 女 / 手机 18824148989", people_id: "身份证 230602199611011109",
+                content: "其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/",
+                button_text1: "审核", button_text2: "编辑", button_text3: '电话', button_text4: "短信"
+            }],
+        }
+            ,
+        {
+            button_text: "处理退款", group_Status: false, index: 2, text: "申请退款", people_num: 1, group_list: [{
+                img: '../images/user.png', check_Status: false, index: 0, club_neme: "", user_name: "用户昵称", ticket: "成人票", price: "130.00", payment: "微信支付", user_real_name: "李慧珍 / 女 / 手机 18824148989", people_id: "身份证 230602199611011109",
+                content: "其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/",
+                button_text1: "审核", button_text2: "编辑", button_text3: '电话', button_text4: "短信"
+            }],
+        },
+        {
+            group_Status: false, index: 3, text: "待付款", people_num: 1, group_list: [{
+                img: '../images/user.png', check_Status: false, index: 0, club_neme: "李慧珍帮报", user_name: "用户昵称", ticket: "成人票", price: "130.00", payment: "微信支付", user_real_name: "李慧珍 / 女 / 手机 18824148989", people_id: "身份证 230602199611011109",
+                content: "其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/",
+                button_text1: "审核", button_text2: "编辑", button_text3: '电话', button_text4: "短信"
+            }],
+        },
+        {
+            group_Status: false, index: 4, text: "已退款", people_num: 1, group_list: [{
+                img: '../images/user.png', check_Status: false, index: 0, club_neme: "", user_name: "用户昵称", ticket: "成人票", price: "130.00", payment: "微信支付", user_real_name: "李慧珍 / 女 / 手机 18824148989", people_id: "身份证 230602199611011109",
+                content: "其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/",
+                button_text1: "审核", button_text2: "编辑", button_text3: '电话', button_text4: "短信"
+            }],
+        }
+            ,
+        {
+            group_Status: false, index: 5, text: "审核不通过", people_num: 1, group_list: [{
+                img: '../images/user.png', check_Status: false, index: 0, club_neme: "李慧珍帮报", user_name: "用户昵称", ticket: "成人票", price: "130.00", payment: "微信支付", user_real_name: "李慧珍 / 女 / 手机 18824148989", people_id: "身份证 230602199611011109",
+                content: "其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/",
+                button_text1: "审核", button_text2: "编辑", button_text3: '电话', button_text4: "短信"
+            }],
+        }
+            ,
+        {
+            group_Status: false, index: 6, text: "未付款", people_num: 2, group_list: [{
+                img: '../images/user.png', check_Status: false, index: 0, club_neme: "", user_name: "用户昵称", ticket: "成人票", price: "130.00", payment: "微信支付", user_real_name: "李慧珍 / 女 / 手机 18824148989", people_id: "身份证 230602199611011109",
+                content: "其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/",
+                button_text1: "审核", button_text2: "编辑", button_text3: '电话', button_text4: "短信"
+            },
+            {
+                img: '../images/user.png', check_Status: false, index: 1, user_name: "用户昵称", ticket: "成人票", price: "130.00", payment: "微信支付", club_neme: "李慧珍帮报", user_real_name: "李慧珍 / 女 / 手机 18824148989", people_id: "身份证 230602199611011109",
+                content: "其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/",
+                button_text1: "审核", button_text2: "编辑", button_text3: '电话', button_text4: "短信"
+            }],
+        }
+        ]
+    },
+    bind_Select(e) {
+        const List = this.data.list;
+        const obj = e.currentTarget.dataset
+
+        console.log(e.currentTarget.id);
+        List[obj.id].group_list[obj.item].check_Status = !List[obj.id].group_list[obj.item].check_Status;
+        this.setData({
+            list: List
+        });
+    }
+    ,
+    //组按钮
+    bindgroup_button(e) {
+        const obj = e.currentTarget.dataset;
+        const id = obj.id
+        const Status = this.data.list[id].group_Status;
+        const List = this.data.list;
+        const Listid = this.data.list[id];
+        if (Status) {
+            for (const item_index in List[id].group_list) {
+                List[id].group_list[item_index].check_Status = false;
+            }
+            Listid.group_Status = false;
+            List[id] = Listid;
+            this.setData({
+                list: List,
+            });
+        } else {
+            Listid.group_Status = true;
+            List[id] = Listid;
+            this.setData({
+                list: List,
+            });
+        }
+    }
+    ,
+    Load: function (options) {
+        // 页面初始化 options为页面跳转所带来的参数
+    },
+    onReady: function () {
+        // 页面渲染完成
+
+    },
+    onShow: function () {
+        // 页面显示
+    },
+    onHide: function () {
+        // 页面隐藏
+    },
+    onUnload: function () {
+        // 页面关闭
+    },
+    nato_grouping_detail_page: function (e) {
+        wx.navigateTo({
+            url: '../grouping_detail_page/grouping_detail_page'
+        })
+    },
+    nato_group_cost_page:function(e){
+        wx.navigateTo({
+            url: '../group_cost_page/group_cost_page'
+        })
+    }
+})

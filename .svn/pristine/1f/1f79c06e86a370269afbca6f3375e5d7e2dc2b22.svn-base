@@ -1,0 +1,33 @@
+
+<!--pages/send_msg/send_msg.wxml-->
+
+<!--header-->
+<text class="des_txt sent">向<text style="color: rgb(61,209,164);">{{people}}</text>人发送免费短信</text>
+<view style="background: rgb(255, 255, 255);height:2vh"></view>
+
+<!--textarea框-->
+<view style="position: relative;">
+  <textarea id='textarea' placeholder="请输入群发内容" class="textarea" placeholder-class="head_name" placeholder-style="letter-spacing: -0.4pt;color:rgb(191,191,191);" maxlength="120" />
+  <text class="num_txt des_txt">{{num_txt}}</text>
+</view>
+
+<!--同时发送到你手机-->
+<view class="checkbox">
+<checkbox-group bindchange="checkboxChange">
+  <checkbox value='1' >同时发送到你的手机</checkbox>
+  </checkbox-group>
+</view>
+
+<!--输入手机-->
+<form bindsubmit="formSubmit">
+  <input id='phone_input' placeholder="请输入手机号" type="number" placeholder-class="head_name" placeholder-style="color:rgb(191,191,191)" maxlength="11" class="input" name="input" />
+  <view class="tips">
+    <text class="des_txt">{{tips}}</text>
+  </view>
+  <button type="primary" style="margin-top:3.6vh;" formType="submit">发送</button>
+</form>
+
+<!--<form bindsubmit="formSubmit" bindreset="formReset">
+    <input name="input" placeholder="please input here" />
+    <button formType="submit">Submit</button>
+</form>-->

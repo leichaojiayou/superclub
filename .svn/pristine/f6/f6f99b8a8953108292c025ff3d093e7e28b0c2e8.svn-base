@@ -1,0 +1,40 @@
+// pages/apply_paged/apply_paged.js
+Page({
+  data: {
+    status: 0,
+    imgss: '../images/logo.png',
+    holder0: '大白，卖的一手好萌一波三折，妙趣横生。悬疑和温情，搞笑与动作，即使拍成真人版也绝对是一部好题材和好故事。大白呆萌可爱一逗比，细节刻画真实有趣，放气如放屁，警察局撕扯胶带还有低电量时如同宿醉一样。大白，卖的一手好萌一波三折，妙趣横生。悬疑白，卖的一手好萌一波三折，妙趣横生。悬疑和温情，搞笑与动作，即使拍成真人版也绝对是一部好题材和好故事。大白呆萌可爱一逗比，细节刻画真实有趣，放气如放屁，警察局撕扯胶带还有低电量时如同宿醉一样。大白，卖的一手好萌一波三折，妙趣横生。悬疑',
+    holder1: '我是报名须知',
+    holder2: '费用',
+    item: {
+      title: '汕头市马拉松运动协会2017黄河口东营-国际马拉松赛报名',
+      name: '用户昵称',
+      pudata: '2017.1.28',
+      readed: '2.3万',
+      like: '2222',
+      place: '体育馆北门（花果山公园对面馆北门（花果山公园对面.',
+      activity_data: '2017.1.1~2017.7.31',
+      cost: '$150~$300',
+      sponsor: '广州市花都区户外运动俱乐部'
+    },
+  },
+  changecolor: function (e) {
+    console.log(e.target.id);
+    this.setData({
+      status: e.target.id
+    })
+  },
+  changebtn: function (e) {
+    wx.showActionSheet({
+      itemList: ['帮人报名', '取消报名', '修改资料'],
+      success: function (res) {
+        console.log(res.tapIndex)
+        if (res.tapIndex == 0) {
+          wx.navigateTo({
+            url: '../apply_page/apply_page'
+          })
+        }
+      }
+    })
+  },
+})

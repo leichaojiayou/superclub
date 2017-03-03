@@ -1,0 +1,11 @@
+/**
+ * Created by liujinqiang on 2017/2/6.
+ * 常量
+ */
+
+var BASE_URL = "https://api.51julebu.com";
+var LOGIN_URL = 'https://api.51julebu.com/ba/user/wxlogin?api_version=15&platform=3';
+module.exports = {
+    BASE_URL: BASE_URL,
+    LOGIN_URL: LOGIN_URL
+}

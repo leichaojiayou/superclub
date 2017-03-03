@@ -1,0 +1,20 @@
+// pages/cash/cash.js
+const app = getApp();
+
+Page({
+  data:{
+    line1:'请设置提现账户',
+    line2:'金额',
+    line2money:'191.00',
+    realname:'真实姓名',
+  },
+  nato_cash3_1: function (e) {
+    app.wxService.navigateTo('mine/cash3_1/cash3_1')
+  },
+  nato_cash6: function (e) {
+    app.wxService.navigateTo('mine/cash6/cash6')
+  },
+  nato_cash5: function (e) {
+    app.wxService.navigateTo('mine/cash5/cash5')
+  },
+})

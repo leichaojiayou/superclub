@@ -1,0 +1,70 @@
+Page({
+    data: {
+        page: {
+            club_name_text: '名称',
+            club_name: '俱乐部名称可以包括十五个文字哦',
+            club_ID_text: 'ID',
+            club_ID: 12345,
+            club_logo_text: 'Logo',
+            club_logo_img: '../images/club_logo.jpg',
+            club_start_text: '星级',
+            club_start_img: '../images/stars.png',
+            club_start_score: "2342分",
+            club_location_text: '地点',
+            club_location: '广州',
+            club_creattime_text: '成立时间',
+            club_creattime: "2009年12月20日",
+            club_MainProject_text: "主打项目",
+            club_MainProject: [{ text: "骑行", color: "rgb(145, 213, 192)" }, { text: "徒步", color: "rgb(172, 198, 237)" }, { text: "跑步", color: "rgb(227, 192, 163)" }],
+            club_Settings_text: "设置加入方式",
+            club_Settings: "允许任何人加入",
+            club_validity_text: "验证消息",
+            club_validity: 8,
+            club_receivable_text: "收款账户",
+            club_receivable: "会长账户",
+            club_admin_text: "任免管理员",
+            club_chairman_text: "任免副会长",
+            club_admin_img: ['../images/user.png', '../images/user.png', '../images/user.png', '../images/user.png', '../images/user.png', '../images/user.png'],
+            club_admin_imglength: 6,
+            club_memberremove_text: "移除成员",
+            club_declaration_text: "宣言",
+            club_declaration: "这里是俱乐部宣故事故故事故事故事事故事故事故事言显示的fghfghfgh位置可多行显示",
+            club_Introduction_text: "简介",
+            club_Introduction: "这里是一段故事故事故故事故事故事故事事故事故事描述事描gggggggg事描事描事描事描事描我的俱",
+            club_statistics_icon: '../images/member.png',
+            club_statistics_text1: "俱乐部成员",
+            club_statistics_text2: "俱乐部成员统计",
+            club_statistics_number: 34355,
+            club_activities_text: "发起活动",
+            club_activities: 4,
+            club_activitiesNumber_text: "参与人次",
+            club_activitiesNumber: 2334,
+            img: '../images/right-errow.png',
+            button_text1: "删除俱乐部",
+            button_text2: "退出俱乐部",
+            button_text3: "加入俱乐部",
+        },
+        statu: 1
+        // statu: '5'  非会员
+        // statu: '4'  会员
+        // statu: '3'  管理员
+        // statu: '2'  副会长
+        // statu: '1'  会长
+    },
+    onLoad: function (options) {
+        // 页面初始化 options为页面跳转所带来的参数
+    },
+    onReady: function () {
+        // 页面渲染完成
+
+    },
+    onShow: function () {
+        // 页面显示
+    },
+    onHide: function () {
+        // 页面隐藏
+    },
+    onUnload: function () {
+        // 页面关闭
+    }
+})

@@ -1,0 +1,48 @@
+<!--第二个模板-->
+<template name="free_msg">
+    <view bindtap="selectAct" class="common2" wx:for="{{acts}}" wx:key="act_index" data-id="{{item.activityID}}">
+        <view bindtap="nato_charge_activity" class="common2">
+            <!--整个大框-->
+            <view class="nd_header">
+                <!--图片-->
+                <view class="nd_img">
+                    <image src="{{item.cover}}"></image>
+                </view>
+                <!--图片右边的大框-->
+                <view style="display:flex;flex-direction: column;margin-left:3.2%">
+                    <!--文字-->
+                    <text class="nd_name">{{item.title}}</text>
+                    <!--时间这一栏-->
+                    <view class="nd_time">
+                        <text style="margin-right:1.5%;">时间</text>
+                        <text>{{item.time}}</text>
+                    </view>
+                    <!--俱乐部名称和钱这一栏-->
+                    <view style="display:flex;justify-content: space-between; align-items: center;margin-top:0.8%;position:relative">
+                        <text class="nd_time" wx:if="{{item.club_name!=''}}">{{item.club_name}}</text>
+                        <text wx:if="{{item.enlistnumber =='null'}}" style="display:none"></text>
+                        <text class="nd_time" wx:elif="{{item.enlistnumber!=''}}">报名{{item.enlistnumber}}</text>
+                        <text class="money">{{item.money}}</text>
+                        <!--短信-->
+                        <text wx:if="{{item.freeSmsCount == ''}}" class="gray_txt nofreemsg freemsg">暂无免费短信</text>
+                        <text wx:elif="{{item.freeSmsCount == 'null'}}" style="display:none"></text>
+                        <text wx:elif="{{item.freefreeSmsCountmsg != ''}} " class="gray_txt havefreemsg freemsg">可免费短信
+                            <text class="green_txt2">{{item.freeSmsCount}}</text>条</text>
+                    </view>
+                </view>
+            </view>
+            <!--foot-->
+            <view style="margin: 3.6% 3.3% 3.5% 3.3%;display:flex;margin-bottom:3.6vh;align-items:center;">
+                <text wx:for="{{item5}}" class="des_txt">{{item.upload}}</text>
+                <!--取消报名 修改报名 去支付-->
+                <view class="it_all">
+                    <view wx:for="{{item4}}" for-index="index" style="margin-left: 10px;">
+                        <view class="it" style="color:{{item.color}};border-color:{{item.color}};" catchtap="changeOrPay" id="{{index}}">
+                            <text id="{{index}}" class="" catchtap="changeOrPay">{{item.it}}</text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>

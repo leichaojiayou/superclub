@@ -1,0 +1,36 @@
+import api from '../request.js'
+
+
+
+/**
+ * 创建俱乐部: http://doc.iweju.com/FitNesse.WejuBaHttp.ClubDoc.ClubCreateDoc
+ */
+const createClub = (param) => api.wxRequest(param, "/ba/club/create")
+
+/**
+ * 我加入的俱乐部: http://doc.iweju.com/FitNesse.WejuBaHttp.ClubDoc.ClubHomeListDoc
+ */
+const myClubs = (param) => api.wxRequest(param, "/ba/club/home/list")
+
+/**
+ * 待办事项（小程序）
+ * 俱乐部管理消息: http://doc.iweju.com/FitNesse.WejuBaHttp.ClubDoc.ClubMemeberJoinList
+ * 
+ */
+const clubMemberJoinMessages = (param) => api.wxRequest(param, "/ba/club/memeber/join/list")
+
+/**
+ * 俱乐部险情，小程序的管理员查看:http://doc.iweju.com/FitNesse.WejuBaHttp.ClubDoc.ClubDetail
+ */
+const clubDetailLite = (param) => api.wxRequest(param, "/ba/club/detail/lite")
+
+/**
+ * 用户管理的俱乐部活动： http://doc.iweju.com/FitNesse.WejuBaHttp.V222Doc.ActTest.ActivityAdminManageByUser222Doc
+ */
+const clubActs = (param) => api.wxRequest(param, "/ba/activity/admin/manage_by_user")
+
+module.exports = {
+    createClub,
+    clubMemberJoinMessages,
+    clubDetailLite
+}

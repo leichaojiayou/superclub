@@ -1,0 +1,12 @@
+page{
+    background: rgb(246, 246, 246);
+    white-space: normal;
+}
+.rules-content{
+    padding: 30rpx;
+    font-size: 36rpx;
+    color: rgb(26, 26, 26);
+}
+.rules-content-text{
+    padding-bottom: 14rpx;
+}

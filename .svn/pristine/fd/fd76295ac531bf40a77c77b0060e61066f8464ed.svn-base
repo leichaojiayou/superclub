@@ -1,0 +1,78 @@
+class WxService {
+    constructor() { }
+
+    /**
+     * 页面跳转方法
+     * @param page_url 可以写出相对路径 或绝对路径
+     *                 相对路径的写法:../../../index/index
+     *                 绝对路径的写法:inde/index      
+     * @param json
+     *                  {
+     *                      id:2,
+     *                      userNo:1234
+     *                  }
+     * @param success
+     *              success callback function
+     *              res =>{
+     *              
+     *              }
+     * @param fail
+     *              success callback function
+     *              res =>{
+     *              
+     *              }
+     * 
+     * return url
+     *          /pages/index/index?id=2&userNo=1234
+     */
+    navigateTo(page_url, json, success, fail) {
+        if (page_url) {
+
+            if (typeof success != 'function') {
+                success = rs => {
+                    console.debug('this is a success callback');
+                }
+            }
+
+            if (typeof fail != 'function') {
+                fail = rs => {
+                    console.debug('this is a fail callback');
+                }
+            }
+
+            if (!/\.\/|\.\.\//.test(page_url)) {
+                page_url = this.__setPageUrl(page_url, json);
+                console.log(page_url);
+            } else {
+                page_url = this.__setParam(page_url, json);
+            }
+            
+            wx.navigateTo({
+                url: page_url,
+                success: res => success(res),
+                fail: res => fail(res)
+            })
+        }
+    }
+
+    __setPageUrl(page_url, json) {
+        page_url = '/pages/' + page_url;
+        return this.__setParam(page_url, json);
+    }
+
+    __setParam(page_url, json) {
+        if (json) {
+            let paramSerializer = '';
+            let parts = new Array();
+            let temp = '';
+            for (let key in json) {
+                temp = key + '=' + json[key];
+                parts.push(temp);
+            }
+            paramSerializer = parts.join('&')
+            page_url += '?' + paramSerializer;
+        }
+        return page_url;
+    }
+}
+module.exports = WxService

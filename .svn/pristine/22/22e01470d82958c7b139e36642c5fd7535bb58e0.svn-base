@@ -1,0 +1,350 @@
+
+// pages/clubhome/clubhome.js
+const App = getApp();
+const clubApi = App.api('clubApi');
+const userApi = App.api("userApi")
+const systemApi = App.api("systemApi")
+
+const wxService = App.wxService;
+
+const config = require('../../../utils/constant')
+Page({
+  data: {
+    img: {
+      imgStart: config.CDN_URL + '/xiaochengxu/image/stars.png',
+      imgRight: config.CDN_URL + '/xiaochengxu/image/right-errow-2@2x.png',
+      imgQrcode: config.CDN_URL + '/xiaochengxu/image/files-2@2x.png',
+      imgMember: config.CDN_URL + '/xiaochengxu/image/member@2x.png',
+      imgAct: config.CDN_URL + '/xiaochengxu/image/active.png',
+    },
+    grade: {
+      lv0: config.CDN_URL + '/xiaochengxu/image/stars.png',
+      lv1: config.CDN_URL + '/xiaochengxu/image/clubstar/lv1@2x.png',
+      lv2: config.CDN_URL + '/xiaochengxu/image/clubstar/lv2@2x.png',
+      lv3: config.CDN_URL + '/xiaochengxu/image/clubstar/lv3@2x.png',
+      lv4: config.CDN_URL + '/xiaochengxu/image/clubstar/lv4@2x.png',
+      lv5: config.CDN_URL + '/xiaochengxu/image/clubstar/lv5@2x.png',
+    },
+    start: 0,
+    time: 60 //倒计时
+  },
+
+  __hideToast: function () {
+    wxService.showModal({
+      content: '"验证码不正确"'
+    })
+    clearInterval(this.data.interval)
+    this.setData({
+      param: null,
+      time: 60
+    })
+  },
+
+  onLoad: function (e) {
+    this.setData({
+      clubId: e.clubId || 100401
+    });
+    this.getClubIndex(true);
+    //this.getMamberActivity();
+  },
+
+  /**
+   * 获取俱乐部主页
+   */
+  getClubIndex: function (loading) {
+    const that = this;
+    let param = {}
+    let data = {
+      club_id: that.data.clubId
+    }
+    param.data = data;
+    if (loading) {
+      param.loading = loading;
+    }
+    clubApi.clubIndex(param, res => {
+      console.log(res)
+      if (res.data.status != 1) {
+        wxService.showToast('没有改俱乐部');
+      }
+      let club = res.data.club, score = club.score, img = that.data.grade;
+      if (score < 200) {
+        club.gradeImg = img.lv0
+      } else if (score < 600) {
+        club.gradeImg = img.lv1
+      } else if (score < 2000) {
+        club.gradeImg = img.lv2
+      } else if (score < 5000) {
+        club.gradeImg = img.lv3
+      } else if (score < 10000) {
+        club.gradeImg = img.lv4
+      } else {
+        club.gradeImg = img.lv5
+      }
+      that.setData({
+        club: res.data.club
+      })
+      that.getMamberActivity();
+    });
+  },
+
+  /**
+   * 获取用户活动信息
+   */
+  getMamberActivity: function () {
+    if (this.data.more == 0) return
+    const that = this;
+    let param = {}
+    let data = {
+      club_id: that.data.clubId,
+      start: that.data.start,
+      count: 10,
+    }
+    param.data = data;
+    clubApi.clubActs(param, (res) => {
+      let data = res.data;
+      if (data) {
+        let activities = data.acts;
+        activities.forEach((e) => {
+          e.timeFlag = App.util.compareDate(new Date(e.endTime));
+          e.begin = App.util.formatTime2(e.beginTime);
+          e.end = App.util.formatTime2(e.endTime);
+        });
+        let oldActs = that.data.activity || [];
+        activities = oldActs.concat(activities);
+        that.setData({
+          activity: activities,
+          start: data.start,
+          more: data.more
+        })
+      }
+    })
+  },
+
+  lower: function (e) {
+    this.getMamberActivity()
+  },
+
+  actDetail: function (e) {
+    wxService.navigateTo('activity/act_detail/act_detail', {
+      activityID: e.currentTarget.dataset.actid,
+      clubId: this.data.clubId
+    })
+  },
+
+  toClubInformation: function () {
+    wxService.navigateTo('club/clubInformation/clubInformation', {
+      clubId: this.data.clubId
+    })
+  },
+
+  mamgerClub: function () {
+    wxService.navigateTo('index/gljlb/gljlb', {
+      clubId: this.data.clubId
+    })
+  },
+
+  joinClub: function () {
+    this.setData({
+      param: {
+        style: 'opacity:1;pointer-events:auto;',
+        focus: true,
+        sendPhone: 1
+      },
+    })
+  },
+
+  showQrcode: function (e) {
+    let club = this.data.club;
+    club.codeHehe = 'opacity:1;pointer-events:auto;';
+    club.clubimg = club.logo;
+    club.clubcode = club.qrcode;
+    club.clubname = club.title;
+    club.clubtext = 'ID:' + club.clubNo + ' 成员' + club.memberCount
+    this.setData({
+      club: club
+    })
+  },
+  closeCode: function () {
+    let club = this.data.club;
+    club.codeHehe = '';
+    this.setData({
+      club: club
+    })
+  },
+
+  onShow: function () {
+    const data = this.data;
+    if (data.club) {
+      this.setData({
+        modifyTitle: data.modifyTitle || data.club.title,
+        modifyLogo: data.modifyLogo || data.club.logo,
+        modifyFeatures: data.modifyFeatures || data.club.features,
+        modifySlogan: data.modifySlogan || data.club.slogan
+      })
+    }
+  },
+
+
+
+  /**
+   * 临时用户，绑定手机号
+   */
+  bindPhone() {
+    let that = this, phone = this.data.phone;
+    userApi.sendAuthCode({
+      data: {
+        auth_type: 2,
+        phone: phone
+      }
+    }, res => {
+      that.data.interval = setInterval(() => {
+        let leftTime = that.data.time - 1;
+        if (leftTime > 0) {
+          that.setData({
+            time: leftTime
+          })
+        } else {
+          clearInterval(that.data.interval)
+          that.setData({
+            status: 0,
+            time: 60
+          })
+        }
+      }, 1000)
+
+      this.setData({
+        param: {
+          style: "opacity:1;pointer-events:auto;",
+          phone: phone,
+          focus: true,
+        },
+        status: 1
+      })
+    }, res => {
+      let errorData = App.util.getErrorMsg(res)
+      let errorMsg = errorData.content
+      if (errorMsg == '') {
+        errorMsg = "发送验证码失败"
+      }
+      wxService.showToast(errorMsg)
+    })
+  },
+
+  /**
+   *获取input phone number 
+   */
+  titleInput: function (e) {
+    this.setData({
+      phone: e.detail.value
+    })
+  },
+
+  /**
+   * 点击发送验证码
+   */
+  touchAddNewSendPhone: function () {
+    //点击发送验证码
+    if (this.data.time == 60) {
+      if (this.data.phone && this.data.phone.length > 10) {
+        this.bindPhone()
+      } else {
+        this.setData({
+          param: {
+            style: "",
+            sendPhone: 1
+          },
+          status: 1
+        })
+        wxService.showToast('电话号码是11位啊')
+      }
+    } else {
+      this.setData({
+        param: {
+          style: "opacity:1;pointer-events:auto;",
+          phone: this.data.phone,
+          focus: true,
+        },
+        status: 1
+      })
+    }
+
+  },
+
+  /**
+   * cancel send phone
+   */
+  touchCancelSendPhone: function () {
+    this.setData({
+      param: {
+        style: "",
+        focus: false,
+        sendPhone: 1
+      },
+    })
+  },
+
+  // mamgerClub: function () {
+  //   this.setData({
+  //     param: {
+  //       style: 'opacity:1;pointer-events:auto;',
+  //       focus: true,
+  //       sendPhone: 1
+  //     },
+  //   })
+  // },
+
+  /**
+   * 重新发送验证码
+   */
+  getAuthCode: function () {
+    if (this.data.time == 60) {
+      this.bindPhone();
+    }
+  },
+
+  /**
+   * 验证码 取消
+   */
+  touchCancel: function () {
+    this.setData({
+      param: {
+        style: ''
+      }
+    })
+  },
+
+  //获取验证码
+  authInput: function (e) {
+    this.setData({
+      code: e.detail.value
+    })
+  },
+
+  /**
+   * 发验证码 确定按钮
+   */
+  touchAddNew: function () {
+    let param = { data: {} }, that = this;
+    param.data.phone = this.data.phone;
+    param.data.code = this.data.code;
+    if (param.data.code > 3) {
+      userApi.bindPhone(param, res => { }, res => { }, res => {
+        console.log(res);
+        if (res.data.status == 1) {
+          this.setData({
+            tempJoin: true,
+            param: null,
+            time: 60
+          })
+        } else {
+          that.__hideToast();
+        }
+      });
+
+    } else {
+      this.__hideToast();
+    }
+  }
+
+
+})

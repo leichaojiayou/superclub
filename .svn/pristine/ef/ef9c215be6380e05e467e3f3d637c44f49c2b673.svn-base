@@ -1,0 +1,58 @@
+/* pages/cash3_1/cash3_1.wxss */
+/*第一行*/
+.t26rpx{
+    font-size: 26rpx;
+    line-height: 36rpx;
+    letter-spacing: -0.6rpx;
+    color: rgb(142, 142, 142);
+    padding-left: 27rpx;
+
+}
+.item{
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    margin-left: 28rpx;
+    border-bottom: 1rpx solid rgb(229, 229, 229);
+}
+.t32rpx{
+    font-size: 32rpx;
+    line-height: 36rpx;
+}
+.t32rpx1{
+    font-size: 32rpx;
+    line-height: 36rpx;
+    color: rgb(142, 142, 142);
+}
+
+/*第二行*/
+.item1{
+    height: 100rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 28rpx;
+    border-bottom: 1rpx solid rgb(229, 229, 229);
+}
+/*删除按钮*/
+.del{
+    width: 178rpx;
+    background-color: rgb(255, 70, 70);
+    height: 100rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:white;
+}
+
+
+/*选择其他账户下面的银行循环体样式*/
+.header{
+    position: relative;
+    height:100rpx;
+    
+    display: flex;
+    align-items: center;
+    margin-left:28rpx;
+    border-bottom: 1rpx solid rgb(229, 229, 229);
+}

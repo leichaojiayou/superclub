@@ -1,0 +1,23 @@
+<view class="top">
+  <view class="to_msg">收款账户由会长设置设置。</view>
+  <view class="to_msg">修改后对俱乐部已发布的活动不会产生影响</view>
+</view>
+<view class="item" catchtap="setMangerAccount">
+  <view class="item_1">
+    <text class="to_msg">管理员代收</text>
+    <icon wx:if="{{payeeType==2}}" class="icon" size="13" color="rgb(61,209,165)" type="success_no_circle"></icon>
+  </view>
+</view>
+<view class="center">
+  <view class="to_msg">管理员组织的俱乐部活动，收款将打入管理员本人账号。</view>
+</view>
+<view class="item" catchtap="setMasterAccount">
+   <view class="item_1">
+    <text class="to_msg">会员账户</text>
+    <icon wx:if="{{payeeType==1}}" class="icon" size="13" color="rgb(61,209,165)" type="success_no_circle"></icon>
+  </view>
+</view>
+<view class="center">
+  <view class="to_msg">所有俱乐部活动的收款将统一打入会长账户。</view>
+</view>
+<button style="margin:61rpx 30rpx;background:rgb(61,209,164);" type="primary" catchtap="submit">保存</button>

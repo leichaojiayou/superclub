@@ -1,0 +1,78 @@
+<scroll-view scroll-y="true" style="height:100vh;">
+
+  <!-- header2-->
+  <view class="header">
+    <view class="header_title">
+      红石梁徒步登山赏雪一日游红石梁徒步登山赏雪一日游
+    </view>
+    <view class="header_time">
+      活动时间 : 07月12日 20:34 - 07月12日24:00
+    </view>
+    <view class="header_msg header_time">
+      <view wx:if="{{isClub}}" class="header_btn">俱乐部活动</view> 收款账户：谢谢谢谢-1234567
+    </view>
+  </view>
+
+  <!-- pp -->
+  <view class="center">
+    当前实收￥500.00
+  </view>
+  <view>
+  </view>
+
+  <!-- 暂无人报名 -->
+  <view class="no">
+    暂无人报名
+  </view>
+
+  <!--      ~        -->
+
+  <!-- title -->
+
+  <!-- for-index="index" -->
+  <block wx:for="{{lists}}" wx:key="{{index}}">
+    <view class="list" id="{{index}}" bindtap="choose">
+      <view class="triangle">
+        <view class="{{item.isShow?'css_icon_true':'css_icon_false'}}">
+        </view>
+      </view>
+      <view class="list_text">
+        {{item.title}}
+      </view>
+    </view>
+
+    <!-- item -->
+    <view hidden="{{!item.isShow}}">
+      <view class="item" bindtap="nato_order_details_page">
+        <view class="item_point"></view>
+        <view style="margin:35rpx 0rpx 0rpx 19rpx;">
+          <view class="item_top">
+            <view class="item_name">用户名</view>
+            <view class="item_name_text">+250.00</view>
+          </view>
+          <view class="item_top">
+            <view class="item_time">07月11日 12:37</view>
+            <view class="item_time">票价名称</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- item -->
+      <view class="item" bindtap="nato_order_details_page">
+        <view class="item_point"></view>
+        <view style="margin:35rpx 0rpx 0rpx 19rpx;">
+          <view class="item_top">
+            <view class="item_name">用户名</view>
+            <view class="item_name_text">+250.00</view>
+          </view>
+          <view class="item_top">
+            <view class="item_time">07月11日 12:37</view>
+            <view class="item_time">票价名称</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!--      ~        -->
+</scroll-view>

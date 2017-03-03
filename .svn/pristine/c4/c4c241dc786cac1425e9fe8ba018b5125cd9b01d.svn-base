@@ -1,0 +1,16 @@
+
+<!-- header -->
+<!-- textarea框 -->
+<view style="position: relative;margin-top:41rpx;">
+  <view style="background: rgb(255, 255, 255);height:2vh"></view>
+  <view style="padding:0 32rpx;background:#fff;">
+    <textarea name="slogan" placeholder="俱乐部宣言" class="textarea" placeholder-class="head_name"
+              placeholder-style="color:rgb(191,191,191);" maxlength="100" value="{{newSlogan}}" bindinput="changeText"  />
+  </view>
+  <text class="num_txt des_txt">{{100-slogan.length}}</text>
+</view>
+<button hover-class="hover-btn" wx:if="{{!type}}" type="primary" style="margin:61rpx 30rpx;background:rgb(61, 209, 164);" catchtap="submit">保存</button>
+
+
+
+

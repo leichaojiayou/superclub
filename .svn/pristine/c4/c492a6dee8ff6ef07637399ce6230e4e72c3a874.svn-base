@@ -1,0 +1,125 @@
+/*头样式*/
+@import "../../../template/toasts/toasts.wxss";
+
+page {
+  white-space: normal;
+  overflow: scroll;
+}
+
+.header {
+  padding: 87rpx 69rpx 70rpx 45rpx;
+  justify-content: space-between;
+}
+
+.header, .meta_item, .body, .body_item, .foot {
+  display: flex;
+  background-color: rgb(255, 255, 255);
+}
+
+.meta_item {
+  flex-direction: column;
+  align-items: center;
+}
+
+.sort_num {
+  margin-top: 2.9vh;
+  font-size: 38rpx;
+  letter-spacing: -1rpx;
+  width: 120rpx;
+  overflow: hidden;
+  text-align: center;
+}
+
+/*body样式*/
+
+.body {
+  padding-top: 69rpx;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.body_item {
+  flex-direction: column;
+  align-items: center;
+  width: 33.3%;
+  /*margin-bottom: 8.7vh;*/
+}
+
+/*foot*/
+
+.foot {
+  position: relative;
+  flex-wrap: wrap;
+  margin-top: 2rpx;
+  padding: 63rpx 161rpx 0 161rpx;
+  justify-content: space-around;
+  border-bottom: 86rpx solid white;
+}
+
+.share {
+  position: absolute;
+  top: -20rpx;
+  left: 25%;
+  font-size: 26rpx;
+  letter-spacing: -0.6rpx;
+  color: rgb(142, 142, 142);
+  white-space: nowrap;
+}
+
+.list_img1 {
+  width: 78rpx;
+  height: 78rpx;
+  opacity: 30%;
+  padding: 10rpx;
+}
+
+.point {
+  background: red;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50px;
+  position: absolute;
+  top: 52rpx;
+  right: 80rpx;
+  text-align: center;
+  line-height: 40rpx;
+}
+
+.body_item1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 33.3%;
+  position: relative;
+}
+
+.manage-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 30rpx 30rpx 50rpx;
+  border-bottom: 1rpx solid #e6e6e6;
+}
+
+.manage-footer-text {
+  color: #8e8e8e;
+  font-size: 30rpx;
+  padding-bottom: 40rpx;
+  background: #fff;
+}
+
+.manage-footer-img {
+  margin: 0 auto;
+  width: 60%;
+  border: 1rpx solid #e6e6e6;
+}
+
+.manage-footer-title {
+  color: #000;
+  font-size: 36rpx;
+  padding-top: 40rpx;
+  text-align: center;
+}

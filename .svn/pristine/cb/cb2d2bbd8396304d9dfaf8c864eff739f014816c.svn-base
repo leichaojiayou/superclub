@@ -1,0 +1,94 @@
+<import src="../../../template/manage/clubManager.wxml" />
+<import src="../../../template/common/common.wxml" />
+<import src="../../../template/toasts/toasts.wxml" />
+<view>
+  <scroll-view style="height:100vh;" scroll-y="true" bindscrolltolower="loadActs">
+
+    <!--head-->
+    <view class="back_head">
+      <view class="back_top">
+        <view class="manage-club-content">
+          <image src="{{club.logo != null ? club.logo : 'https://cdn.51julebu.com/xiaochengxu/image/club.png'}}" class="head_img manage-club-logo" mode="aspectFill"></image>
+          <view class="white_txt">
+            <text>{{club.title}}</text>
+            <text class="manage-club-text">ID:{{club.clubNo}}</text>
+          </view>
+        </view>
+        <view bindtap="clubModify" style="display:flex;align-items:center;justify-content:center">
+          <view style="color:#fff;font-size:34rpx;padding:4rpx 10rpx 0 0">设置</view>
+          <image class="manage-club-errow" src="https://cdn.51julebu.com/xiaochengxu/image/right-errow-1@2x.png" mode="aspectFit"></image>
+        </view>
+      </view>
+      <view class="back_foot" style="padding-top:0;padding-bottom:20rpx;">
+        <view wx:for="{{threelabel}}" wx:key="key" style="display: flex;align-items: center;justify-content: center;">
+          <template is="clubmsg" data="{{item}}" />
+        </view>
+        <label class="xiegan label_txt">/</label>
+        <label class="xiegan2 label_txt">/</label>
+      </view>
+    </view>
+    <view class="back_foot" style="background:#fff">
+      <block wx:for="{{item}}" wx:key="key">
+        <view bindtap="nato" id="{{index}}" class="body_item1">
+          <image src="{{item.img}}" class="list_img" style="margin-bottom:10px;"></image>
+          <text class="des_txt2">{{item.content}}</text>
+          <view class="point" wx:if="{{index == 3 & club.joinUnCheckNum != 0}}">
+            <text>{{club.joinUnCheckNum}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view class="tran des_txt" style="padding-bottom:40rpx;background:#fff">
+      <view class="line" style="left:50px;"></view>
+      <view class="line" style="right: 50px;"></view>
+      管理活动
+    </view>
+
+    <!--<template is="common_two" data="{{item3}}" style="border-bottom:1px solid white" />-->
+
+    <!--<view>
+      <template is="item_act" data="{{acts}}" style="border-bottom:1px solid white" />
+    </view>-->
+    <view style="padding-bottom:50rpx;">
+      <view wx:for="{{acts}}" wx:key='index' class="midview_list">
+
+        <!-- 每条-报名中 -->
+        <view class="midview_item_1" catchtap="actDetail" data-id="{{item.activityID}}">
+          <view class="midview_item_img_view">
+            <text class=" midview_item_1_text1" wx:if="{{item.timeFlag}}">报名中</text>
+            <text class=" midview_item_1_text2" wx:else>已结束</text>
+            <image mode="aspectFill" class=" midview_item_1_img" src="{{item.cover}}"></image>
+          </view>
+          <view class="midview_item_2">
+          <view style="height:96rpx; margin-top:-10rpx">
+          <text class="bigsize">{{item.title}}</text>
+          </view>
+            
+            <text class="smalltext" style="padding-bottom:4rpx">时间 {{item.time}}</text>
+            <view class="midview_item_2_1">
+              <text class="smalltext">报名 {{item.applyCount}}</text>
+              <text class="pricetext">￥{{item.cost}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view style="text-align:center;font-size:12px;color:rgb(229,229,229);margin-bottom:30px;">
+      <text>THE END</text>
+    </view>
+    <template name="clubmsg">
+      <view class="club_msg">
+        <text class="label_txt" style="font-size:12px;">{{item.txt}}</text>
+        <text class="label_txt">{{item.amount}}</text>
+      </view>
+    </template>
+    <view>
+      <view class="culb-manage" catchtap="clubDetail" style="position:fixed;bottom:0;left:0;right:0;">
+        <button class="button">俱乐部主页</button>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!--招募会员二维码-->
+  <template is="clubCode" data="{{codeHehe,club}}" />
+</view>

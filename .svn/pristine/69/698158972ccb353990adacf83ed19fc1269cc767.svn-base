@@ -1,0 +1,158 @@
+const app = getApp();
+const mineApi = app.api("mineApi");
+
+Page({
+  data: {
+    datas: [],
+    accountName: '',
+    accountType: 0,
+    realName: '',
+    accountNo: '',
+    bankAddr: '广州',
+    bankSubname: '',
+
+    province: [],
+    provinceIndex: 0,
+    cities: [],
+    cityIndex: 0,
+  },
+  onLoad: function (e) {
+    if (app.globalData.selectAccount) {
+      this.setData({
+        accountName: app.globalData.selectAccount.accountName,
+        accountType: app.globalData.selectAccount.accountType,
+        realName: app.globalData.selectAccount.realName
+      })
+      app.globalData.selectAccount = {};
+    } else {
+      wx.navigateBack();
+    }
+    this.getCityList();
+  },
+  getCityList: function () {
+    var that = this;
+    mineApi.cityList({
+      data: {
+      },
+    },
+      function (res) {
+        const datas = res.data.datas, length = datas.length;
+        let province = [];
+        for (let i = 0; i < length; i++) {
+          province.push(datas[i].province)
+        }
+        that.setData({
+          datas: res.data.datas,
+          province: province
+        });
+      },
+      function (res) {
+        console.log("fail");
+      },
+      function (res) {
+        app.util.getErrorMsg(res);
+      }
+
+    )
+  },
+
+  submitSetGatherAccount: function () {
+    var that = this;
+    mineApi.setGatherAccount({
+      method: 'POST',
+      data: {
+        real_name: that.data.realName,
+        account_no: that.data.accountNo,
+        account_type: that.data.accountType,
+        bank_addr: that.data.bankAddr,
+        bank_subname: that.data.bankSubname
+      },
+    },
+      function (res) {
+        wx.navigateBack();
+      },
+      function (res) {
+        console.log("fail");
+        wx.hideToast();
+        if (res.data.msg) {
+          wx.showToast({
+            title: res.data.msg,
+            icon: "success"
+          })
+        }
+      },
+      function (res) {
+        app.util.getErrorMsg(res);
+      }
+
+    )
+  },
+  btn_submit() {
+    if (this.data.realName == '') {
+      wx.showToast({
+        title: "请输入开户名",
+        icon: "success"
+      })
+      return;
+    }
+    if (this.data.accountNo == '') {
+      wx.showToast({
+        title: "请输入银行卡号",
+        icon: "success"
+      })
+      return;
+    }
+    if (this.data.bankAddr == '') {
+      wx.showToast({
+        title: "请选择开户所在地",
+        icon: "success"
+      })
+      return;
+    }
+    if (this.data.bankSubname == '') {
+      wx.showToast({
+        title: "请填写开户支行",
+        icon: "success"
+      })
+      return;
+    }
+    this.submitSetGatherAccount();
+
+  },
+
+  inputRealName(e) {
+    this.data.realName = e.detail.value
+  },
+
+  inputAccountNo(e) {
+    this.data.accountNo = e.detail.value
+  },
+
+  inputBankSubname(e) {
+    this.data.bankSubname = e.detail.value
+  },
+
+
+  selectProvince: function (e) {
+    const datas = this.data.datas[e.detail.value].cities;
+    let cities = [];
+    for (let i = 0; i < datas.length; i++) {
+      cities.push(datas[i].cityName)
+    }
+    this.setData({
+      provinceIndex: e.detail.value,
+      cities: cities,
+      cityIndex: 0
+    })
+    this.data.bankAddr = this.data.cities[this.data.cityIndex];
+    console.log(this.data.bankAddr);
+  },
+  selectCity: function (e) {
+    this.setData({
+      cityIndex: e.detail.value,
+    })
+    this.data.bankAddr = this.data.cities[this.data.cityIndex];
+    console.log(this.data.bankAddr);
+  },
+
+})

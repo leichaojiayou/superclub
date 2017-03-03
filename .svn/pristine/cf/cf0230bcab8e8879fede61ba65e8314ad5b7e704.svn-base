@@ -1,0 +1,30 @@
+<!--pages/loading_th/loading_th.wxml-->
+
+<template name="item">
+<view class="body" wx:for="{{item}}">
+
+<view class="item_t1">
+<text>{{item.funs}}</text>
+<text>{{item.time}}</text>
+</view>
+
+<view style="display:flex;align-items:center;margin-top:31rpx;">
+<image src="{{item.img}}" class="item_i1"></image>
+<text class="item_t2">{{item.username}}</text>
+</view>
+
+<text class="item_t3">{{item.txt}}</text>
+
+<view class="body_foot">
+<text class="ok" style="color:rgb(61,209,164)">通过</text>
+<text style="color:rgb(229,229,229)">|</text>
+<text class="refu" style="color:rgb(255,128,86)">拒绝</text>
+</view>
+</view>
+</template>
+
+<!--引用模板-->
+<template is="item" data="{{item}}"/>
+<template is="item" data="{{item}}"/>
+<template is="item" data="{{item}}"/>
+<template is="item" data="{{item}}"/>

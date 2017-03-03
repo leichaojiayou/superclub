@@ -1,0 +1,29 @@
+/* template/common/city/city.wxss */
+.place-page {
+  padding: 30rpx 0;
+  overflow:scroll;
+}
+
+.place-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 16rpx;
+  background: #fff;
+  border-bottom: 2rpx solid #e5e5e5;
+}
+
+.palce-content-text {
+  font-size: 36rpx;
+  padding-left: 16rpx;
+}
+
+.place-img {
+    display: flex;
+    justify-content: center;
+}
+
+.palce-content-icon {
+  width: 18rpx;
+  padding-top: 6rpx;
+  opacity: 0.8;
+}

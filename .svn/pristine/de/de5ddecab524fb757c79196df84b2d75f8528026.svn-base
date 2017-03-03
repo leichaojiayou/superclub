@@ -1,0 +1,360 @@
+// pages/mine/me/me.js
+const app = getApp();
+const mineApi = app.api("mineApi");
+const actApi = app.api("actApi");
+var needCountdown = false;
+let recvResult = 0;
+let applyResult = 0;
+let currentActItem;
+Page({
+    data: {
+        userStatus: 0,// 0 临时用户
+        dataList: [],
+        start: '0',
+        more: 0,
+        applyActCount: -1,
+        loading: false,
+
+        userName: '',
+        userAvater: '',
+        userNum: '',
+        bindPhone: '',
+        unreadReceiptCount: 0
+    },
+    onShow: function () {
+        app.event.remove(app.config.EVENT_APPLY_CHANGE, this);
+        this.setData({
+            userStatus: app.session.isTempUser() ? 0 : 1,
+            userName: app.session.getUserInfo().nick,
+            userAvater: app.session.getUserInfo().avatar,
+            userNum: app.session.getUserInfo().num,
+            bindPhone: app.session.getUserInfo().mobile,
+            unreadReceiptCount: app.globalData.unreadReceiptCount
+        })
+        this.getMoneyNotifyCount();
+        needCountdown = true;
+        this.countdown();
+        let that = this;
+        switch (recvResult) {
+            case 1://对应需求文档情况1 - 报名成功, 新绑定了报名手机号.
+            case 3://对应需求文档情况3 - 报名成功.
+                that.showApplySuccessDialog(0);
+                that.refresh();
+                break;
+            case 2://对应需求文档情况2 - 报名成功待审核, 新绑定了报名手机号.
+            case 4://对应需求文档情况4 - 报名成功待审核.
+                that.showApplySuccessDialog(1);
+                that.refresh();
+                break;
+            case 5://修改报名资料成功
+                that.refresh();
+                app.util.showTip(that, "修改成功");
+                break;
+            case 110://支付失败
+                app.wxService.showModal({title: "提示", content: "报名费用支付失败"})
+                break;
+        }
+        recvResult = 0;//每次收到数据消费完后要置空
+    },
+    onHide: function () {
+        needCountdown = false;
+
+        //报名人数发生更改
+        app.event.on(app.config.EVENT_APPLY_CHANGE, this, info => {
+            this.refresh();
+        })
+    },
+    onLoad: function () {
+        this.getUserApplyList();
+        recvResult = 0;
+    },
+    onUnload: function () {
+        app.event.remove(app.config.EVENT_APPLY_CHANGE, this);
+    },
+    //请求用户活动报名记录
+    getUserApplyList: function () {
+        if (this.data.loading) {
+            return;
+        }
+        this.data.loading = true;
+        var that = this;
+        mineApi.userApplyList({
+                data: {
+                    user_id: app.session.getUserInfo().userID,
+                    start: that.data.start,
+                    count: 30
+                },
+            },
+            function (res) {
+                var dataArr = res.data.activities;
+                var dataList = that.data.dataList;
+                //合并数组，用于上拉加载更多
+                var renderArr = that.data.start == '0' ? dataArr : dataList.concat(dataArr);
+                that.setData({
+                    dataList: renderArr,
+                    start: res.data.start,
+                    more: res.data.more,
+                    applyActCount: res.data.applyActCount
+                })
+            },
+            function (res) {
+                if (app.util.getErrorMsg(res).content) {
+                    app.util.showTip(that, app.util.getErrorMsg(res).content);
+                }
+            },
+            function (res) {
+                that.data.loading = false;
+            }
+        )
+    },
+    //获取用户钱包未读收款数
+    getMoneyNotifyCount: function () {
+        var that = this;
+        mineApi.moneyNotifyCount({
+                loading: true,
+                data: {},
+            },
+            function (res) {
+                app.globalData.unreadReceiptCount = res.data.unreadReceiptCount;
+                that.setData({
+                    unreadReceiptCount: res.data.unreadReceiptCount
+                })
+            },
+            function (res) {
+                console.log("fail");
+            },
+            function (res) {
+            }
+        )
+    },
+
+    // 页面上拉触底事件的处理函数，用于上拉加载更多
+    loadMore: function () {
+        if (this.data.more == 1) {
+            this.getUserApplyList();
+        }
+        return false;
+    },
+    refresh: function () {
+        this.setData({
+            start: '0'
+        })
+        this.getUserApplyList();
+    },
+    //报名详情
+    goToApplyDetail: function (e) {
+        var id = e.currentTarget.id;
+        app.wxService.navigateTo('activity/apply_detail/apply_detail', {applyId: id})
+    },
+    //修改报名
+    changeApply: function (e) {
+        let item = e.currentTarget.dataset.item;
+        if (!item || item.activityID <= 0 || item.applyId <= 0) {
+            app.util.showTip(this, "数据错误");
+            console.log(item);
+            return;
+        }
+        if (item.isGroupApply == 1) {//组队报名
+            this.showModal('暂不支持组队活动报名修改')
+        } else if (item.isProxyActivity == 1) {
+            this.showModal('暂不支持代理活动报名修改')
+        } else {
+            app.wxService.navigateTo("activity/apply_page/apply_page", {
+                activityId: item.activityID,
+                applyId: item.applyId,
+                type: 2
+            })
+        }
+    },
+    //取消报名  待审核和其他支付方式可以取消
+    cancelApply: function (e) {
+        let item = e.currentTarget.dataset.item;
+        if (item.payStatus != 0 && item.payStatus != 1 && item.payStatus != 5 && item.payStatus != 7 && item.payStatus != 8 && item.applyStatus != 0) {
+            this.showModal('暂不支持在线付费报名取消，请在超级俱乐部App或网页端取消')
+            return;
+        } else if (item.isGroupApply == 1) {//组队报名
+            this.showModal('暂不支持组队活动报名修改')
+            return;
+        } else if (item.isProxyActivity == 1) {
+            this.showModal('暂不支持代理活动报名修改')
+            return;
+        }
+        if (item.hasHelpApply == 1 && item.applyUserType == 0) {
+            app.wxService.navigateTo("activity/applylist/applylist", {activityId: item.activityID, type: 0})
+        } else {
+            this.cancelApplyAction(item.howToPay != 1 && item.payStatus >= 7, item.activityID, item.applyId);
+        }
+    },
+    //重新报名
+    againApply: function (e) {
+        let item = e.currentTarget.dataset.item;
+        if (item.isGroupApply == 1) {//组队报名
+            this.showModal('暂不支持组队活动报名，请在超级俱乐部App或网页端报名活动')
+        } else if (item.isProxyActivity == 1) {
+            this.showModal('暂不支持代理活动报名，请在超级俱乐部App或网页端报名活动')
+        } else {
+            app.wxService.navigateTo('activity/apply_page/apply_page', {
+                activityId: item.activityID,
+                applyId: item.applyId,
+                type: 4,
+                applyUserType: item.applyUserType,
+            });
+        }
+    },
+    //去支付按钮
+    toPay: function (e) {
+        let id = e.currentTarget.id;
+        app.wxService.navigateTo('activity/applylist/applylist', {activityId: id, type: 2});
+    },
+    //申请退款
+    applyRefund: function (e) {
+        this.showModal('暂不支持付费活动在线退款，请到网页端和App操作')
+    },
+    //不支持退款
+    noSupportRefund: function (e) {
+        app.util.showTip(this, "不支持退款");
+        // this.showModal('不支持退款')
+    },
+    //提示弹窗
+    showModal: function (msg) {
+        app.wxService.showModal({
+            content: msg,
+            showCancel: false,
+            confirmText: '知道了'
+        })
+    },
+    nato_myaccount: function (e) {
+        if (app.session.getUserKey() == null) {
+            app.wxService.showModal({
+                title: '提示',
+                content: app.config.MSG_AUTH_FAIL,
+                showCancel: false,
+            })
+            return
+        }
+        app.wxService.navigateTo('index/myaccount/myaccount')
+    },
+    nato_myWallet: function (e) {
+        if (app.session.getUserKey() == null) {
+            //没有授权获取微信用户信息
+            app.wxService.showModal({
+                title: '提示',
+                content: app.config.MSG_AUTH_FAIL,
+                showCancel: false,
+            })
+        } else if (app.session.isTempUser()) {
+            //如果是临时用户，先绑定手机号码，才可以进去我的钱包
+            app.wxService.navigateTo('index/bindphone/bindphone')
+        } else {
+            app.wxService.navigateTo('mine/my_wallet/my_wallet')
+        }
+    },
+    countdown: function () {
+        if (needCountdown) {
+            // console.log("countdown");
+            countdown(this);
+        }
+    },
+    /**
+     * 收到上一个页面返回的数据
+     */
+    recvData: function (result) {
+        recvResult = result;
+    },
+    hideAuthDialog() {
+        this.setData({dialogInfo: {applySucceed: ''}});
+    },
+    /**
+     * 显示报名成功弹窗
+     * @param check 0、报名成功；1、待审核
+     */
+    showApplySuccessDialog: function (check) {
+        this.setData({
+            dialogInfo: {
+                check: check,
+                applySucceed: 'opacity:1;pointer-events:auto;'
+            }
+        })
+    },
+    hideToasts: function () {//报名成功弹窗确认按钮
+        this.hideAuthDialog();
+    },
+    cancelApplyAction: function (otherPay, activityId, applyId) {//取消报名操作
+        if (applyId <= 0) {
+            app.util.showTip(this, "applyId为" + applyId);
+        }
+        let that = this;
+        let cancelReason = ["个人行程有变，参加不了了", "不符合报名条件，主办方拒绝参加", "主办方变更了活动信息",
+            "实际情况跟活动信息不符", "主办方取消了活动", "其他原因"]
+        wx.showActionSheet({
+            itemList: cancelReason,
+            success: function (res) {
+                let reason = cancelReason[res.tapIndex];
+                if (reason) {
+                    actApi.cancelApplySelf({
+                        data: {
+                            actID: activityId,
+                            applyID: applyId,
+                            reason: reason,
+                        },
+                        method: 'POST'
+                    }, function (res) {
+                        if (otherPay) {
+                            app.wxService.showModal({
+                                showCancel: false,
+                                content: '您已取消报名，您报名时选择的是其他支付方式，如已私下向主办方支付报名费用，请与主办方协商退款'
+                            })
+                        } else {
+                            app.util.showTip(that, "取消报名成功");
+                        }
+                    }, function (res) {
+                        app.util.showTip(that, "取消报名失败");
+                    }, function (res) {
+                        console.log(res);
+                        that.refresh();
+                    });
+                }
+            }
+        })
+    },
+});
+
+function countdown(that) {
+    var list = that.data.dataList
+    for (var i = 0; i < list.length; i++) {
+        var item = list[i];
+        if (item.payStatus == 1) {
+            var remain_time = item.applyExpiredTime - new Date().getTime();
+            if (remain_time > 0) {
+                item.remainTime = dateformat(remain_time);
+            } else if (remain_time > -1000) {
+                that.refresh();
+            }
+        }
+    }
+    that.setData({
+        dataList: list
+    });
+    var time = setTimeout(function () {
+            that.countdown();
+        }
+        , 1000)
+}
+
+// 时间格式化输出
+function dateformat(micro_second) {
+    var remain_time = micro_second - new Date().getTime();
+    // 秒数
+    var second = Math.floor(micro_second / 1000);
+    // 分钟位
+    var min = Math.floor(second / 60);
+    // 秒位
+    var sec = second % 60;
+    if (min < 10) {
+        min = "0" + min;
+    }
+    if (sec < 10) {
+        sec = "0" + sec;
+    }
+    return min + ":" + sec;
+}

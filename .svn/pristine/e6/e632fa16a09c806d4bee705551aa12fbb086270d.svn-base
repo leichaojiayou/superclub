@@ -1,0 +1,152 @@
+<!--pages/edit/edit.wxml-->
+<import src="../../../template/toasts/toasts.wxml" />
+<view>
+<!--pages/add_numbers/add_numbers.wxml-->
+<!--票价-->
+<view wx:if="{{showTicket}}" class="line0">
+  <view style="margin-right:217rpx;">
+    <text class="body_txt">票价</text>
+  </view>
+<view wx:if="{{showTicket}}">
+  <view style="text-align:right;">
+    <text class="t3">{{ticketPrice}}</text>
+  </view>
+  <view>
+    <text class="t4" style="color:rgb(141,141,141)">{{ticketName}}</text>
+  </view>
+</view>
+
+</view>
+
+
+<!--紧急联系人-->
+<!--<view class="foot" style="border-bottom: 1rpx solid rgb(229, 229, 229);">
+<text class="body_txt">紧急联系人手机号+字</text>
+<view style="margin-top:29rpx;border:">
+<input  value="输入的文字显示在这里" placeholder="输入" placeholder-style="placeholder" class="placeholder1"/>
+</view>
+</view>-->
+
+<view  class="body" style="height:1000rpx">
+
+<!--第二组:报名选项-->
+<block wx:for="{{itemArray}}" wx:for-index="indexX">
+
+  <block wx:if="{{item.fieldName == '报名状态' && item.reason && item.reason != ''}}">
+      <view class="status1" style="">
+      <view style="justify-content: space-between;display:flex;">
+      <text class="body_txt">{{item.fieldName}}</text>
+      <text class="placeholder1">{{item.currentValue}}</text>
+      </view>
+      <view style="float:right;width:455rpx;margin-top:16rpx;text-align:right;">
+      <text class="status1_txt">{{item.reason}}</text>
+      </view>
+      </view>
+  </block>
+
+  <block wx:elif="{{item.fieldType==1 && item.fieldName!='昵称'&& item.fieldName!='手机' && item.fieldName!='身份证'&& item.fieldName!='真实姓名' && item.fieldName!='支付方式' && item.fieldName!='报名状态'}}">
+      <view  class="help-apply">
+            <view class="help-apply-title">{{item.fieldName}}</view>
+            <input bindinput="didFieldTextChanged" id="{{indexX}}"  placeholder="{{item.defaultValue}}" placeholder-class="help-apply-placeholder"/>
+        </view>
+  </block>
+
+  <block wx:else>
+      <view class="body_1" >
+          <text class="body_txt">{{item.fieldName}}</text>
+          <view wx:if="{{item.readonly == 1 }}" style="text-align:right;margin-right:29rpx;">
+          <input disabled="ture" placeholder="{{item.currentValue}}" placeholder-style="placeholder"/>
+          </view>
+
+          <view wx:elif="{{item.fieldType == 1 }}" style="text-align:right;margin-right:29rpx;">
+          <input  bindinput="didFieldTextChanged" id="{{indexX}}"  placeholder="{{item.currentValue}}" placeholder-style="placeholder"/>
+          </view>
+
+          <view wx:else style="text-align:right;margin-right:29rpx;">
+          <picker  bindchange="didItemPickerChanged" id="{{indexX}}" range="{{item.ranges}}" value="{{index}}">
+          {{item.currentValue}} 
+          </picker>
+          </view>
+      </view>
+  </block>
+
+
+
+</block>
+
+
+<!--第三组:支付状态-->
+<block wx:if="{{howToPay > 1}}" wx:for="{{payArray}}" wx:for-index="indexPay">
+    <block wx:if="{{item.fieldName == '报名状态' && item.reason && item.reason != ''}}">
+      <view class="status1" style="">
+      <view style="justify-content: space-between;display:flex;">
+      <text class="body_txt">{{item.fieldName}}</text>
+      <text class="placeholder1">{{item.currentValue}}</text>
+      </view>
+      <view style="float:right;width:455rpx;margin-top:16rpx;text-align:right;">
+      <text class="status1_txt">{{item.reason}}</text>
+      </view>
+      </view>
+  </block>
+
+  <block wx:elif="{{item.fieldName == '支付状态'}}">
+      <view class="body_1">
+      <text class="body_txt">{{item.fieldName}}</text>
+      <view  style="text-align:right;margin-right:29rpx;">
+      <block wx:if="{{item.currentValue == '未付款'}}">
+          <text class="body_txt">未付款      </text>
+          <view id="{{indexPay}}" bindtap="setPayYes">
+            <text class="body_txt1" >    设为已付款</text>
+          </view>
+      </block>
+      <block wx:else>
+        <input disabled="ture" placeholder="{{item.currentValue}}" placeholder-style="placeholder"/>
+        <block wx:if="{{adminUserName != ''}}">
+          <text class="body_txt" >({{adminUserName}}设置)</text>
+        </block>
+      </block>
+      </view>
+      </view>
+  </block>
+
+
+  <block wx:else>
+      <!--第三组:支付状态-->
+      <view class="body_1">
+      <text class="body_txt">{{item.fieldName}}</text>
+      <view  style="text-align:right;margin-right:29rpx;">
+      <input disabled="ture" placeholder="{{item.defaultValue}}" placeholder-style="placeholder"/>
+      </view>
+      </view>
+    
+  </block>
+
+</block>
+
+
+
+
+<!--第四组:分组-->
+<view class="body_1">
+<text class="body_txt">{{fieldGroup.fieldName}}</text>
+<view style="text-align:right;margin-right:29rpx;">
+<picker  bindchange="didGroupNameChanged"  range="{{fieldGroup.ranges}}" value="{{index}}">
+{{fieldGroup.currentValue}} 
+</picker>
+</view>
+</view>
+
+
+<view style="margin:60rpx 30rpx 0 30rpx;">
+<button bindtap="tapSaveButton" type="primary" hover-class="hover-btn" style="background:#3dd1a5;">保存</button>
+</view>
+<view style="margin:30rpx 30rpx 0 30rpx;">
+<button wx:if="{{checkStatus != '' && checkStatus != 'null' }}" bindtap="tapRefuseButton" >{{checkStatus}}报名</button>
+</view>
+
+
+</view>
+</view>
+
+<template is="fillInfo" data="{{emailShowStyle,alertTitle,placeHolder}}" />
+<template is="applyCheck" data="{{applyCheckStyle,applyTitle}}" />

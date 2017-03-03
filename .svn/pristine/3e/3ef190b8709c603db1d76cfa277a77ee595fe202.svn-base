@@ -1,0 +1,43 @@
+<view class="top">
+西安正大学校
+</view>
+
+
+
+<view>
+  <scroll-view scroll-x scroll-y>
+    <view class="body">
+    <!-- 标题-->
+      <view class="body_item">
+        <block wx:for="{{title}}" for-index="index">
+          <view wx:if="{{index%2==0}}" class="body_item_1" style="  background: rgb(255, 255, 255);">
+            {{item}}
+          </view>
+          <view wx:else class="body_item_1" style="background: rgb(247, 255, 253);">
+            {{item}}
+          </view>
+        </block>
+      </view>
+      <!-- 标题下的内容 -->
+      
+
+       <block wx:for="{{contents}}" wx:for-item="obj">
+          <view class="body_item">
+            <block wx:for="{{obj}}" wx:for-index="idx">
+              <view wx:if="{{idx%2==0}}" class="body_item_1" style="  background: rgb(255, 255, 255);">
+                {{item}}
+              </view>
+              <view wx:else class="body_item_1" style="background: rgb(247, 255, 253);">
+                {{item}}
+              </view>
+            </block>
+          </view>
+
+
+       </block>
+
+
+    </view>
+  </scroll-view>
+</view>
+

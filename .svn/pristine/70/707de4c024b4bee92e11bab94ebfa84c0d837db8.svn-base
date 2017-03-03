@@ -1,0 +1,12 @@
+<!--pages/sort_one/sort_one.wxml-->
+
+<view class="header">
+<input value="分组ONE" class="header_input"/>
+</view>
+<view class="header_btn">
+<button type="primary" >保存</button>
+</view>
+
+<view class="header_btn1">
+<button  >删除分组</button>
+</view>

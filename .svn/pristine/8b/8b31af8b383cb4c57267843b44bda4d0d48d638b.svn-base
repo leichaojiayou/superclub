@@ -1,0 +1,77 @@
+/* template/common/grade/grade.wxss */
+
+page {
+  overflow: scroll;
+  white-space: normal;
+  background: #f6f6f6;
+}
+
+.title-color {
+  color: #1a1a1a;
+}
+
+.title-text {
+  color: #8e8e8e;
+}
+
+.grade-info {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 20rpx;
+}
+
+.grade-info-img {
+  
+  width: 134rpx;
+}
+
+.grade-info-title {
+  padding: 20rpx 0 10rpx;
+  font-size: 36rpx;
+}
+
+.grade-info-text {
+  font-size: 26rpx;
+}
+
+.grade-number-box {
+  margin-bottom: 20rpx;
+  padding: 40rpx 30rpx;
+  background: #fff;
+}
+
+.grade-number {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grade-number-img {
+  width: 80rpx;
+}
+
+.grade-number-text {
+  font-size: 28rpx;
+}
+
+.grade-number-content {
+  font-size: 24rpx;
+}
+
+.grade-number-explain {
+  width: 70rpx;
+  height: 32rpx;
+  font-size: 24rpx;
+  color: #ff7e56;
+  padding: 4rpx 8rpx;
+  border: 1rpx solid #ff7e56;
+  border-radius: 20rpx;
+  margin-right: 12rpx;
+}
+
+.grade-footer {
+  padding: 0 30rpx 40rpx;
+  font-size: 28rpx;
+}

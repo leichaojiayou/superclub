@@ -1,0 +1,89 @@
+<!--template/common/grade/grade.wxml-->
+
+<!--pages/grade/grade.wxml-->
+<view class="grade-info">
+  <image class="grade-info-img" mode="widthFix" src="{{url}}"/>
+  <view class="grade-info-title title-color">{{name}}</view>
+  <view class="grade-info-text title-text">{{score}}分</view>
+</view>
+<view class="grade-number-box">
+  <view class="grade-number">
+    <view>
+      <view class="grade-number-title title-color">俱乐部</view>
+      <view class="grade-number-text title-text">0-199分</view>
+    </view>
+  </view>
+  <view>
+    <text class="grade-number-content title-text">活动短信条数 = 报名人数 X 1，活动结束时关闭。</text>
+  </view>
+</view>
+<view class="grade-number-box">
+  <view class="grade-number">
+    <view>
+      <view class="grade-number-title title-color">星级俱乐部</view>
+      <view class="grade-number-text title-text">200-599分</view>
+    </view>
+    <image class="grade-number-img" mode="widthFix" src="https://cdn.51julebu.com/xiaochengxu/image/clubstar/star_lv1_small.png"></image>
+  </view>
+  <view>
+    <text class="grade-number-explain">特权</text>
+    <text class="grade-number-content title-text">活动短信条数 = 报名人数 X 2，活动结束时关闭。</text>
+  </view>
+</view>
+<view class="grade-number-box">
+  <view class="grade-number">
+    <view>
+      <view class="grade-number-title title-color">两星俱乐部</view>
+      <view class="grade-number-text title-text">600-1999分</view>
+    </view>
+    <image class="grade-number-img" mode="widthFix" src="https://cdn.51julebu.com/xiaochengxu/image/clubstar/star_lv2_small.png"></image>
+  </view>
+  <view>
+    <text class="grade-number-explain">特权</text>
+    <text class="grade-number-content title-text">活动短信条数 = 报名人数 X 2，活动结束时关闭。</text>
+  </view>
+</view>
+<view class="grade-number-box">
+  <view class="grade-number">
+    <view>
+      <view class="grade-number-title title-color">三星俱乐部</view>
+      <view class="grade-number-text title-text">2000-4999分</view>
+    </view>
+    <image class="grade-number-img" mode="widthFix" src="https://cdn.51julebu.com/xiaochengxu/image/clubstar/star_lv3_small.png"></image>
+  </view>
+  <view>
+    <text class="grade-number-explain">特权</text>
+    <text class="grade-number-content title-text">活动短信条数 = 报名人数 X 3，活动结束时关闭。</text>
+  </view>
+</view>
+<view class="grade-number-box">
+  <view class="grade-number">
+    <view>
+      <view class="grade-number-title title-color">四星俱乐部</view>
+      <view class="grade-number-text title-text">5055-10000分</view>
+    </view>
+    <image class="grade-number-img" mode="widthFix" src="https://cdn.51julebu.com/xiaochengxu/image/clubstar/star_lv4_small.png"></image>
+  </view>
+  <view>
+    <text class="grade-number-explain">特权</text>
+    <text class="grade-number-content title-text">活动短信条数 = 报名人数 X 4，活动结束时关闭。</text>
+  </view>
+</view>
+<view class="grade-number-box">
+  <view class="grade-number">
+    <view>
+      <view class="grade-number-title title-color">五星俱乐部</view>
+      <view class="grade-number-text title-text">10000分以上</view>
+    </view>
+    <image class="grade-number-img" mode="widthFix" src="https://cdn.51julebu.com/xiaochengxu/image/clubstar/star_lv5_small.png"></image>
+  </view>
+  <view>
+    <text class="grade-number-explain">特权</text>
+    <text class="grade-number-content title-text">活动短信条数 = 报名人数 X 5，活动结束时关闭。</text>
+  </view>
+</view>
+
+<!--footer-->
+
+<view class="grade-footer title-text">俱乐部活跃分数不仅和俱乐部成员数、活动报名人数有关，还
+和活动动态的发表及照片分享的多少有关。</view>

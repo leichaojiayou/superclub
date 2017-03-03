@@ -1,0 +1,24 @@
+// pages/shoukuanxiangqing/shoukuanxiangqing.js
+const app = getApp();
+
+Page({
+  data:{
+    
+    isClub:true,
+    lists:[
+     {isShow:true,title:'3人已确认报名'},
+     {isShow:false,title:'1人待付款'}
+    ]
+  },
+  choose:function(e){
+    var lists=this.data.lists
+    lists[e.currentTarget.id].isShow=!lists[e.currentTarget.id].isShow
+
+    this.setData({
+      lists:lists
+    })
+  },
+  nato_order_details_page: function(){
+    app.wxService.navigateTo('mine/order_details_page/order_details_page')
+  }
+})

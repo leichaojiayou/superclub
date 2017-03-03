@@ -1,0 +1,43 @@
+// pages/julebumingcheng/julebumingcheng.js
+const App = getApp();
+const clubApi = App.api('clubApi');
+Page({
+  data: {},
+  onLoad: function (e) {
+    this.setData({
+      clubName: e.clubName
+    })
+    // 页面初始化 options为页面跳转所带来的参数
+  },
+
+  //clean club name
+  cleanValue: function () {
+    this.setData({
+      clubName: ''
+    })
+  },
+  change: function (e) {
+    this.setData({
+      clubName: e.detail.value
+    })
+  },
+
+  //post param to server
+  formSubmit: function (e) {
+    let data = e.detail.value;
+    let param = {
+      data:data
+    }
+    clubApi.uniquenClubName(param,res=>{},res=>{},res=>{
+      if(res.data.status === 0){
+        let obj = {};
+        obj.content = '俱乐部名称已被使用！';
+        obj.showCancel = false;
+        App.wxService.showModal(obj);
+      }else{
+        param.club_id = 333;
+        clubApi.modifyClubName(param)
+      }
+    });
+  }
+})

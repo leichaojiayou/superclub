@@ -1,0 +1,7 @@
+Page({
+  data:{
+    item:[
+      {funs:'申请加入俱乐部',time:'01-21 13:00',img:'../../../assets/images/user@2x.png',username:'用户昵称',txt:'我是奔跑的小马申请加入俱乐部。'}
+    ]
+  },
+})

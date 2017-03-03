@@ -1,0 +1,57 @@
+.top {
+  text-align: center;
+  margin-top: 45rpx;
+  font-size: 26rpx;
+}
+
+.to_msg {
+  line-height: 40rpx;
+  letter-spacing: -0.6rpx;
+  color: rgba(142, 142, 142, 0.6);
+}
+
+.icon {
+  margin-right: 30rpx;
+  margin-top: 14rpx;
+  float: right;
+}
+
+.item {
+  margin-top: 41rpx;
+  background: white;
+  height: 88rpx;
+  line-height: 88rpx;
+  border: 1rpx;
+  border-bottom-color: rgb(230, 230, 230);
+  border-bottom-style: solid;
+  border-top-color: rgb(230, 230, 230);
+  border-top-style: solid;
+}
+
+.item2 {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 70rpx;
+  background: white;
+  height: 88rpx;
+  line-height: 88rpx;
+  border: 1rpx;
+  border-bottom-color: rgb(230, 230, 230);
+  border-bottom-style: solid;
+  border-top-color: rgb(230, 230, 230);
+  border-top-style: solid;
+}
+
+.item_1 {
+  margin-left: 33rpx;
+}
+
+.item_2 {
+  display: flex;
+}
+
+.center {
+  text-align: center;
+  margin-top: 29rpx;
+  font-size: 26rpx;
+}

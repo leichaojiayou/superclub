@@ -1,0 +1,158 @@
+/* pages/apply_paged/apply_paged.wxss */
+
+.header_imgss {
+  width: 100%;
+  height: 350rpx;
+  opacity: 85%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imgss {
+  width: 348rpx;
+  height: 85rpx;
+}
+
+.detail_title_lay {
+  white-space: normal;
+  padding: 30rpx 0 30rpx 0;
+}
+
+.detail_con, .detail_map {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail_con {
+  background-color: #fff;
+  padding: 0 17px 0 17px;
+}
+
+.detail_msg, .detail_input {
+  display: flex;
+  flex-direction: row;
+}
+
+.detail_msg {
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.detail_input {
+  position: relative;
+  align-items: center;
+  padding-bottom: 10px;
+  margin-top: 10px;
+}
+
+.detail_txt {
+  margin-right: 15px;
+  width: 55px;
+  flex-shrink: 0;
+}
+
+.detail_map {
+  position: absolute;
+  right: 0px;
+  align-items: center;
+}
+
+.detail_row_right {
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.detail_lineh {
+  position: absolute;
+  bottom: 0px;
+  width: 80%;
+  border-bottom: 1px solid rgb(230, 230, 230);
+}
+
+.detail_linev {
+  position: absolute;
+  border-left: 1px solid rgb(230, 230, 230);
+  height: 20px;
+  width: 1px;
+  top: 0;
+  right: 40px;
+}
+
+/*<!--详情 报名须知 费用循环-->*/
+
+.sort {
+  display: flex;
+  height: 49px;
+  align-items: center;
+  font-size: 14px;
+  letter-spacing: -0.3px;
+  justify-content: space-around;
+}
+
+.sort1 {
+  padding: 4px;
+  border-radius: 2px;
+}
+
+/*活动详情、报名须知、费用说*/
+
+.actDetail, .applyKnow, .cost {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 0 0 30rpx;
+}
+
+/*textarea里面的样式*/
+
+.textarea1 {
+  white-space: normal;
+  /*height: 116.5px;*/
+  width: 90%;
+  overflow: scroll;
+  font-size: 17px;
+  line-height: 25px;
+  letter-spacing: -0.4px;
+  color: rgb(17, 17, 17);
+}
+
+.all_scr {
+  height: 90vh;
+}
+
+/*已报名 ,修改报名大框*/
+
+.textarea_foot {
+  display: flex;
+  letter-spacing: -0.4px;
+  color: rgb(142, 142, 142);
+  font-size: 17px;
+  position: relative;
+  bottom: 0px;
+  justify-content: space-between;
+  border-top: 0.5px solid rgb(230, 230, 230);
+  opacity: 0.95;
+  align-items: center;
+  height: 10vh;
+  background-color: rgb(255, 255, 255);
+}
+
+.txt_textarea {
+  padding-left: 5%;
+}
+
+.btn_textarea {
+  position: absolute;
+  right: 5%;
+  margin-top: 4rpx;
+}
+
+/*详情图片*/
+
+.detailPicture {
+  width: 690rpx;
+}

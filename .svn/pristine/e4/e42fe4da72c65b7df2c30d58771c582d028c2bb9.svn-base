@@ -1,0 +1,21 @@
+<!--pages/cash3/cash3.wxml-->
+<view style="height:30rpx"> </view>
+<view style="border-bottom:1rpx solid rgb(229,229,229);border-top:1rpx solid rgb(229,229,229);background-color: rgb(255, 255, 255);">
+
+
+
+<!--银行图标及其名字循环体-->
+<view class="header" wx:for="{{item}}">
+  <!--银行图标-->
+  <image src="{{item.img}}" style="height:50rpx;width:50rpx;margin-right:28rpx;"></image>
+    <!--银行-->
+    <view style="display:flex;justify-content: space-between; align-items: center;">
+        <view>
+          <text class="t32rpx">{{item.bank}}</text>
+        </view>
+</view>
+</view>
+</view>
+
+
+<view style="height:89rpx;"></view>

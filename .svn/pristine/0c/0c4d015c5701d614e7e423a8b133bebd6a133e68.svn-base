@@ -1,0 +1,8 @@
+// pages/cash2/cash2.js
+Page({
+  data:{
+    bank:'招商银行',
+    num:'5678',
+    money:'191.00'
+  },
+})

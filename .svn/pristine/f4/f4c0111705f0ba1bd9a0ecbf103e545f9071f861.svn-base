@@ -1,0 +1,12 @@
+<!--template/common/city/city.wxml-->
+<scroll-view scroll-y="true" style="height:100vh;white-space: normal;">
+<view class="place-page">
+  <view wx:for="{{cities}}" wx:key="city">
+    <view class="place-content"  data-cityName="{{item.cityName}}" data-cityid="{{item.cityID}}" catchtap="chooseCity">
+      <text class="palce-content-text">{{item.cityName}}</text>
+      <image class="palce-content-icon" mode="widthFix" src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png"></image>
+    </view>
+  </view>
+</view>
+</scroll-view>
+

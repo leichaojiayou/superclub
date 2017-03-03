@@ -1,0 +1,67 @@
+@import "../../../template/common/common.wxss";
+.con_row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 15px;
+}
+.center{
+   display: flex;
+   align-items: center;
+}
+
+.con_img {
+  width: 17px;
+  height: 17px;
+  margin: 17px 20px 15px 20pt;
+}
+
+.con_title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.con_total {
+  margin-right: 4%;
+}
+.txt_stat{
+  padding-right: 10px;
+}
+/*页面为空的样式*/
+.empty_img{
+  height: 115rpx;
+  width: 141rpx;
+}
+.t28rpx{
+  font-size: 28rpx;
+  line-height: 42rpx;
+  letter-spacing: -0.6rpx;
+  color: rgb(142, 142, 142);
+}
+.imgitem{
+  display: flex;
+  justify-content: center;
+  margin-top: 73rpx;
+}
+.txtitem{
+    display: flex;
+  justify-content: center;
+   margin-top: 29rpx;
+}
+
+.text_icon_view {
+  display: flex;
+  align-items: center;
+}
+
+.text_icon {
+  margin-right: 31rpx;
+  text-align: center;
+  font-size: 25rpx;
+  line-height: 36rpx;
+  width: 36rpx;
+  height: 36rpx;
+  color: white;
+  background-color: red;
+  border-radius: 50%;
+}

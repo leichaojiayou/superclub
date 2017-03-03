@@ -1,0 +1,40 @@
+<!-- pages/dismiss/dismiss.wxml -->
+<view wx:if="{{type==0}}">
+    <view class="header">
+        <image src="{{header_img}}" class="header_img"></image>
+    </view>
+    <view class="header_t">
+        <text style="font-size:26rpx;Letter-spacing:-0.6rpx;color:rgb(191,191,191)">副会长</text>
+    </view>
+    <view class="header_btn" bindtap="setAppoint" data-type="0">
+        <button type="primary">设置副会长</button>
+    </view>
+</view>
+<view wx:if="{{type==1}}">
+    <view class="header">
+        <image src="{{header_img}}" class="header_img"></image>
+    </view>
+    <view class="header_t">
+        <text style="font-size:26rpx;Letter-spacing:-0.6rpx;color:rgb(191,191,191)">管理员</text>
+    </view>
+    <view class="header_btn" bindtap="setAppoint" data-type="1">
+        <button type="primary">添加管理员</button>
+    </view>
+</view>
+<view wx:if="{{type==2}}">
+    <block wx:for="{{voicChriman}}" wx:key="index">
+        <view class="header">
+            <image  src="{{item.avatar}}" class="header_img"></image>
+        </view>
+        <view class="header_t">
+            <text  style="font-size:32rpx;Letter-spacing:-0.8rpx;">{{item.nick}}</text>
+        </view>
+    </block>
+    <view class="header_btn">
+        <button type="primary" bindtap="nato_removes" disabled="false">{{btn.setBtn}}</button>
+        <view style="margin-top:29rpx;" bindtap="removeBtn"
+              data-userid="{{suffixUser.userID==null?userID:suffixUser.userID}}">
+            <button>{{btn.removeBtn}}</button>
+        </view>
+    </view>
+</view>

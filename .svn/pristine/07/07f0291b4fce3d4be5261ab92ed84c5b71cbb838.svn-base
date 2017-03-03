@@ -1,0 +1,84 @@
+.top_view {
+  margin-top: 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mid_view {
+  margin-top: 60rpx;
+  font-size: 35rpx;
+}
+
+.checkbox_text_view {
+  margin-left: 30rpx;
+}
+
+.checkbox_view {
+  display: flex;
+  align-items: center;
+}
+
+.group_icon {
+  margin-top: 15rpx;
+  margin-left: 25rpx;
+  margin-bottom: 15rpx;
+}
+
+.item_icon {
+  margin-top: 32rpx;
+  margin-left: 25rpx;
+  margin-bottom: 32rpx;
+}
+
+.item_img {
+  width: 90rpx;
+  height: 90rpx;
+}
+
+.group_view {
+  border-top: 0.5px solid rgb(230, 230, 230);
+  border-bottom: 0.5px solid rgb(230, 230, 230);
+  background-color: rgb(255, 255, 255);
+}
+
+.checkbox_group_view {
+  height: 150rpx;
+  display: flex;
+  align-items: center;
+}
+
+.item_mid_view {
+  margin-left: 30rpx;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 0.5px solid rgb(230, 230, 230);
+}
+
+.item_right_view {
+  margin-left: 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.smart_text_size {
+  margin-top: 25rpx;
+  font-size: 25rpx;
+  color: rgb(141, 141, 141);
+}
+
+.smartsize {
+  font-size: 28rpx;
+  color: rgb(141, 141, 141);
+}
+
+.button {
+  border-radius: 0;
+  margin-top: 130rpx;
+  background-color: rgba(61, 209, 164, 0.84);
+  color: white;
+  border: 0rpx;
+}

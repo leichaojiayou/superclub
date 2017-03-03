@@ -1,0 +1,34 @@
+Page({
+    data: {
+        statu: '1',
+        group_list: [{
+            img: '../images/user.png', check_Status: true, index: 0, user_name: "用户昵称", ticket: "成人票", price: "130.00", payment: "微信支付", club_neme: "李慧珍帮报", user_real_name: "李慧珍 / 女 / 手机 18824148989", people_id: "身份证 230602199611011109",
+            content: "其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/",
+            button_text1: "分组", button_text2: "编辑", button_text3: '电话', button_text4: "短信"
+        }, {
+            img: '../images/user.png', check_Status: false, index: 1, user_name: "用户昵称", ticket: "成人票", price: "130.00", payment: "微信支付", club_neme: "", user_real_name: "李慧珍 / 女 / 手机 18824148989", people_id: "身份证 230602199611011109",
+            content: "其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/",
+            button_text1: "分组", button_text2: "编辑", button_text3: '电话', button_text4: "短信"
+        }, {
+            img: '../images/user.png', check_Status: false, index: 2, user_name: "用户昵称", ticket: "成人票", price: "130.00", payment: "微信支付", club_neme: "李慧珍帮报", user_real_name: "李慧珍 / 女 / 手机 18824148989", people_id: "身份证 230602199611011109",
+            content: "其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/其他用户填写项目展示区域：答案选择/",
+            button_text1: "分组", button_text2: "编辑", button_text3: '电话', button_text4: "短信"
+        }]
+    },
+    bind_Select(e) {
+        const Group_list = this.data.group_list;
+        const obj = e.currentTarget.dataset
+
+        console.log(e.currentTarget.id);
+        Group_list[obj.item].check_Status = !Group_list[obj.item].check_Status;
+        this.setData({
+            group_list: Group_list
+        });
+    }
+    ,
+    nato_sort_one: function (e) {
+        wx.navigateTo({
+            url: '../sort_one/sort_one'
+        })
+    }
+})

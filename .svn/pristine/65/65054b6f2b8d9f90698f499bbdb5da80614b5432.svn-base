@@ -1,0 +1,5 @@
+// pages/cash5/cash5.js
+Page({
+  data:{
+  },
+})

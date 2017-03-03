@@ -1,0 +1,18 @@
+<import src="../../../template/common/common.wxml" />
+
+<scroll-view scroll-y="true" style="height:100vh">
+
+<view style="text-align:center;padding:15px 0 10px 0">
+    <view class="des_txt">根据俱乐部等级课获得不同的免费的短信使用额度</view>
+    <text class="green_txt4">使用规则</text>
+</view>
+
+<view style="background-color:#fff;padding:25px 0 25px 0;">
+     <template is="common_two" data="{{item3}}"/>
+     <template is="common_two" data="{{item3}}"/>
+     <view style="text-align:center;font-size:12px;color:rgb(229,229,229)">
+        <text>THE END</text>
+     </view>
+</view>
+
+</scroll-view>

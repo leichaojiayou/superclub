@@ -1,0 +1,29 @@
+// pages/cash4/cash4.js
+Page({
+  data: {
+    array1: ['广州', '香港','佛山'],
+    index1: 0,
+    rightarrow:'../images/right-errow.png',
+  },
+  bindPickerChange1: function(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      index1: e.detail.value
+    })
+  },
+    nato_cash3: function (e) {
+    wx.navigateTo({
+      url: '../cash3/cash3',
+      success: function (res) {
+        // success
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        // complete
+      }
+    })
+  }
+  ,
+})

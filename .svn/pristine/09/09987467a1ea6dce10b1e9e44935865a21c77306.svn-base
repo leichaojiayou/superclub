@@ -1,0 +1,244 @@
+var app = getApp();
+var actApi = require("../../../api/activity/actApi.js");
+var utils = require("../../../utils/util");
+var session = require("../../../utils/session");
+
+const activityId = 591623;
+const clubId = 100315;
+var inputText = '';
+Page({
+    data: {
+        text: "活动详情",
+        inputFocus: false,
+        inputText: '',
+        showInput: 'display:none'
+    },
+    actDetail: function () {//请求活动详情
+        actApi && actApi.getActDetail({
+            data: {
+                activity_id: activityId,
+                club_id: clubId
+            },
+            success: (res) => {
+                console.log("success");
+                this.setData({
+                    text: JSON.stringify(res.data)
+                })
+            },
+            fail: (res) => {
+                console.log("fail");
+                let errorMsg = utils.getErrorMsg(res);
+                wx.showModal({title: '请求失败', content: errorMsg.title + '；' + errorMsg.content})
+            },
+            complete: (res) => {
+                console.log("complete");
+                console.log(res);
+            }
+        })
+    },
+    commentList: function () {//请求评论列表
+        actApi && actApi.getActComment({
+            data: {
+                activity_id: activityId,
+                start: 0,
+                count: 30
+            },
+            success: (res) => {
+                console.log("success");
+                this.setData({
+                    text: JSON.stringify(res.data)
+                })
+            },
+            fail: (res) => {
+                console.log("fail");
+                let errorMsg = utils.getErrorMsg(res);
+                wx.showModal({title: '请求失败', content: errorMsg.title + '；' + errorMsg.content})
+            },
+            complete: (res) => {
+                console.log("complete");
+                console.log(res);
+            }
+        })
+    },
+    applyList: function () {//请求报名列表
+        actApi && actApi.getActApplyList({
+            data: {
+                activity_id: activityId,
+                start: 0,
+                count: 30
+            },
+            success: (res) => {
+                console.log("success");
+                this.setData({
+                    text: JSON.stringify(res.data)
+                })
+            },
+            fail: (res) => {
+                console.log("fail");
+                let errorMsg = utils.getErrorMsg(res);
+                wx.showModal({title: '请求失败', content: errorMsg.title + '；' + errorMsg.content})
+            },
+            complete: (res) => {
+                console.log("complete");
+                console.log(res);
+            }
+        })
+    },
+    likeList: function () {//请求点赞列表
+        actApi && actApi.getLikeList({
+            data: {
+                activity_id: activityId,
+                start: 0,
+                count: 30
+            },
+            success: (res) => {
+                console.log("success");
+                this.setData({
+                    text: JSON.stringify(res.data)
+                })
+            },
+            fail: (res) => {
+                console.log("fail");
+                let errorMsg = utils.getErrorMsg(res);
+                wx.showModal({title: '请求失败', content: errorMsg.title + '；' + errorMsg.content})
+            },
+            complete: (res) => {
+                console.log("complete");
+                console.log(res);
+            }
+        })
+    },
+    createComment: function () {//创建评论
+        var that = this;
+        if (!inputText || inputText.length == 0) {
+            wx.showModal({
+                title: '提醒',
+                content: '请输入评论内容',
+                success: function (res) {
+                    if (res.confirm) {
+                        that.setData({
+                            inputFocus: true
+                        })
+                    }
+                }
+            })
+        } else {
+            wx.showModal({
+                title: '是否发送：',
+                content: inputText,
+                success: function (res) {
+                    if (res.confirm) {
+                        console.log('用户点击确定')
+                        actApi.createActComment({
+                            data: {//请求参数
+                                activity_id: activityId,
+                                content: inputText,
+                                refCommentId: session.getUserInfo().userID,
+                            },
+                            successToast: {
+                                title: '评论成功',
+                                icon: 'success',
+                                duration: 2000
+                            },
+                            success: function (res) {
+                                console.log("success");
+                                that.setData({inputText: '', inputFocus: false})
+                            },
+                            fail: function (res) {
+                                console.log("fail");
+                                let errorMsg = utils.getErrorMsg(res);
+                                wx.showModal({title: '评论发送失败', content: errorMsg.title + '；' + errorMsg.content})
+                                that.setData({inputFocus: true})
+                            },
+                            complete: (res) => {
+                                console.log("complete");
+                            }
+                        })
+                    }
+                }
+            })
+        }
+    },
+    inputEvent: function (e) {//监听输入
+        inputText = e.detail.value;
+    },
+    likeAction: function () {//点赞
+        var that = this;
+        actApi.likeAction({
+            data: {
+                activity_id: activityId,
+                type: 0
+            },
+            successToast: {
+                title: '点赞成功',
+                icon: 'success',
+                duration: 2000
+            },
+            success: function (res) {
+                console.log("success");
+            },
+            fail: function (res) {
+                console.log("fail");
+                let errorMsg = utils.getErrorMsg(res);
+                wx.showModal({title: '点赞失败', content: errorMsg.title + '；' + errorMsg.content})
+            },
+            complete: (res) => {
+                console.log("complete");
+            }
+        });
+    },
+    unlikeAction: function () {//取消点赞
+        var that = this;
+        actApi.likeAction({
+            data: {
+                activity_id: activityId,
+                type: 1
+            },
+            successToast: {
+                title: '取消点赞成功',
+                icon: 'success',
+                duration: 2000
+            },
+            success: function (res) {
+                console.log("success");
+            },
+            fail: function (res) {
+                console.log("fail");
+                let errorMsg = utils.getErrorMsg(res);
+                wx.showModal({title: '取消点赞失败', content: errorMsg.title + '；' + errorMsg.content})
+            },
+            complete: (res) => {
+                console.log("complete");
+            }
+        });
+    },
+    apply: function () {//发起为自己报名报名请求
+        var that = this;
+        actApi.actApplySelf({
+            data: {
+                activity_id: activityId,
+                type: 1,
+            },
+            successToast: {
+                title: '报名成功',
+                icon: 'success',
+                duration: 2000
+            },
+            success: function (res) {
+                console.log("success");
+            },
+            fail: function (res) {
+                console.log("fail");
+                let errorMsg = utils.getErrorMsg(res);
+                wx.showModal({title: '报名失败', content: errorMsg.title + '；' + errorMsg.content})
+            },
+            complete: (res) => {
+                console.log("complete");
+            }
+        });
+    },
+    onLoad: function () {
+        wx.setNavigationBarTitle({title: "活动详情"})
+        console.info(session.getUserInfo())
+    }
+})

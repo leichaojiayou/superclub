@@ -1,0 +1,62 @@
+<scroll-view style="height:90vh;" scroll-y="true">
+  <block wx:for="{{resultArray}}" wx:for-index="indexX">
+    <view class="mid_item_view">
+      <view bindtap="tapGroupForDisplay" id="{{indexX}}" class="mid_item_mid_view">
+        <view class="icon_view">
+          <view class="{{item.open ? 'css_icon_true':'css_icon_false'}}" style="{{item.open ? 'margin-left:30rpx':'margin-left:35rpx'}}"></view>
+        </view>
+        <view class="text_groud_view">
+          <text class="mid_text" style="margin-left:22rpx;">{{item.ticket.name}}￥{{item.ticket.cost/100.0}}</text>
+          <text class="small_text" style="margin-left:18rpx;">{{item.count}}人</text>
+        </view>
+      </view>
+    </view>
+
+    
+    <block wx:if="{{item.open}}" wx:for-index="indexY" wx:for="{{item.applys}}" wx:for-item="obj">
+       
+      <!--未点击的列-->
+      <view wx:if="{{!obj.open}}" bindtap="tapRowForDisplay" data-x="{{indexX}}" data-y="{{indexY}}" class="list_view1">
+        <view class="image_view">
+          <image class="user_image" src="{{obj.user.userImg}}"></image>
+        </view>
+        <view class="user_info_top">
+          <view class="user_info_name_top">
+            <text style="font-size: 32rpx;">{{obj.user.nick}}</text>
+            <text class="small_text" wx:if="{{obj.isManagerHelp}}">{{obj.helper.nick}}帮报</text>
+          </view>
+          <text class="small_text" style="margin-top: 23rpx;">{{obj.payString}}</text>
+        </view>
+      </view>
+
+      <!--点击后的列-->
+      <view wx:if="{{obj.open}}" class="list_view2">
+        <view bindtap="tapRowForDisplay" data-x="{{indexX}}" data-y="{{indexY}}" class="list_view2_top">
+          <view class="image_view">
+            <image class="user_image2" src="{{obj.user.userImg}}"></image>
+          </view>
+          <view class="user_info_top2">
+            <view class="user_info_name_top">
+              <text style="font-size: 32rpx;">{{obj.user.nick}}</text>
+              <text class="small_text" wx:if="{{obj.isManagerHelp}}">{{obj.helper.nick}}帮报</text>
+            </view>
+            <text class="small_text" style="margin-top: 23rpx;">{{obj.payString}}</text>
+            <text class="small_text" style="font-size: 26rpx;margin-top: 71rpx;">{{obj.baseString}}</text>
+            <text class="small_text" style="font-size: 26rpx;margin-top: 20rpx;">{{obj.fieldString}}</text>
+            <text class="small_text" style="white-space:normal;font-size: 26rpx;margin-top: 19rpx;">{{obj.content}}</text>
+          </view>
+        </view>
+        <view class="user_foot_view">
+          <text class="list_item_text"></text>
+          <text bindtap="tapApplySmallButton" data-x="{{indexX}}" data-y="{{indexY}}" data-tag="1" class="list_item_text">编辑</text>
+          <text bindtap="tapApplySmallButton" data-x="{{indexX}}" data-y="{{indexY}}" data-tag="2" class="list_item_text">电话</text>
+          <text bindtap="tapApplySmallButton" data-x="{{indexX}}" data-y="{{indexY}}" data-tag="3" class="list_item_text">短信</text>
+        </view>
+      </view>
+    </block>
+  </block>
+  <view style="height:150rpx;"></view>
+</scroll-view>
+<view>
+  <button  bindtap="btn" class="btn">导出</button>
+</view>

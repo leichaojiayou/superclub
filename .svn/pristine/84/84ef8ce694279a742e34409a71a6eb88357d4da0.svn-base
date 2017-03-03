@@ -1,0 +1,27 @@
+.des_txt {
+  font-size: 13px;
+  letter-spacing: -0.3pt;
+  color: rgb(142, 142, 142);
+  white-space: normal;
+}
+
+
+.sent{
+    display: flex;
+    justify-content: center;
+    margin: 1.8vh 0 2vh 0;
+}
+
+
+.textarea{
+    opacity: 85%;
+    width: 100%;
+    
+    background: rgb(255, 255, 255);
+}
+
+.num_txt{
+   position: absolute;
+   right: 3.9%;
+   bottom: 7.6%;
+}

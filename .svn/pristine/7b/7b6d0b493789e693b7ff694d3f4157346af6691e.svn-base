@@ -1,0 +1,45 @@
+<import src="../../../template/club/memberAct.wxml"  />
+<view class="home_head">
+    <view class="head_first">
+        <image src="{{club.logo}}" class="club_img" mode="aspectFit"></image>
+        <view></view>
+    </view>
+    <view class="head_second" bindtap="natoChargeActivity">
+        <text class="white_txt">{{club.title}}</text>
+        <view style="margin-top:10px;">
+            <block wx:for="{{club.features}}">
+                <text class="second_label">{{item.name}}</text>
+            </block>
+            <view class="des_txt" style="margin-top:10px;">
+                <text style="margin-right:5px;">ID：{{club.clubNo}}</text>
+                <text>{{club.city.province}}{{club.city.cityName}}</text>
+            </view>
+            <view class="des_txt second_des">{{club.slogan}}</view>
+        </view>
+    </view>
+    <view class="head_thrid">
+        <image class="head_QRcode" src="" mode="aspectFit"></image>
+        <image src="" class="right_errow2" mode="aspectFit"></image>
+    </view>
+</view>
+<view class="home_list">
+    <view class="home_list_one">
+        <image class="list_img" src=""></image>
+        <text>会员{{club.memberCount}}</text>
+    </view>
+    <view class="home_list_one">
+        <image class="list_img" src=""></image>
+        <text>活动{{club.activityCount}}</text>
+    </view>
+</view>
+<view class="tran des_txt" style="margin-bottom:20px">
+    <view class="line" style="left:50px;"></view>
+    <view class="line" style="right: 50px;"></view>
+    活动列表
+</view>
+    <block>
+        <template is="common_two" data="{{activity}}"  />
+    </block>
+    <view style="text-align:center;font-size:12px;color:rgb(229,229,229);margin-bottom:30px;">
+        <text>THE END</text>
+    </view>

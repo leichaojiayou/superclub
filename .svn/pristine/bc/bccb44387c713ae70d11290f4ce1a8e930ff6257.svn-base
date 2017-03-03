@@ -1,0 +1,53 @@
+const api = require("./request");
+class ClubApi {
+    constructor() {
+    }
+    /**
+ * 创建俱乐部: http://doc.iweju.com/FitNesse.WejuBaHttp.ClubDoc.ClubCreateDoc
+ */
+    createClub(param,...fn) {
+        api.wxRequest(param, "/ba/club/create",...fn)
+    }
+
+    /**
+     * 我加入的俱乐部: http://doc.iweju.com/FitNesse.WejuBaHttp.ClubDoc.ClubHomeListDoc
+     */
+    myClubs(param,...fn) {
+        api.wxRequest(param, "/ba/club/home/list",...fn)
+    }
+
+    /**
+     * 待办事项（小程序）
+     * 俱乐部管理消息: http://doc.iweju.com/FitNesse.WejuBaHttp.ClubDoc.ClubMemeberJoinList
+     * 
+     */
+    clubMemberJoinMessages(param,...fn) {
+        api.wxRequest(param, "/ba/club/memeber/join/list",...fn)
+    }
+
+    /**
+     * 俱乐部险情，小程序的管理员查看:http://doc.iweju.com/FitNesse.WejuBaHttp.ClubDoc.ClubDetail
+     */
+    clubDetailLite(param,...fn) {
+        api.wxRequest(param, "/ba/club/detail/lite",...fn);
+    }
+
+    /**
+     * 用户管理的俱乐部活动： http://doc.iweju.com/FitNesse.WejuBaHttp.V222Doc.ActTest.ActivityAdminManageByUser222Doc
+     */
+
+    clubActs(param,...fn) {
+        api.wxRequest(param, "/ba/activity/admin/manage_by_user",...fn)
+    }
+    
+    /**
+     * 俱乐部详情
+     */
+    clubIndex(param,...fn){
+        console.log('club index');
+        api.wxRequest(param, "/ba/club/detail/lite",...fn)
+    }
+
+}
+
+module.exports = ClubApi

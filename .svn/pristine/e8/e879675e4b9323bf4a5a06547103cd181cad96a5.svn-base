@@ -1,0 +1,10 @@
+<!--pages/julebumingcheng/julebumingcheng.wxml-->
+
+
+
+<view class="header">
+<input placeholder="俱乐部名称15字以内" placeholder-class="t"/>
+<icon type="clear" size="18"></icon>
+</view>
+<button style="margin:60rpx 30rpx 0 30rpx;" type="primary" disabled="true">保存</button>
+<button style="margin:60rpx 30rpx 0 30rpx;" type="primary">保存</button>

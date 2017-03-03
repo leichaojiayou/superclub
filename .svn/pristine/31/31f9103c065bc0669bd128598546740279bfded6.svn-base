@@ -1,0 +1,187 @@
+@import "../../../template/common/common.wxss";
+.back_head {
+  background-color: rgb(89, 215, 176);
+}
+
+.back_top {
+  margin-bottom: 17px;
+}
+
+.back_top,
+.club_msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.back_foot,
+.tran {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  position: relative;
+}
+
+.back_foot {
+  margin: 20px 0 20px 0;
+}
+
+.line {
+  position: absolute;
+  width: 80px;
+  border-bottom: 1px solid rgb(230, 230, 230);
+  top: 9px;
+}
+
+.label_txt {
+  color: rgb(58, 157, 126);
+  font-size: 19px;
+  margin-bottom: 5px;
+}
+
+.xiegan {
+  position: absolute;
+  right: 67%;
+  top: 15%;
+}
+
+.xiegan2 {
+  position: absolute;
+  right: 33.3%;
+  top: 15%;
+}
+
+.point {
+  background: red;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50px;
+  position: absolute;
+  /*margin-left: 30rpx;
+  margin-top: 50rpx;*/
+  top: 50rpx;
+  right: 0rpx;
+  text-align: center;
+  line-height: 40rpx;
+}
+
+.body_item1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.list_img {
+  width: 78rpx;
+  height: 78rpx;
+  opacity: 30%;
+}
+.nd_img_class{
+  width: 112px;
+  height: 77px;
+}
+.common2 {
+  border-bottom: 1px solid rgb(246, 246, 246);
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.code-succeed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  opacity: 0;
+  transition: opacity 400ms ease-in;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.code-succeed-toast {
+  position: fixed;
+  top: 7%;
+  width: 75%;
+  background-color: #fff;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  background-size: cover;
+}
+
+.code-message {
+  position: relative;
+  margin: 30rpx auto 0;
+}
+
+.code-message-logo {
+  width: 100rpx;
+}
+
+.code-message-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 30rpx;
+}
+
+.code-content-title {
+  text-align: center;
+  margin: 20rpx 0 10rpx;
+}
+
+.code-content-text {
+  text-align: center;
+  font-size: 24rpx;
+}
+
+.code-message-img {
+  width: 60%;
+  margin: 20rpx auto;
+}
+
+.code-content-btn {
+  width: 80%;
+  background: #3dd1a5;
+  color: #fff;
+  margin-bottom: 30rpx;
+}
+
+.code-text {
+  opacity: 0;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 70%;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.code-hehe {
+  text-align: center;
+  color: #fff;
+}
+
+.code-share {
+  width: 60%;
+  text-align: center;
+  margin: 20rpx auto 30rpx;
+  color: #3dd1a5;
+  background: rgb(61, 209, 165, 0);
+  border: 1px solid #3dd1a5;
+  border-radius: 10rpx;
+  padding: 10rpx 0;
+}
+
+.code-close {
+  width: 60rpx;
+  margin: 0 auto;
+  text-align: center;
+}

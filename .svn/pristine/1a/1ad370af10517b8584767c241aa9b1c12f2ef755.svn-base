@@ -1,0 +1,91 @@
+Page({
+  data: {
+    sex_array: ['男', '女'],
+    sex_arrayArray: [
+      {
+        id: 0,
+        name: '男'
+      },
+      {
+        id: 1,
+        name: '女'
+      }
+    ],
+    sex_index: 0,
+    clother_array: ['选手骑行服xs', '选手骑行服xx'],
+    clother_arrayArray: [
+      {
+        id: 0,
+        name: '选手骑行服xs'
+      },
+      {
+        id: 1,
+        name: '选手骑行服xx'
+      }
+    ],
+    clother_index: 0,
+    page: {
+      ticket_text: '票价',
+      img: '../images/right-errow.png',
+      ticket: {
+        price: '￥270',
+        text: '潜水22人组票价的名字可以有这么'
+      },
+      insurance_text: '保险',
+      insurance_msg: '由主办方统一购买',
+      name_text: '昵称',
+      nameinput_text: '输入昵称',
+      sex_text: '性别',
+      sex_msg: '男',
+      phone_text: '手机',
+      phone_number: 18824815656,
+      realname_text: '真实姓名',
+      realname_msg: '李希光',
+      IDnumber_text: '身份证号',
+      clother_text: '骑行服码数(必选*)',
+      clother_msg: '选手骑行服xs',
+      contacts_text: '紧急联系人手机号+字',
+      input_text: '输入',
+      button1: '马上报名',
+      button2: '帮人报名',
+    },
+    statu: '1'
+
+  }
+  ,
+  //衣服选择器
+  clother_bindPickerChange(e) {
+    this.setData({
+      clother_index: e.detail.value
+    })
+  }
+  ,
+  //性别选择器
+  sex_bindPickerChange(e) {
+    this.setData({
+      sex_index: e.detail.value
+    })
+  }
+  ,
+  onLoad: function (options) {
+    // 页面初始化 options为页面跳转所带来的参数
+  },
+  onReady: function () {
+    // 页面渲染完成
+
+  },
+  onShow: function () {
+    // 页面显示
+  },
+  onHide: function () {
+    // 页面隐藏
+  },
+  onUnload: function () {
+    // 页面关闭
+  },
+    helpapply:function(e){
+    wx.navigateTo({
+      url: '../payment/payment',
+    })
+  }
+})

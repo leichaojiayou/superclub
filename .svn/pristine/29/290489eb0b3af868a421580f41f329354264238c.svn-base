@@ -1,0 +1,27 @@
+.comment_item{
+    display: flex;
+    flex-direction: column;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: row;
+  width: 750rpx;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nick, .comment_content {
+  font-size: 28rpx;
+  letter-spacing: -0.6rpx;
+}
+
+.post_time {
+  font-size: 24rpx;
+  letter-spacing: -0.6rpx;
+  color: rgb(191, 191, 191);
+}
+
+.comment_content {
+  margin-left: 140rpx;
+}

@@ -1,0 +1,125 @@
+// pages/mine/me/me.js
+var util = require("../../../utils/util.js");
+var session = require("../../../utils/session.js");
+
+Page({
+  data: {
+    status: '1',
+    stat: '进入管理后台',
+    stat1: '创建俱乐部',
+    dataList: [],
+    start:'0',
+    more:1,
+    applyActCount: 0,
+    item3: [
+      { img: '', name: '潍坊市马拉松运动协会2017黄河口东营-国际马拉松赛报名啊啊啊啊啊啊啊啊啊啊啊啊', time: '2017.12.21 17:30', club_name: '俱乐部俱乐部名称', money: '￥230.00', freemsg: 'null', enlistnumber: 'null' }
+    ],
+    item4: [
+      { it: '取消报名', color: 'rgb(0,0,0)', idnum: '1' },
+      { it: '修改报名', color: 'rgb(0,0,0)', idnum: '2' },
+      { it: '去支付', color: 'rgb(61,209,164)', idnum: '3' }
+    ],
+    item5: [
+      { upload: '待付款' }
+    ]
+    ,
+    msg: {
+      name: '黄丽燕',
+      head_img: '../../../assets/images/user.png',
+      head_id: '222222222',
+      head_signname: '我是简介简介简介',
+      clubname: '俱乐部名称',
+      signed: '200'
+    }
+  },
+  onLoad: function(){
+    var that = this;
+    getApp().mineApi.userApplyList({//请求报名记录
+      data: {
+        failToast: true,
+        successToast: true,
+        user_id: 10237,
+        start: 0,
+        count: 30
+      },
+    },
+    function(res){
+        console.log("success");
+        that.setData({
+          dataList: res.data.activities,
+          start: res.data.start,
+          more: res.data.more,
+          applyActCount: res.data.applyActCount,
+        })
+    },
+    function(res){
+        console.log("fail");
+    },
+    function(res){
+        console.log("complete");
+          console.log(res);
+          util.getErrorMsg(res);
+    }
+  )},
+  // 页面上拉触底事件的处理函数，用于上拉加载更多
+  onReachBottom:function(){
+      if(this.data.more == 1){
+        this.setData({ 
+          hasMore:true
+        })
+        this.onLoad();
+      }else{
+        this.setData({ 
+          hasMore:false
+        })
+      }
+      return false;
+  },
+  onPullDownRefresh: function(){
+      this.setData({ 
+          start:'0',
+          hasRefresh:true
+      })
+      this.onLoad();
+  },
+  navBackstage: function (e) {
+    wx.navigateTo({
+      url: '../mine/backstage/backstage',
+      success: function (res) {
+        // success
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        // complete
+      }
+    })
+  },
+  
+  changeApply: function (e) {
+    wx.navigateTo({
+      url: '../../activity/apply_paged/apply_paged'
+    })
+  },
+  cancelApply: function (e) {
+    wx.navigateTo({
+      url: '../mine/helpenlist/helpenlist'
+    })
+  },
+  toPay: function (e) {
+    wx.navigateTo({
+      url: '../../activity/payment/payment'
+    })
+  },
+  nato_myaccount: function (e) {
+    wx.navigateTo({
+      url: '../mine/myaccount/myaccount'
+    })
+  },
+  myWallet: function (e) {
+    wx.navigateTo({
+      url: '../mine/myaccount/myaccount'
+    })
+  }
+})

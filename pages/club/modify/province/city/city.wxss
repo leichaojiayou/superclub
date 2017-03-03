@@ -1,0 +1,3 @@
+/* template/common/city/city.wxss */
+
+@import '../province.wxss';

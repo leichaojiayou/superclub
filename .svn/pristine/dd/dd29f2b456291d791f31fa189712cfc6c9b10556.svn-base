@@ -1,0 +1,14 @@
+// pages/cash6/cash6.js
+const app = getApp();
+
+Page({
+  data: {
+    item: [
+      { txt: '支付宝 - 提现', money: '50.00', time: '2015-07-12 20:34:34', statu: '正在审核',color:'rgb(255,112,68) '},
+      { txt: '招商银行 - 提现', money: '50.00', time: '2015-07-12 20:34:34', statu: '已打款',color:'rgb(61,209,165) ' },
+    ]
+  },
+  nato_cash7: function(){
+    app.wxService.navigateTo('mine/cash7/cash7')
+  }
+})

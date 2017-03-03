@@ -1,0 +1,24 @@
+@import "/template/toasts/toasts.wxss";
+.batten_head{
+    background-color: rgb(253, 245, 217);
+}
+.batten{
+    padding: 8px 17px 10px 14px;
+    white-space: normal;
+}
+.batten_txt{
+    color: rgb(197, 148, 100);
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: -0.3pt;
+    text-align: justify;
+}
+.batten_mag{
+    margin:8px 10px 0 0;
+}
+.paymoney{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+}

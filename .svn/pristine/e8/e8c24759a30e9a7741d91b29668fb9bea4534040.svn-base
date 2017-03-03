@@ -1,0 +1,49 @@
+<import src="../../../template/toasts/toasts.wxml" />
+<!--报名页面-->
+
+<!--头框-->
+<view class="bigview" wx:if="{{isCost}}">
+
+  <!--票价-->
+  <view class="itemView" >
+    <text>费用</text>
+    <view class="itemView_foot">
+      <picker bindchange="ticketSelect" value="{{ticketSelectIndex}}" range="{{tickets}}" range-key="desc">
+        <view class="foot_text_view">
+          <text class="bigsize" style="margin-bottom: 5px;">¥{{selectTicket.cost/100}}</text>
+          <text class="smartsize">{{selectTicket.name}}</text>
+        </view>
+      </picker>
+      <image src="{{rightArrow}}"></image>
+    </view>
+  </view>
+</view>
+
+<!--中框-->
+<view class="bigview">
+  <view wx:for="{{fields}}" wx:key="item">
+    <view class="itemView">
+      <text>{{item.fieldName}}</text>
+      <view wx:if="{{item.fieldType==2}}" class="itemView_foot">
+        <picker bindchange="pickerEvent" value="{{item.select}}" range="{{item.option}}" data-item="{{item}}" data-index="{{index}}">
+          <view class="foot_text_view">
+            <text class="bigsize"> {{item.option[item.select]}} </text>
+          </view>
+        </picker>
+        <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png"></image>
+      </view>
+      <view wx:else class="itemView_foot">
+        <input bindinput="inputEvent" data-item="{{item}}" data-index="index" type="{{item.inputType}}" maxlength="{{item.maxText}}" value="{{item.defaultValue}}" placeholder="{{item.placeHolder}}" placeholder-class="psection" />
+      </view>
+    </view>
+  </view>
+</view>
+
+<!--按钮框-->
+<view class="buttonview">
+  <button bindtap="greenButton" class="button1">{{type==0?'马上报名':'保存'}}</button>
+  <button wx:if="{{type==0}}" bindtap="helpApply" class="button2">帮人报名</button>
+</view>
+
+<!--临时用户绑定手机号码-->
+<template is="sendNum" data="{{authDialog}}" />

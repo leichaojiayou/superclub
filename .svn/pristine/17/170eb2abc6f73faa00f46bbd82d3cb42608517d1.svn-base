@@ -1,0 +1,152 @@
+@import "../../../template/toasts/toasts.wxss";
+/*<!--设置提现用户-->*/
+.line-border{
+    border-top: 1rpx solid #e6e6e6;
+    border-bottom: 1rpx solid #e6e6e6;
+}
+.line1{
+    height: 88rpx;
+    background-color: rgb(255, 255, 255);
+    margin-top: 31rpx;
+    display: flex;
+    padding: 0 29rpx 0 28rpx;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+.line1_img{
+    height: 31rpx;
+    width: 18rpx;
+    opacity: 0.2;
+}
+.header{
+    position: relative;
+    height:158rpx;
+    background-color: rgb(255, 255, 255);
+    margin-top: 31rpx;
+    display: flex;
+    align-items: center;
+    padding: 0 47rpx 0 30rpx;
+}
+
+.line1_img{
+    height: 31rpx;
+    width: 18rpx;
+    opacity: 0.2;
+    position: absolute;
+    right: 29rpx;
+    top: 63.5rpx;
+}
+.t32rpx{
+    font-size: 32rpx;
+    line-height: 36rpx;
+    letter-spacing: -0.8rpx;
+}
+.t26rpx{
+    font-size: 26rpx;
+    line-height: 18rpx;
+    color: rgb(142, 142, 142);
+}
+/*<!--金额-->*/
+.line2{
+    height: 88rpx;
+    background-color: rgb(255, 255, 255);
+    margin-top: 39rpx;
+    display: flex;
+    padding: 0 29rpx 0 28rpx;
+    align-items: center;
+    justify-content: space-between;
+}
+ /*<!--每天一次，单笔~-->*/
+.line2_bottom{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 31rpx 0 28rpx;
+    margin: 22rpx 0 58rpx 0;
+}
+
+/*<!--真实姓名-->*/
+.line3{
+    height: 88rpx;
+    background-color: rgb(255, 255, 255);
+    margin-top: 31rpx;
+    display: flex;
+    padding: 0 29rpx 0 28rpx;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+.input{
+    text-align: right;
+}
+
+/*身份证正面~手持本人身份证拍照*/
+.body4{
+    height: 380rpx;
+    background-color: rgb(255, 255, 255);
+    border-top: 1rpx solid rgb(230, 230, 230);
+    border-bottom: 1rpx solid rgb(230, 230, 230);
+    margin-top: 79rpx;
+}
+/*<!--身份证正面-->*/
+.body4_1{
+    position: relative;
+    height: 126rpx;
+    display: flex;
+    align-items: center;
+     padding: 0 76rpx 0 27.8rpx;
+     justify-content: space-between;
+}
+.body4_1img{
+    height: 80rpx;
+    width: 107rpx;
+    border-radius: 10rpx;
+    border: 1rpx solid rgb(229, 229, 229);
+   
+}
+.line1_img1{
+    position: absolute;
+    right: 29rpx;
+    height: 31rpx;
+    width: 18rpx;
+    opacity: 0.2;
+    top: 52rpx;
+}
+/*身份证反面*/
+.body4_2{
+    position: relative;
+    height: 126rpx;
+    display: flex;
+    align-items: center;
+    border-top: 1rpx solid rgb(230, 230, 230);
+    border-bottom: 1rpx solid rgb(230, 230, 230);
+     padding-right:76rpx;
+     justify-content: space-between;
+     margin-left: 27.8rpx;
+}
+/*手持本人身份证拍照*/
+.body4_3{
+    position: relative;
+    height: 126rpx;
+    display: flex;
+    align-items: center;
+     padding-right:76rpx;
+     justify-content: space-between;
+     margin-left: 27.8rpx;
+}
+.check-money{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20rpx 30rpx;
+    background: #fef6e1;
+    color: #d88451;
+    font-size: 30rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+.check-money-img{
+  width: 20rpx;
+}

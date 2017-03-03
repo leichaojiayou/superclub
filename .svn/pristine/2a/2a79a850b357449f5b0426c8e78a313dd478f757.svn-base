@@ -1,0 +1,9 @@
+
+<!-- pages/summary/summary.wxml -->
+  <view class="header">
+    <textarea name="description" placeholder="俱乐部简介" maxlength="-1" auto-height="true" placeholder-style="font-size:34rpx;Letter-spacing:-0.8rpx;rgb(191,191,191)"
+              class="textarea" value="{{newDescription}}"  bindinput="changeText"/>
+  </view>
+  <view class="btn">
+    <button wx:if="{{!type}}"  type="primary" catchtap="submit" style="background:rgb(61, 209, 164);">保存</button>
+  </view>

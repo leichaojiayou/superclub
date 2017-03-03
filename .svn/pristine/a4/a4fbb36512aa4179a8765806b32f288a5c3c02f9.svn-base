@@ -1,0 +1,17 @@
+.msg_name, .msg_num {
+  justify-content: center;
+  display: flex;
+}
+
+.msg_img {
+  margin-top: 8.1vh;
+  margin-left: 40%;
+}
+
+.btn {
+  margin: 2.4vh 4% 0 4%;
+}
+
+.foot {
+  margin-top: 25pt;
+}

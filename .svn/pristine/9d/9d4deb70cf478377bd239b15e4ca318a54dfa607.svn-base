@@ -1,0 +1,238 @@
+@import "../../../template/common/common.wxss";
+
+.manage {
+  display: flex;
+  flex-direction: row;
+  background-color: yellow;
+  justify-content: space-around;
+}
+
+.container1 {
+  height: 177rpx;
+  background-color: white;
+  border-bottom: 2.2vh solid rgb(246, 246, 246);
+}
+
+.mycharge {
+  padding: 40rpx 0 16rpx 32rpx;
+}
+
+.mycharge1 {
+  padding: 0 0 36rpx 32rpx;
+}
+
+.mycharge_txt {
+  font-size: 34rpx;
+  letter-spacing: -0.8rpx;
+}
+
+/* pages/index_empty/index_empty.wxss */
+
+page {
+  white-space: normal;
+}
+
+.header {
+  /*height: 208rpx;*/
+  background-color: rgb(255, 255, 255);
+  /*margin-top: 33rpx;*/
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.header_item {
+  margin-left: 32rpx;
+}
+
+.header_img {
+  height: 130rpx;
+  width: 130rpx;
+  border-radius: 10rpx;
+  /*border: 1rpx solid rgb(180, 180, 180);
+  margin-left: 32rpx;*/
+}
+
+
+.arrowright {
+  width: 18rpx;
+  height: 31rpx;
+  opacity: 0.2;
+  position: absolute;
+  right: 29rpx;
+}
+
+/*俱乐部名字*/
+
+.club_id {
+  font-size: 17px;
+  letter-spacing: -0.4px;
+}
+
+
+/*中间分类*/
+
+.sort {
+  flex-direction: row;
+  color: rgb(255, 255, 255);
+  margin-top: 1vh;
+}
+
+
+/*每一类的样式*/
+
+.sort_item {
+  background-color: red;
+  padding: 4.5px 8.5px;
+  margin-right: 3%;
+  border-radius: 3px;
+}
+
+
+/*有几个活动样式*/
+
+.nums {
+  letter-spacing: -0.3px;
+  color: rgb(142, 142, 142);
+  margin-top: 1vh;
+}
+
+
+/*body*/
+
+.body_img {
+  height: 115rpx;
+  width: 141rpx;
+}
+
+.body_txt {
+  font-size: 28rpx;
+  line-height: 42rpx;
+  letter-spacing: -0.6rpx;
+  color: rgb(142, 142, 142);
+}
+
+.fun_item {
+  position: relative;
+  background-color: rgb(255, 255, 255);
+  height: 94rpx;
+}
+
+.fun_line {
+  border-bottom: 1rpx solid rgb(230, 230, 230);
+  height: 46.5rpx;
+  margin: 0 23.6% 0 23.6%;
+}
+
+.fun_txt {
+  font-size: 24rpx;
+  letter-spacing: -0.6rpx;
+  color: rgb(142, 142, 142);
+  position: absolute;
+  top: 33%;
+  left: 43%;
+  background-color: rgb(255, 255, 255);
+}
+
+/*模版*/
+
+.swiper {
+  width: 100%;
+  height: 352rpx;
+}
+
+.sw_txt {
+  padding: 4.5rpx;
+  position: absolute;
+  top: -349rpx;
+  right: 20rpx;
+  background-color: rgb(61, 209, 164);
+  font-size: 25.4rpx;
+  color: rgb(255, 255, 255);
+}
+
+.item_css {
+  padding: 29rpx 30rpx 49rpx 33rpx;
+  position: relative;
+}
+
+.item_text {
+  font-size: 34rpx;
+  line-height: 50rpx;
+  letter-spacing: -0.8rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.item_time {
+  font-size: 26rpx;
+  color: rgb(191, 191, 191);
+  margin-top: 27rpx;
+}
+
+.item_img {
+  height: 41rpx;
+  width: 41rpx;
+  border: 1rpx solid rgb(219, 219, 219);
+  border-radius: 20.5rpx;
+}
+
+.item_text_ab {
+  font-size: 26rpx;
+  color: rgb(191, 191, 191);
+  padding-left: 10.8rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  width: 340rpx;
+}
+
+.item_price {
+  font-size: 40rpx;
+  color: rgb(61, 209, 164);
+  top: -4rpx;
+  position: absolute;
+  right: 28rpx;
+}
+
+.mangage-club-content {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 3%;
+  padding: 20rpx 0;
+  border-bottom: 2rpx solid #e5e5e5;
+}
+
+.mangage-club-btn {
+  position: absolute;
+  top: 40rpx;
+  right: 4%;
+  color: #3dd1a5;
+  border: 2rpx solid #3dd1a5;
+  border-radius: 10rpx;
+  padding: 14rpx 20rpx;
+  font-size: 30rpx;
+}
+.line2{
+    display: flex;
+    align-items: center;
+    margin-bottom: 26rpx;
+}
+.line2_img{
+    width: 36rpx;
+    height: 31rpx;
+    margin-right: 16rpx;
+}
+.kuangkuang{
+    height:42rpx;
+    width:72rpx;
+    border-radius:6rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12rpx;
+}

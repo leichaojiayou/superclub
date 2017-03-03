@@ -1,0 +1,35 @@
+Page({
+  data: {
+    user_text: '用户名',
+    user_img: '../images/user.png',
+    date: '07月11日 12:37',
+    receipt_text: '收款',
+    receipt_price: '500.00',
+    order_number_text: '订单编号',
+    order_number: '35436564',
+    payment_text: '付款方式',
+    payment: '微信支付',
+    payment_date_text: '付款时间',
+    payment_date: '2015-07-12 20:34:23',
+    transaction_text: '交易单号',
+    transaction: '375489357985722657657',
+    accounts_receivable_text: '收款账户',
+    accounts_receivable: '黄锡成-298732',
+  }
+  ,
+  onLoad: function (options) {
+    // 页面初始化 options为页面跳转所带来的参数
+  },
+  onReady: function () {
+    // 页面渲染完成
+  },
+  onShow: function () {
+    // 页面显示
+  },
+  onHide: function () {
+    // 页面隐藏
+  },
+  onUnload: function () {
+    // 页面关闭
+  }
+})

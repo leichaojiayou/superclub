@@ -1,0 +1,249 @@
+<view style="background: rgb(0, 0, 0);">
+  <view class="bg">
+
+    <!-- 标题-->
+    <view>
+      <input bindinput="setTitle" class="input_title" placeholder="输入活动主题" value="{{title}}" />
+    </view>
+
+    <!-- 内容 -->
+    <view class="input_content" bindtap="set_input">
+      <block wx:for="{{contents}}" for-index="index">
+        <view style="width:750rpx;" wx:if="{{item.type==2}}">
+          <image id="{{index}}" src="{{item.value}}" mode="widthFix" style="width:100%;" catchtap="con_tap"></image>
+          <icon id="{{index}}" type="clear" bindtap="delete" class="del"></icon>
+        </view>
+        <text id="{{index}}" style="color:{{item.color}};font-weight:{{item.bold==1?'bold':'normal'}};font-size:{{item.size==1?'30':'36'}}rpx" catchtap="con_tap" wx:if="{{item.type==1}}">{{item.value}}</text>
+        <text id="{{index}}" wx:if="{{item.type==1&item.value==''}}" style="width:30rpx;heigth:30rpx;width:{{windowWidth}}" catchtap="con_tap"></text>
+        <view id="{{index}}" wx:if="{{item.type==3}}" style="width:750rpx;heigth:30rpx;" catchtap="con_tap"></view>
+        <view wx:if="{{item.type=='can'}}" style="background: #{{can}};" class="can"></view>
+      </block>
+      <view wx:if="{{contents==0}}" style="font-size: 34rpx;letter-spacing:-0.8rpx;color:rgb(191,191,191);">请输入内容</view>
+    </view>
+    <view class="blank" bindtap="set_input"></view>
+    <textarea focus="{{input_auto}}" value="{{test}}" bindinput="con_input" style="width:0rpx;height:0rpx;" bindblur="reset_pos" />
+  </view>
+</view>
+
+<!-- 选择 -->
+<view class="choose" style="position:relative;">
+  <view class="choose_color" hidden="{{isShowColor}}" bindtap="show_color">
+    <view style="display:flex;" class="point1">
+      <block wx:for="{{color}}" for-index="index">
+        <view bindtap="choose_color" id="{{index}}" style="height:79rpx;width:80rpx;display:flex;align-items:center; justify-content: center;">
+          <view bindtap="choose_color" id="{{index}}" style="background:{{item}};" class="point2"></view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class="choosestatus">
+
+    <!--上传图片-->
+    <view class="icon" bindtap="choose_img">
+      <image src="https://cdn.51julebu.com/xiaochengxu/image/img.png" style="width: 47rpx;height: 47rpx;"></image>
+    </view>
+
+    <!--加粗b图片-->
+    <view class="iconb" bindtap="choose_weight">
+      <image src="{{isWeight?'https://cdn.51julebu.com/xiaochengxu/image/bold-on@2x.png':'https://cdn.51julebu.com/xiaochengxu/image/bold@2x.png'}}" style="width: 30rpx;height: 33rpx;"></image>
+    </view>
+
+    <!--a+图片-->
+    <view class="icona" bindtap="changeimg">
+      <image src="{{font_size==1?'https://cdn.51julebu.com/xiaochengxu/image/font-@2x.png':'https://cdn.51julebu.com/xiaochengxu/image/font+@2x.png'}}" style="width: 34rpx;height: 34rpx;"></image>
+    </view>
+
+    <!--选择颜色-->
+
+    <!--选择颜色-->
+    <view class="pointt" bindtap="show_color">
+      <view class="point_1" style="border: 1rpx solid {{point_color}}">
+        <view style="background:{{point_color}};" class="point"></view>
+      </view>
+    </view>
+  </view>
+  <view class="look" bindtap="preview">
+    预览
+  </view>
+</view>
+
+<!-- list -->
+
+<!-- -->
+<view class="list_item" style="margin-top:41rpx;">
+  <view class="picker">
+    <view>
+      活动开始时间
+      <view id="begin" style="float:right;position:relative;z-index:100" bindtap="togglePicker">{{beginTxt}}</view>
+    </view>
+  </view>
+  <image class="errow" src="https://cdn.51julebu.com/xiaochengxu/image/right-errow.png"></image>
+</view>
+
+<!-- -->
+<view class="list_item">
+  <view class="picker">
+    <view>
+      活动结束时间
+      <view id="end" style="float:right;" bindtap="togglePicker">{{endTxt}}</view>
+    </view>
+  </view>
+  <image class="errow" src="https://cdn.51julebu.com/xiaochengxu/image/right-errow.png"></image>
+</view>
+
+<!-- -->
+<view class="list_item" style="margin-top:41rpx;">
+  <view class="picker" bindtap="addActAddress">
+    <view>
+      活动地点
+      <text style="float:right;width:310rpx;display:  -webkit-box;-webkit-line-clamp:1;-webkit-box-orient:  vertical;overflow:hidden;text-overflow: ellipsis; white-space: nowrap;text-align: right;">{{address}}</text>
+    </view>
+  </view>
+  <image class="errow" src="https://cdn.51julebu.com/xiaochengxu/image/right-errow.png"></image>
+</view>
+
+<!-- -->
+<view class="list_item" bindtap="changeActCover">
+  <view class="picker">
+    活动封面
+    <image class="headerImg" src="{{cover}}"></image>
+  </view>
+  <image class="errow" src="https://cdn.51julebu.com/xiaochengxu/image/right-errow.png"></image>
+</view>
+<view class="list_item" style="margin-top:41rpx;" bindtap="setActFee">
+  <view class="picker">
+    活动费用
+    <text style="float:right;">{{actFeeText}}</text>
+  </view>
+  <image class="errow" src="https://cdn.51julebu.com/xiaochengxu/image/right-errow.png"></image>
+</view>
+
+<!-- 资料 -->
+<view class="bg">
+  <view class="list_item picker1" style="margin-top:41rpx;">
+    用户报名填写项
+  </view>
+  <view class="choose_user">
+    <block wx:for="{{applyFields}}" wx:for-item="applyField" for-index="index">
+      <block wx:if="{{applyField.canEidt == false}}">
+        <view id="{{index}}" style="color:rgb({{applyField.isCheck?'256,256,256':'89,215,176'}});background:rgb({{applyField.isCheck?'89,215,176':'256,256,256'}});position:relative;z-index:101" class="choose_user_item" bindtap="choseApplyFields">{{applyField.fieldName}}</view>
+      </block>
+      <block wx:if="{{applyField.canEidt == true}}">
+        <view id="{{index}}" bindtap="editApplyFields" style="color:rgb({{applyField.isCheck?'256,256,256':'89,215,176'}});background:rgb({{applyField.isCheck?'89,215,176':'256,256,256'}});position:relative;z-index:101" class="choose_user_item">{{applyField.fieldName}}</view>
+      </block>
+    </block>
+    <view id="{{index}}" bindtap="addApplyFields" style="color:rgb({{applyField.isCheck?'256,256,256':'89,215,176'}});background:rgb('256,256,256');position:relative;z-index:101" class="choose_user_item">+</view>
+  </view>
+</view>
+<view class="bg" style="margin-top:41rpx;"  bindtap="showMoreInfo">
+  <view class="list_item">
+    <view class="picker">
+      更多报名设置
+    </view>
+    <view class="triangle">
+      <view class="{{moreApplyIcon?'css_icon_true':'css_icon_false'}}">
+      </view>
+    </view>
+  </view>
+  </view>
+  <view id="nihao" style="display:{{showMoreInfo}}">
+<view class="bg">
+<view class="list_item">
+    <view class="picker">
+      <view>
+        报名截止时间
+        <view style="float:right;" id="deadline" bindtap="togglePicker">{{deadlineTxt}}</view>
+      </view>
+    </view>
+    <image class="errow" src="https://cdn.51julebu.com/xiaochengxu/image/right-errow.png"></image>
+  </view>
+  <view class="list_item" bindtap="setActType">
+    <view class="picker" bindtap="nato_huodongleixing">
+      活动类型
+      <text style="float:right;">{{actTypeTxt}}</text>
+    </view>
+    <image class="errow" src="https://cdn.51julebu.com/xiaochengxu/image/right-errow.png"></image>
+  </view>
+  <view class="list_item" bindtap="setActSMSTips">
+    <view class="picker" bindtap="nato_duanxintixing">
+      短信通知
+      <text style="float:right;">{{smsText}}</text>
+    </view>
+    <image class="errow" src="https://cdn.51julebu.com/xiaochengxu/image/right-errow.png"></image>
+  </view>
+</view>
+<view class="bg" style="margin-top:41rpx;">
+  <view class="list_item">
+    <picker class="picker">
+      报名人需审核
+    </picker>
+    <block wx:if="{{apply_check == 0}}">
+      <switch type="switch" bindchange="canApplyCheck" />
+    </block>
+    <block wx:if="{{apply_check == 1}}">
+      <switch type="switch" checked bindchange="canApplyCheck" />
+    </block>
+  </view>
+  <view class="list_item">
+    <picker class="picker">
+      允许帮人报名
+    </picker>
+    <block wx:if="{{helper_apply == 1}}">
+      <switch type="switch" checked bindchange="canHelpApply" />
+    </block>
+    <block wx:if="{{helper_apply == 2}}">
+      <switch type="switch" bindchange="canHelpApply" />
+    </block>
+  </view>
+</view>
+<view class="bg" style="margin-top:41rpx;">
+  <textarea placeholder-style="font-size: 34rpx;letter-spacing:-0.8rpx;color:rgb(191,191,191);z-index：-1px" style="padding:30rpx;" placeholder="填写报名须知" class="act-textarea" />
+</view>
+</view>
+<view class="check-agree">
+<block wx:if="{{ agreeCheck==true}}">
+         <checkbox class="check-agree-checkbox" checked="true" bindtap="Iagree"></checkbox>
+  </block>
+  <block wx:if="{{ agreeCheck== false}}">
+         <checkbox class="check-agree-checkbox" bindtap="Iagree"></checkbox>
+  </block>
+
+ 
+  <view>我同意
+    <text style="color:#3dd1a5">《超级俱乐部服务协议》</text>
+  </view>
+</view>
+<view style="margin:0 30rpx 60rpx;;">
+  <button style="background:#3dd1a5;color:#fff" bindtap="saveOrUpdateAct">发布</button>
+</view>
+
+<!--时间控件-->
+<view class="picker-view-big" style="{{modalShowStyle}};z-index: {{zindex}};">
+  <view class="pickerdata">
+    <view class="picker-btn">
+      <view class="btn picker-alpha-btn" bindtap="touchCancel">取消</view>
+      <view class="btn picker-beta-btn" bindtap="touchAdd">确定</view>
+    </view>
+    <picker-view indicator-style="height: 50px;" class="picker-view" style="width: 100%; height: 300px;" value="{{value}}" bindchange="bindChange">
+      <picker-view-column>
+        <view wx:for="{{years}}" style="line-height: 50px;">{{item}}年</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:if="{{item<10}}" wx:for="{{months}}" style="line-height: 50px">0{{item}}月</view>
+        <view wx:if="{{item>9}}" wx:for="{{months}}" style="line-height: 50px">{{item}}月</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:if="{{item<10}}" wx:for="{{days}}" style="line-height: 50px">0{{item}}日</view>
+        <view wx:if="{{item>9}}" wx:for="{{days}}" style="line-height: 50px">{{item}}日</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:if="{{item<10}}" wx:for="{{hours}}" style="line-height: 50px">0{{item}}</view>
+        <view wx:if="{{item>9}}" wx:for="{{hours}}" style="line-height: 50px">{{item}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:if="{{item<10}}" wx:for="{{minutes}}" style="line-height: 50px">0{{item}}</view>
+        <view wx:if="{{item>9}}" wx:for="{{minutes}}" style="line-height: 50px">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+</view>

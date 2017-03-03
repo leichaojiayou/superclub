@@ -1,0 +1,31 @@
+
+<!--topview 顶部input输入框-->
+<view class="top_view">
+  <input bindinput="inputHandle" id="entry" type="text" maxlength="10" placeholder="{{input_placeholder_text}}" placeholder-class="psection" />
+</view>
+<view class="item_view" bindtap="binditem_button">
+  <view class="icon_view">
+    <view class="{{click_Status ? 'css_icon_true':'css_icon_false'}}" style="{{click_Status ? 'margin-left:33rpx':'margin-left:36rpx'}}"></view>
+  </view>
+  <text>{{text1}}</text>
+</view>
+
+<!--下面2个input输入框view-->
+<block wx:if="{{click_Status}}">
+  <view class="item_input_view">
+    <view class="item_view1">
+      <image src="../../../assets/images/delet@2x.png" class="img" style="height:20px;width:20px"></image>
+      <input  bindinput="inputHandle" id="option1" type="text" maxlength="10" placeholder="{{input_placeholder_text1}}" placeholder-class="psection" style="border-bottom: 1rpx solid rgb(230, 230, 230);" />
+    </view>
+    <view class="item_view1">
+      <image src="../../../assets/images/add@2x.png" class="img" style="height:20px;width:20px"></image>
+      <input bindinput="inputHandle" id="option2" type="text" maxlength="10" placeholder="{{input_placeholder_text1}}" placeholder-class="psection" />
+    </view>
+  </view>
+  <view class="input_foot_view">
+    <text>{{text2}}</text>
+  </view>
+</block>
+<view class="button_view">
+  <button bindtap="{{button_Status?'button':''}}" style="{{button_Status?'':'opacity: 0.4'}}">{{botton_text}}</button>
+</view>
