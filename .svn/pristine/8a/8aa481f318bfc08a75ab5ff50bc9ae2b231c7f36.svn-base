@@ -84,8 +84,7 @@ page {
 
 .sort {
   flex-direction: row;
-  color: #fff;
-  margin-top: 0;
+  color: rgb(255, 255, 255);
 }
 
 /*每一类的样式*/
@@ -102,7 +101,7 @@ page {
 .nums {
   letter-spacing: -0.3px;
   color: rgb(142, 142, 142);
-  margin-top: 0;
+  margin-top: 1vh;
 }
 
 /*body*/
@@ -283,6 +282,7 @@ page {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 6rpx;
   white-space: nowrap;
 }
 
@@ -321,12 +321,4 @@ page {
   flex-direction: column;
   display: flex;
   margin-left: 28rpx;
-}
-.club-index-list{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  height: 42rpx;
-  margin-bottom:19rpx;
-  margin-top:15rpx;
 }

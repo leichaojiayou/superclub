@@ -102,7 +102,7 @@ page {
 .nums {
   letter-spacing: -0.3px;
   color: rgb(142, 142, 142);
-  margin-top: 0;
+  margin-top: 1vh;
 }
 
 /*body*/
@@ -283,6 +283,7 @@ page {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 6rpx;
   white-space: nowrap;
 }
 

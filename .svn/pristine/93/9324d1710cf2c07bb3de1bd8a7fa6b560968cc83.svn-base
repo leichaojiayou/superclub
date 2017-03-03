@@ -12,8 +12,8 @@
         <view class="club-index-title">
           <text class="club_id txt-overflow">{{club.title}}</text>
         </view>
-        <view class="club-index-list">
-          <view class="sort">
+        <view style="display:flex; justify-content:space-between;align-items:center;height：42rpx;margin-bottom:19rpx;margin-top:15rpx;">
+          <view class="sort" style="margin-top:0;">
             <view class="items-tap">
               <block wx:for="{{club.features}}" wx:key="key_feature" wx:for-item="feature">
                 <text wx:if="{{index==0&&feature.name}}" class="kuangkuang master-project-overflow" style="background-color:rgb(145, 213, 192)">{{feature.name}}</text>

@@ -38,7 +38,7 @@
               <view class="club-index-title">
                 <text class="club_id txt-overflow">{{myClub.title}}</text>
               </view>
-              <view class="sort" style="margin-top:15rpx;margin-bottom:19rpx;height:42rpx">
+              <view class="sort" style="padding-top:8rpx;margin-top:0;">
                 <view class="items-tap">
                   <block wx:for="{{myClub.features}}" wx:key="key_feature">
                     <text wx:if="{{index==0&&item.name}}" class="kuangkuang master-project-overflow" style="background-color:rgb(145, 213, 192)">{{item.name}}</text>

@@ -71,20 +71,20 @@ Page({
         if (e.joinStatus < 3) {
           e.title = '申请加入俱乐部'
         } else if (e.joinStatus == 3) {
-          e.title = '会员管理'
-        } else if (e.joinStatus == 4) {
           e.title = '管理员设置'
-        } else if (e.joinStatus == 5) {
+        } else if (e.joinStatus == 4) {
           e.title = '管理员撤销'
+        } else if (e.joinStatus == 5) {
+          e.title = '副会长设置'
         } else if (e.joinStatus == 6) {
-          e.title = '副会长设置'
-        } else if (e.joinStatus == 7) {
           e.title = '副会长撤销'
-        } else if (e.joinStatus == 8) {
+        } else if (e.joinStatus == 7) {
           e.title = '副会长设置'
+        } else if (e.joinStatus == 8) {
+          e.title = '会员管理'
         } else if (e.joinStatus == 9) {
           e.title = '会员管理'
-        } 
+        }
       })
       that.setData({
         clubMsgs: messages

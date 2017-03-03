@@ -102,7 +102,7 @@ page {
 .nums {
   letter-spacing: -0.3px;
   color: rgb(142, 142, 142);
-  margin-top: 0;
+  margin-top: 1vh;
 }
 
 /*body*/
