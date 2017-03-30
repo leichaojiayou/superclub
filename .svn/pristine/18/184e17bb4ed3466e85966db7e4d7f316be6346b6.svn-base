@@ -1,8 +1,0 @@
-@import "../../club/clubhome/clubhome.wxss";
-@import "../../../template/common/common.wxss";
-.midview_item_2_1{
-    display: flex;
-    justify-content: flex-end;
-    align-items:center;
-    border-radius: 4rpx;
-}

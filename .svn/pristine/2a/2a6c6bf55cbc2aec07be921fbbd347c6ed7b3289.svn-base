@@ -1,8 +1,0 @@
-// pages/create_club/create_club.js
-Page({
-  data: {
-    choose: '请选择',
-    input: '输入',
-    txt: '写一段简介描述你的俱乐部吧'
-  },
-})

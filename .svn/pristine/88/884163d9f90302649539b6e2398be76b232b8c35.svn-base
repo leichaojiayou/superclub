@@ -1,8 +1,0 @@
-page{
-    background-color: rgb(246, 246, 246);
-}
-.top_view{
-    margin-top: 31rpx;
-    height: 87rpx;
-    background-color: rgb(255, 255, 255);
-}

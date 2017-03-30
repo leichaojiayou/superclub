@@ -1,9 +1,0 @@
-<!-- pages/julebumingcheng/julebumingcheng.wxml -->
-<form bindsubmit="formSubmit">
-    <view class="header">
-        <input name="title" placeholder="俱乐部名称15字以内" placeholder-class="t" value="{{title}}" bindinput="change"  />
-        <icon type="clear" size="18" bindtap="cleanValue"></icon>
-    </view>
-    <button style="margin:60rpx 30rpx 0 30rpx;" type="primary" style="background:#3DD1A5;margin:0 30rpx;" form-type="submit" wx:if="{{title}}">保存</button>
-    <button style="margin:60rpx 30rpx 0 30rpx;" type="primary" style="background:#3DD1A5;margin:0 30rpx;" disabled="true"wx:else>保存</button>
-</form>
