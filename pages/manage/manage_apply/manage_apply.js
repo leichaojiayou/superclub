@@ -102,12 +102,6 @@ Page({
         this.setData({
             tabIndex:tabIndex,
         });
-        if(tabIndex==1){
-            this.setData({topViewBorder:'border-bottom:1rpx solid #e6e6e6'})
-        }
-        else{
-            this.setData({topViewBorder:''})
-        }
     },
     tapCostGroup:function(e){
         this.setData({
@@ -1064,7 +1058,7 @@ Page({
       case '3':
         //查看活动
         wx.navigateTo({
-          url: '../../activity/act_detail/act_detail?activityID='+activityId+'&clubID='+clubID
+          url: '../../activity/act_detail/act_detail?backOrTo=1&activityID='+activityId+'&clubID='+clubID
         })
         break;
       case '4':

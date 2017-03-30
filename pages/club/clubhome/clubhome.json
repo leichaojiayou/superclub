@@ -1,6 +1,5 @@
 {
     "navigationBarTitleText": "俱乐部主页",
-    "window":{
-        "enablePullDownRefresh":"true"
-    }
+     "backgroundTextStyle":"dark",
+    "enablePullDownRefresh":"true"
 }

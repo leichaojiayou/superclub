@@ -2,6 +2,7 @@ const App = getApp();
 const clubApi = App.api('clubApi');
 const userApi = App.api("userApi")
 const wxService = App.wxService;
+const session = App.session;
 
 const util = require('../../../utils/util')
 Page({
@@ -13,9 +14,11 @@ Page({
         },
         isReWriteLister: true,//是否要启动监听器
         club: {
-            isReLoad: false//是否刷新
+            isReLoad: false,//是否刷新
+            roleType:1
         },
         time: 60, //倒计时
+        isServerDoIt:0 //服务处理临时用户问题 0：服务器处理 1：不做处理
     },
     onLoad(e) {
         this.setData({
@@ -65,11 +68,18 @@ Page({
             }
             wxService.showModal(toastParam, res => {
                 if (res.confirm) {
-                    if (!getApp().session.isTempUser()) {
+
+                    if(that.data.isServerDoIt == 0) {
                         this.__joinClub();
                     } else {
-                        this.__showSMSPopup();
+
+                        if (!getApp().session.isTempUser()) {
+                            this.__joinClub();
+                        } else {
+                            this.__showSMSPopup();
+                        }
                     }
+
                 }
             });
         } else {
@@ -230,11 +240,16 @@ Page({
                 formId: formId
             })
 
-
-            if (!getApp().session.isTempUser()) {
+            if (this.data.isServerDoIt == 0) {
                 this.__joinClub();
+
             } else {
-                this.__showSMSPopup();
+                if (!getApp().session.isTempUser()) {
+                    this.__joinClub();
+                } else {
+                    this.__showSMSPopup();
+                }
+
             }
         }
     },
@@ -277,6 +292,7 @@ Page({
                         App.event.trigger('clubHome', {
                             roleType: 0
                         })
+                        App.event.emit(App.config.EVENT_CLUB_CHANGE, null)
                     }
 
                 });
@@ -501,7 +517,8 @@ Page({
     __showCheckPopup: function () {
         this.setData({
             joinShowStyle: "opacity:1;pointer-events:auto;",
-            join: '申请加入'
+            join: '请输入验证信息',
+            needjoinText: App.session.getUserInfo().nick + "申请加入"
         });
     },
 
@@ -548,6 +565,7 @@ Page({
                     })
 
                     App.util.showTip(this, '加入成功');
+                    App.event.emit(App.config.EVENT_CLUB_CHANGE, null)
                 } else {
                     App.util.showTip(this, '申请已提交，请耐心等候审核');
                 }

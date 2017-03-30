@@ -19,7 +19,7 @@
     <view wx:if="{{obj.open}}" class="list_view2">
       <view bindtap="tapRowForDisplay" id="{{idx}}" data-item="{{idx}}" class="list_view2_top">
         <view class="image_view">
-          <image class="user_image2" src="{{obj.user.userImg}}"></image>
+          <image class="user_image" src="{{obj.user.userImg}}"></image>
         </view>
         <view class="user_info_top2">
           <view class="user_info_name_top">

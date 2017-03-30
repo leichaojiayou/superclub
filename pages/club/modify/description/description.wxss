@@ -1,4 +1,3 @@
-/* pages/summary/summary.wxss */
 .des_txt {
   font-size: 13px;
   letter-spacing: -0.3pt;
@@ -6,26 +5,28 @@
   white-space: normal;
 }
 
-
-.sent{
-    display: flex;
-    justify-content: center;
-    margin: 1.8vh 0 2vh 0;
+.sent {
+  display: flex;
+  justify-content: center;
+  margin: 1.8vh 0 2vh 0;
 }
 
-
-.textarea{
-    opacity: 85%;
-    width: 100%;
-    background: rgb(255, 255, 255);
+.textarea {
+  opacity: 85%;
+  width: 100%;
+  background: #fff;
+  height: 850rpx;
+  padding:28rpx 0 90rpx;
 }
 
-.num_txt{
-   position: absolute;
-   right: 3.9%;
-   bottom: 7.6%;
+.num_txt {
+  position: absolute;
+  right: 40rpx;
+  bottom: 40rpx;
 }
 
-.textarea-height{
-    height:850rpx;
+.description-txt {
+  padding: 0 32rpx;
+  background: #fff;
+  position: relative;
 }

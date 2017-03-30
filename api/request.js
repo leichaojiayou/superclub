@@ -1,7 +1,7 @@
 const __config = require('../utils/constant');
 
 /**
- * @param param 
+ * @param param
  *              {
  *                  method:'get',
  *                  failToast:'定制了fail  toast内容',
@@ -11,9 +11,9 @@ const __config = require('../utils/constant');
  *                          userNo:1234
  *                       }
  *              }
- * @param path  
+ * @param path
  * @param callback function[]
- * 
+ *
  */
 const wxRequest = (param, path, ...fn) => {
     const session = getApp().session;
@@ -25,10 +25,11 @@ const wxRequest = (param, path, ...fn) => {
             title: upload ? "上传中...." : "加载中...",
             icon: "loading",
             duration: 10000,
-            mask:true
+            mask: true
         })
     }
-    let url = __config.BASE_URL + path + '?platform=3&sys_version=2.1&api_version=15&_key=' + session.getUserKey();
+    let api_version = param.api_version || 15;
+    let url = __config.BASE_URL + path + '?platform=3&sys_version=2.1&api_version=' + api_version + '&_key=' + session.getUserKey();
     console.log("-------request URL-------", url);
     console.log("-------request data------", param.data);
 

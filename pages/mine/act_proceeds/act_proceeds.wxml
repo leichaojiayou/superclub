@@ -20,7 +20,7 @@
       <view class="item2_bottom">
         <view class="header_time2">活动时间 : {{item.beginTimeStr}} - {{item.endTimeStr}}</view>
         <view wx:if="{{item.payUserCount>0}}" class="pay">{{item.payUserCount}}人付款</view>
-        <view wx:else class="pay" style="position:absolute;top:41rpx;right:31rpx;">暂无付款</view>
+        <view wx:else class="pay pay-none">暂无付款</view>
       </view>
       <view class="item_bottom" style="align-items:center">
         <view hidden="{{item.isClubAct!=1}}" class="header_btn">俱乐部活动</view>

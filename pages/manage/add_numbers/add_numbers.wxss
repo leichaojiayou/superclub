@@ -13,8 +13,6 @@
   position: relative;
 }
 
-
-
 .t3 {
   font-size: 34rpx;
   line-height: 14.2rpx;
@@ -40,70 +38,100 @@
 }
 
 /*昵称-~骑行服码数(必选*)十字样式*/
-.body{
-    margin-top: 39rpx;
-    background: rgb(255, 255, 255);
-    padding-left:32rpx;
+
+.body {
+  margin-top: 39rpx;
+  background: rgb(255, 255, 255);
+  padding-left: 32rpx;
 }
 
-.body_txt{
-    flex-shrink: 0;
-    font-size: 30rpx;
-    line-height: 14.4rpx;
-    letter-spacing: -0.8rpx;
+.body_txt {
+  flex-shrink: 0;
+  font-size: 30rpx;
+  line-height: 14.4rpx;
+  letter-spacing: -0.8rpx;
 }
-.placeholder{
-    font-size: 34rpx;
-    line-height: 14.4rpx;
-    letter-spacing: -0.8rpx;
+
+.placeholder {
+  font-size: 34rpx;
+  line-height: 14.4rpx;
+  letter-spacing: -0.8rpx;
 }
 
 /*紧急联系人手机+字*/
-.foot{
+
+.foot {
   height: 226rpx;
   background-color: rgb(255, 255, 255);
   padding: 37rpx 33rpx;
 }
-.placeholder1{
-    font-size: 32rpx;
-    line-height: 14.4rpx;
-    letter-spacing: -0.8rpx;
+
+.placeholder1 {
+  font-size: 32rpx;
+  line-height: 14.4rpx;
+  letter-spacing: -0.8rpx;
 }
 
-.body_txt1{
-    font-size: 30rpx;
-    line-height: 14.4rpx;
-    letter-spacing: -0.8rpx;
-    color: rgb(61, 209, 165);
+.body_txt1 {
+  font-size: 30rpx;
+  line-height: 14.4rpx;
+  letter-spacing: -0.8rpx;
+  color: rgb(61, 209, 165);
 }
 
-.body_txt{
-    font-size: 30rpx;
-    line-height: 14.4rpx;
-    letter-spacing: -0.8rpx;
+.body_txt {
+  font-size: 30rpx;
+  line-height: 14.4rpx;
+  letter-spacing: -0.8rpx;
 }
 
 .pick_text {
   font-size: 30rpx;
 }
 
-.body_1{
-    /*position: relative;*/
-    justify-content: space-between;
-    height: 88rpx;
-    display: flex;
-    align-items: center;
-    border-bottom: 1rpx solid rgb(229, 229, 229);
+.body_1 {
+  /*position: relative;*/
+  justify-content: space-between;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  border-bottom: 1rpx solid rgb(229, 229, 229);
 }
 
-.help-apply{
+.help-apply {
   padding: 40rpx 34rpx 40rpx 0;
   border-bottom: 1rpx solid #e6e6e6;
 }
-.help-apply-title{
+
+.help-apply-title {
   padding-bottom: 30rpx;
 }
-.help-apply-placeholder{
+
+.help-apply-placeholder {
   color: rgb(191, 191, 191);
-  font-size: 32rpx;
+  font-size: 34rpx;
+}
+
+.add-apply-info {
+  display: flex;
+  align-items: center;
+  text-align: right;
+  margin-right: 30rpx;
+}
+
+.add-apply-arrow {
+  width: 18rpx;
+  height: 31rpx;
+  margin-left: 30rpx;
+  opacity: 0.5;
+}
+.base-style{
+  color: rgb(191, 191, 191);
+}
+.bigsize{
+  font-size: 34rpx;
+}
+.foot_text_view{
+  display: flex;
+  align-items: center;
 }

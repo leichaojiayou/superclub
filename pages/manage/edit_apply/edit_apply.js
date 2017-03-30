@@ -80,7 +80,10 @@ Page({
     this.setData({
       emailShowStyle:'',
     })
-    if(!this.data.reason || this.data.reason == ''){
+
+    var reason = this.data.reason.replace(/(^\s*)|(\s*$)/g,"");
+
+    if(!reason || reason == ''){
       wx.showToast({
         title: '请输入拒绝的原因',
         icon: 'success',
@@ -88,7 +91,7 @@ Page({
       })
       return
     }
-    this.reqeustRefuseApply(this.data.reason)
+    this.reqeustRefuseApply(reason)
     
    },
   titleInput:function(event){

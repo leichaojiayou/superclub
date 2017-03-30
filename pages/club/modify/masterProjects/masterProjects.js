@@ -64,10 +64,16 @@ Page({
         }
         //封装对象
         for (let i = 0;features!=''&& i < features.length; i++) {
-          preItems.push({
+          // preItems.push({
+          //   name: features[i],
+          //   id: ids[i]
+          // })
+          if(features[i]!=''){
+	preItems.push({
             name: features[i],
             id: ids[i]
           })
+}
         }
 
 

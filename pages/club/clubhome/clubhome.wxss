@@ -54,7 +54,7 @@
 
 .top_view2 {
   display: flex;
-  margin-top: 10rpx;
+  margin-top: 20rpx;
   color: rgb(142, 142, 142);
   flex-direction: column;
   align-items: flex-start;
@@ -64,7 +64,6 @@
 
 .right_view_1 {
   display: flex;
-  /*align-items: flex-start;*/
   justify-content: center;
 }
 
@@ -82,17 +81,14 @@
 /*右边图标*/
 
 .right_view {
-  height: 300rpx;
-  padding-top: 20rpx;
-  padding-right: 30rpx;
+  padding: 29rpx 30rpx 0 0;
   font-size: 34rpx;
   width: 75%;
-  color: rgb(255, 255, 255);
+  color: #fff;
 }
 
 .right_img {
-  padding-top: 40rpx;
-  padding-left: 35rpx;
+  padding: 40rpx 0 0 35rpx;
   width: 18rpx;
   height: 31rpx;
   opacity: 0.8;
@@ -116,15 +112,15 @@
 }
 
 .bigsize {
-  /*line-height: 22rpx;*/
+  line-height: 37rpx;
   font-size: 30rpx;
-  width: 100%;
   color: #000;
 }
 
 .smalltext {
   font-size: 26rpx;
   color: rgb(191, 191, 191);
+  height: 26rpx;
 }
 
 .pricetext {
@@ -185,18 +181,22 @@
 
 .midview_list {
   display: flex;
-  flex-direction: column;
-  align-content: stretch;
+  /*flex-direction: column;
+  align-content: stretch;*/
   background: #fff;
 }
 
 .midview_item_img_view {
   position: relative;
+  margin-left: 15rpx;
 }
 
 /*图片*/
 
 .midview_item_1_img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: rgb(230, 230, 230);
   width: 224rpx;
   height: 154rpx;
@@ -249,17 +249,18 @@
 }
 
 .midview_item_1 {
+  width:100%;
   height: 154rpx;
   display: flex;
   padding-left: 15rpx;
-  padding-bottom: 50rpx;
+  padding: 20rpx 0;
+  margin-bottom: 10rpx;
 }
 
 .midview_item_2 {
   height: 154rpx;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   margin-left: 24rpx;
   width: 447rpx;
 }
@@ -372,5 +373,8 @@
 }
 
 .activity-title{
-  height: 90rpx;
+  height: 74rpx;
+}
+.apply-time{
+  margin:14rpx 0 13rpx;
 }

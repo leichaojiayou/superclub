@@ -298,11 +298,11 @@ function getClubImg(key, flag) {
 }
 
 /**
- * 封装后的toast 
+ * 封装后的toast
  * @param that 页面tap事件函数中的 this
  * @param txt 你想要提醒的方式
  * @param time  hide 时间
- * 
+ *
  */
 function showTip(that, txt, time) {
     try {
@@ -324,6 +324,42 @@ function showTip(that, txt, time) {
     }, time)
 }
 
+/**
+ * 校验输入的身份证是否正确
+ * @param ID
+ * @returns ｛*｝ 0、身份证验证通过；1、输入类型错误；2、位数不对；3、地区错误；4、生日错误；5、最后一位错误；
+ */
+function checkID(ID) {
+    if (typeof ID !== 'string') return 1;//输入的不是字符串
+    let city = {11: "北京", 12: "天津", 13: "河北", 14: "山西", 15: "内蒙古", 21: "辽宁", 22: "吉林", 23: "黑龙江 ", 31: "上海", 32: "江苏", 33: "浙江", 34: "安徽", 35: "福建", 36: "江西", 37: "山东", 41: "河南", 42: "湖北 ", 43: "湖南", 44: "广东", 45: "广西", 46: "海南", 50: "重庆", 51: "四川", 52: "贵州", 53: "云南", 54: "西藏 ", 61: "陕西", 62: "甘肃", 63: "青海", 64: "宁夏", 65: "新疆", 71: "台湾", 81: "香港", 82: "澳门", 91: "国外"};
+    let arrInt = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+    let arrCh = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'];
+    let sum = 0, i, residue;
+    let is15 = false;//是否是15位身份证号
+    if (ID.length == 15) {//补充两位年数
+        is15 = true;
+        let start = ID.substring(0, 6), end = ID.substring(6);
+        ID = start + "19" + end;
+    }
+    for (i = 0; i < 17; i++) {
+        sum += ID.substr(i, 1) * arrInt[i];
+    }
+    residue = arrCh[sum % 11];//最后一位校验位计算结果
+    if (is15) {//15位身份证要补充最后一位
+        ID = ID + residue;
+    }
+    let birthday = ID.substr(6, 4) + '/' + Number(ID.substr(10, 2)) + '/' + Number(ID.substr(12, 2));
+    let d = new Date(birthday);
+    let newBirthday = d.getFullYear() + '/' + Number(d.getMonth() + 1) + '/' + Number(d.getDate());
+    let currentTime = new Date().getTime();
+    let time = d.getTime();
+    if (!/^\d{17}(\d|x)$/i.test(ID)) return 2;//位数不对
+    if (city[ID.substr(0, 2)] === undefined) return 3;//地区错误
+    if (time >= currentTime || birthday !== newBirthday) return 4;//出生日期不对
+    if (residue !== ID.substr(17, 1)) return 5;//最后一位校验码不对
+    return 0;
+}
+
 module.exports = {
     formatTime: formatTime,
     formatTime2: formatTime2,
@@ -339,5 +375,6 @@ module.exports = {
     formatTime8: formatTime8,
     formatTime9: formatTime9,
     showTip: showTip,
-    realformatMoney:realformatMoney,
+    realformatMoney: realformatMoney,
+    checkID: checkID,
 }

@@ -19,6 +19,7 @@ let applyInfos;
 let allCost;//累计需要付款的金额
 let applyResult = 0;
 let applyCount = 0;//报名数额
+let loadEndPayImmediately = false;
 Page({
     data: {
         isCost: false,//是否是付费活动
@@ -44,6 +45,7 @@ Page({
         } else if (this.data.type == 2) {
             app.wxService.setNavigationBarTitle("立即付款");
             that.setData({greenButtonText: '立即付款'});
+            loadEndPayImmediately = true;
             this.loadApplyList();
         }
     },
@@ -132,7 +134,7 @@ Page({
             if (item.applyUserType == 0 && that.data.applyList.length > 1) {//删除自己报名要提示
                 app.util.showTip(that, '取消帮报名成员，才能取消自己报名');
                 return;
-            } else if (that.data.isCost && item.payStatus < 7 && this.data.type != 2 && item.payStatus !=1 && item.payStatus !=6) {
+            } else if (that.data.isCost && item.payStatus < 7 && this.data.type != 2 && item.payStatus != 1 && item.payStatus != 6) {
                 app.wxService.showModal({
                     showCancel: false,
                     confirmText: '知道了', content: '小程序暂不支持付费活动在线退款，请到网页端和App操作'
@@ -352,12 +354,12 @@ Page({
                     item.extraDatas = extraDatas;
                     item.gender = item.sex == 1 ? "女" : "男";
                     item.feiyong = utils.realformatMoney(item.cost) + item.ticketName;
-                    allCost = allCost + item.cost;
                     let payStatus = '';
                     if (item.refundStatus == 0) {
                         payStatus = '退款中';
                     } else if (item.payStatus == 1) {
                         payStatus = '待支付';
+                        allCost = allCost + item.cost;
                     } else if (item.payStatus == 2) {
                         payStatus = '已支付';
                     }
@@ -368,12 +370,16 @@ Page({
                     applyList: applyEntityList,
                     greenButtonText: utils.realformatMoney(allCost) + '，立即支付'
                 });
+                if(loadEndPayImmediately){
+                    loadEndPayImmediately = false;
+                    that.getUnPayId();
+                }
             } else {
                 let tips = '';
                 if (that.data.type == 1 || that.data.type == 0) {
-                    tips = '已取消所有报名信息';
+                    tips = '已取消报名';
                 } else if (that.data.type == 2) {
-                    tips = '已取消所有待付信息';
+                    tips = '已取消报名';
                 }
                 app.wxService.showModal({
                         showCancel: false,
@@ -383,7 +389,7 @@ Page({
                     function (res) {
                         let pages = getCurrentPages();
                         let prevPage = pages[pages.length - 2];  //上一个页面
-                        prevPage.recvData(5);
+                        prevPage.recvData(6);
                         app.wxService.navigateBack();
                     });
             }
@@ -521,7 +527,11 @@ Page({
                     let currPage = pages[pages.length - 1];   //当前页面
                     let prevPage = pages[pages.length - 2];  //上一个页面
                     prevPage.recvData(110);//返回act_detail result==110，代表支付失败
-                    app.wxService.navigateBack();
+                    //app.wxService.navigateBack();
+                    that.setData({
+                        type: 2,
+                    });
+                    that.loadApplyList();
                 },
                 complete: function () {
                 }

@@ -4,7 +4,7 @@
   <view class="common2" catchtap="goToApplyDetail" id="{{item.applyId}}">
 
     <!--整个大框-->
-    <view class="nd_header" style="margin-bottom:40rpx;">
+    <view class="nd_header" style="margin:0 30rpx 40rpx 0;">
 
       <!--活动封面-->
       <image src="{{item.cover}}" class="nd_img" mode="scaleToFill" style="width:154rpx;height:154rpx;"></image>
@@ -125,7 +125,7 @@
     <view wx:elif="{{item.applyStatus==1 && item.payStatus==2}}" class="it_bottom">
       <text class="des_txt">报名成功</text>
       <view class="it_all">
-        <view class="it" style="color:rgb(0,0,0);border-color:rgb(0,0,0);opacity:0.4;" catchtap="applyRefund" data-item="{{item}}">
+        <view class="it" style="color:rgb(0,0,0);border-color:rgb(0,0,0);opacity:{{item.isGroupApply==1?0.4:1}};" catchtap="applyRefund" data-item="{{item}}">
           <text>申请退款</text>
         </view>
         
@@ -139,8 +139,7 @@
     <view wx:elif="{{item.applyStatus==2 || item.applyStatus==4}}" class="it_bottom">
       <text class="des_txt">报名取消</text>
       <view class="it_all">
-        <view class="it" style="color:rgb(61,209,164);border-color:rgb(61,209,164);" catchtap="againApply" data-item="{{item}}">
-          <text>重新报名</text>
+        <view class="it" style="color:rgb(61,209,164);border-color:rgb(61,209,164);" catchtap="againApply" data-item="{{item}}">重新报名
         </view>
       </view>
     </view>

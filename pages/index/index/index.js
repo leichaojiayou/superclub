@@ -6,8 +6,8 @@ const clubApi = app.api("clubApi")
 const actApi = app.api("actApi")
 const systemApi = app.api("systemApi")
 
-const COUNT = 5
-const CHECK_INTEVAL = 1000 * 60 * 5 //定时检查系统消息
+const COUNT = 10
+const CHECK_INTERVAL = 1000 * 60 * 5 //定时检查系统消息
 
 Page({
   data: {
@@ -25,20 +25,27 @@ Page({
     firstLoad: true, //是否首次加载页面
     loadingSystemMsg: false, //是否正在请求系统消息
     showingSystemMsg: false, //正在显示系统弹窗
+    hasLogin: false, //是否已经登录
   },
-
+  refesh: function () {
+    wx.showToast({
+      title: '加载中...',
+      icon: 'loading'
+    })
+  },
   onLoad() {
     this.login()
   },
 
   onShow() {
-    if (getApp().session.getUserKey() == null) return
+    if (!this.data.hasLogin) return
 
     this.showSystemDialog()
     this.checkSystemMsg()
 
     app.event.remove(app.config.EVENT_CLUB_MODIFY, this)
     app.event.remove(app.config.EVENT_ACTIVITY_CHANGE, this)
+    app.event.remove(app.config.EVENT_CLUB_CHANGE, this)
 
     if (this.data.refreshClubs) {
       this.data.refreshClubs = false
@@ -54,7 +61,7 @@ Page({
         this.loadRecentClubs()
       } else if (recentClubIds.length > 0 &&
         this.data.recentClubs.length > 0 &&
-        recentClubIds[0] != this.data.recentClubs[0]) {
+        recentClubIds[0] != this.data.recentClubs[0].clubID) {
         //最近访问的俱乐部刚好满了，需要判断第一个最近访问的俱乐部是否相同
         this.loadRecentClubs()
       }
@@ -78,6 +85,11 @@ Page({
       //发布了活动，刷新俱乐部列表
       this.loadClubs()
     })
+
+    app.event.on(app.config.EVENT_CLUB_CHANGE, this, info => {
+      //加入或者退出俱乐部
+      this.data.refreshClubs = true
+    })
   },
 
   onPullDownRefresh: function () {
@@ -89,12 +101,14 @@ Page({
     let that = this
     wx.login({
       success: (res) => {
+        console.log("wx.login() ==> success")
         if (res.code) {
           // 检查用户是否已经绑定超级俱乐部账号
           //https://mp.weixin.qq.com/debug/wxadoc/dev/api/open.html#wxgetuserinfoobject
           //获取微信用户信息, 获取encryptedData和iv
           wx.getUserInfo({
             success: (userRes) => {
+              console.log("wx.getUserInfo() ==> success")
               userApi.login({
                 method: "POST",
                 data: {
@@ -105,31 +119,46 @@ Page({
               }, (res) => {
                 that.validateBind(res)
               }, (res) => {
-                that.showLoginFailDialog()
+                that.showLoginFailDialog('账号登录失败，请重试')
               })
             },
             fail: (res) => {
-              that.weixinAuthFail()
+              //errorMsg: 
+              // 1. getUserInfo:fail auth deny 
+              // 2.getUserInfo:fail
+              console.error("wx.getUserInfo() ==> " + res.errMsg)
+              if (res.errMsg.includes('auth deny')) {
+                that.weixinAuthFail()
+              } else {
+                that.showLoginFailDialog('获取微信用户信息失败,请重试')
+              }
             }
           })
         } else {
           // weixin code empty
+          console.error("wx.login.success with empty code")
           that.weixinAuthFail()
         }
       },
       fail: res => {
-        that.weixinAuthFail()
+        console.error("wx.login() ==> " + res.errMsg)
+        //经常出现此错误,但是不应该提示未授权 (login:fail 网络错误 statusCode : 404)
+        if (res.errMsg.includes('404')) {
+          that.showLoginFailDialog()
+        } else {
+          that.weixinAuthFail()
+        }
       }
     });
   },
 
   //登录出错
-  showLoginFailDialog: function () {
+  showLoginFailDialog: function (content = '微信账号登录失败，请重试') {
     let that = this
     app.wxService.showModal({
       title: '提示',
-      content: '账号登录失败，请重试',
-      showCancel: false,
+      content: content,
+      showCancel: false
     }, res => {
       that.login()
     })
@@ -148,10 +177,10 @@ Page({
     })
     let that = this
     app.wxService.showModal({
-        title: '提示',
-        content: app.config.MSG_AUTH_FAIL,
-        showCancel: false,
-      },
+      title: '提示',
+      content: app.config.MSG_AUTH_FAIL,
+      showCancel: false,
+    },
       function (res) {
         that.emptyHandle()
       }
@@ -161,6 +190,7 @@ Page({
   validateBind: function (res) {
     let data = res.data;
     var that = this
+    this.data.hasLogin = true
     //给session添加特定的key.防止多用户数据污染
     app.session.setKeyPrefix(data.user.userID + "_")
     //已经绑定了超级俱乐部账号
@@ -244,7 +274,7 @@ Page({
 
       //index_empty = true
       clubs.sort((first, second) => {
-          return second.newActCount - first.newActCount
+        return second.newActCount - first.newActCount
       })
 
       that.setData({
@@ -338,7 +368,7 @@ Page({
         }
       }
       clubs.sort((first, second) => {
-          return second.newActCount - first.newActCount
+        return second.newActCount - first.newActCount
       })
       if (type == 2) {
         this.setData({
@@ -354,7 +384,7 @@ Page({
 
   loadRecentClubs: function () {
     let that = this
-    let recentClubs = app.session.recentClubs();
+    let recentClubs = that.data.index_empty ? app.session.recentClubs() : app.session.allRecentClubs();
     if (recentClubs == null || recentClubs.length == 0) {
       this.setData({
         recentClubs: []
@@ -375,7 +405,7 @@ Page({
         }
       }
       recents.sort((first, second) => {
-          return second.newActCount - first.newActCount
+        return second.newActCount - first.newActCount
       })
       that.setData({
         recentClubs: recents
@@ -419,7 +449,7 @@ Page({
     if (this.data.city == '') return
     if (!this.data.hasMore && !refresh) return
     this.data.loadingActs = true
-    let start = this.data.start
+    let start = refresh ? 0 : this.data.start
     actApi.hotActs({
       data: {
         type: 2, //最热活动
@@ -436,7 +466,13 @@ Page({
       if (hotActs == null) hotActs = []
       hotActs.forEach(e => {
         e.formatTime = app.util.formatTime2(e.begin)
-        e.price = app.util.formatMoney(e.cost)
+        if (e.ticketCount > 1) {
+          e.price = '￥' + e.cost + '起'
+        } else if (e.cost > 0) {
+          e.price = '￥' + e.cost
+        } else {
+          e.price = '免费'
+        }
         //actStatus:活动状态 0报名中，1报名关闭，2活动结束
         if (e.actStatus == 1) {
           e.actStatusText = "活动中"
@@ -462,7 +498,9 @@ Page({
     let activityId = activity.activityID
     app.wxService.navigateTo('activity/act_detail/act_detail', {
       activityID: activityId,
-      clubID: activity.clubInfo.clubID
+      clubID: activity.clubInfo.clubID,
+      backOrTo: 1,
+      recent: 0
     })
   },
 
@@ -477,7 +515,7 @@ Page({
   //检查系统消息
   checkSystemMsg: function () {
     let checkTime = app.session.getSync("check", 0)
-    if (Date.now() - checkTime <= CHECK_INTEVAL) {
+    if (Date.now() - checkTime <= CHECK_INTERVAL) {
       return
     }
     this.loadClubs() //每隔一定时间检查是否有新活动
@@ -514,5 +552,5 @@ Page({
       that.showSystemDialog()
     })
   },
-  
+
 })

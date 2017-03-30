@@ -78,3 +78,8 @@ page {
   color: rgb(255, 255, 255);
   background-color: rgb(61, 209, 164);
 }
+.apply-fields{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -55,4 +55,4 @@
   </view>
 </view>
 <!--完成按钮-->
-<button type="primary" style="margin:61rpx 30rpx 0 30rpx;" bindtap="btn_finish">完成</button>
+<button type="primary" style="margin:61rpx 30rpx 0 30rpx;background:#3dd1a5;border:1rpx solid #3dd1a5;" bindtap="btn_finish">完成</button>

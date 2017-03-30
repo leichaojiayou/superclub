@@ -38,7 +38,7 @@
 }
 
 .drawer_attr_content {
-  padding: 20rpx;
+  padding: 0 0 20rpx 0;
   height: 600rpx;
   overflow-y: scroll;
 }
@@ -76,12 +76,10 @@
 }
 
 .item {
-  position: relative;
   display: flex;
   justify-content: space-between;
   border-bottom: 1rpx solid rgb(230, 230, 230);
   height: 108rpx;
-  margin-left: 29rpx;
-  padding-right: 30rpx;
+  margin-left: 41rpx;
   align-items: center;
 }

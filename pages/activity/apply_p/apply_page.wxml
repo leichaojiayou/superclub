@@ -1,0 +1,132 @@
+<import src="../../../template/toasts/toasts.wxml"/>
+
+<!--报名页面-->
+<form bindsubmit="greenButton" report-submit="true">
+
+    <!--中框-->
+    <view class="bigview" style="border-top:0;margin-top:30rpx;">
+        <view style="margin-bottom:30rpx;background:#fff" wx:for="{{applys}}" wx:key="item" wx:for-index="idx"
+              wx:for-item="applyItem">
+            <!--票价-->
+
+            <view class="bigview" wx:if="{{showTicket}}">
+                <view class="itemView" bindtap="setModalStatus" data-status="1" data-index="{{idx}}">
+                    <text style="width:100px" class="{{applyItem.ticketRed?'red':''}}">费用</text>
+                    <view class="itemView_foot">
+                        <view class="foot_text_view">
+                            <text wx:if="{{applyItem.selectTicket==null||applyItem.selectTicket==undefined}}"
+                                  class="bigsize base-style">点击选择
+                            </text>
+                            <view wx:if="{{applyItem.selectTicket}}" class="bigsize" style="margin-bottom: 5rpx;">
+                                ¥{{applyItem.selectTicket.cost/100}}
+                            </view>
+                            <view wx:if="{{applyItem.selectTicket}}" class="smartsize">{{applyItem.selectTicket.name}}
+                            </view>
+                        </view>
+                        <image style="width:18rpx;height:31rpx"
+                               src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png"></image>
+                    </view>
+                </view>
+            </view>
+
+
+            <view wx:for="{{applyItem.fields}}" wx:key="field">
+                <!--自定义-->
+
+                <view wx:if="{{item.fieldType!=2&&!item.oneLine}}"
+                      class="help-apply">
+                    <view class="help-apply-title {{item.red?'red':''}}">{{item.fieldName}}</view>
+                    <input bindinput="inputEvent" data-item="{{item}}" data-index="{{index}}" data-applyIndex="{{idx}}"
+                           type="{{item.inputType}}"
+                           maxlength="{{item.maxText}}" value="{{item.defaultValue}}" placeholder="{{item.placeHolder}}"
+                           placeholder-class="help-apply-placeholder"/>
+                </view>
+                <view wx:else class="itemView">
+                    <text style="width:100px" class="{{item.red?'red':''}}">{{item.fieldName}}</text>
+                    <view wx:if="{{item.fieldType==2}}" class="itemView_foot">
+                        <picker bindchange="pickerEvent" value="{{item.select}}" range="{{item.option}}"
+                                data-item="{{item}}" data-index="{{index}}" data-applyindex="{{idx}}">
+                            <view class="foot_text_view">
+                                <view class="bigsize {{item.select==-1?'base-style':'min-width'}}">
+                                    {{(item.select==-1)?'点击选择':item.option[item.select]}}
+                                </view>
+                            </view>
+                        </picker>
+                        <image style="width:18rpx;height:31rpx"
+                               src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png"></image>
+                    </view>
+                    <view wx:else class="itemView_foot">
+                        <input bindinput="inputEvent" data-item="{{item}}" data-index="{{index}}"
+                               data-applyindex="{{idx}}"
+                               type="{{item.inputType}}"
+                               maxlength="{{item.maxText}}" value="{{item.defaultValue}}"
+                               placeholder="{{item.placeHolder}}"
+                               placeholder-class="psection"/>
+                    </view>
+                </view>
+            </view>
+            <!--优化改动-->
+
+            <view class="help-apply-status" wx:if="{{!applyItem.isSelf||(type==3||type==5)}}">
+                <view class="help-apply-txt">{{applyItem.applyStatusText}}</view>
+                <view style="display:flex;" bindtap="deleteApplyItem" data-index="{{idx}}">
+                    <view class="help-apply-line"></view>
+                    <view class="help-delete">
+                        <image class="help-apply-icon"
+                               src="{{applyItem.applyActionIco}}"></image>
+                        {{applyItem.applyActionText}}
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="buttonview">
+        <view class="help-apply-box" bindtap="helpApply" wx:if="{{showHelp}}">
+                <image class="help-apply-img" src="https://cdn.51julebu.com/xiaochengxu/image/helpbm@2x.png"></image>
+        添加报名
+        </view>
+        <view class="apply-agree" bindtap="agreeButton" wx:if="{{showAgree}}">
+            <image src="https://cdn.51julebu.com/xiaochengxu/image/ysygx@2x.png" class="apply-aggree-img"></image>
+            我同意
+            <text style="color:#3dd1a5">《超级俱乐部活动报名协议》</text>
+        </view>
+        <button class="apply-btn botbtn" form-type="submit">{{bottomButtonText}}</button>
+    </view>
+    <view style="height:120rpx;"></view>
+
+    <!--临时用户绑定手机号码-->
+    <template is="sendNum" data="{{authDialog,countDown}}"/>
+    <template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}"/>
+
+    <!--费用选择器-->
+    <view class="drawer_screen" catchtap="setModalStatus" data-status="0" wx:if="{{showModalStatus}}"></view>
+    <view animation="{{animationData}}" class="drawer_attr_box" wx:if="{{showModalStatus}}">
+        <view class="drawer-choose-theme">请选择费用组别
+            <image catchtap="hideModelStatus" class="drawer-close-icon" src="https://cdn.51julebu.com/xiaochengxu/image/x@2x.png"></image>
+        </view>
+        <view class="drawer_attr_content">
+            <view class="text_center">
+                <view style="background: #fff;">
+                    <view class="item" wx:for="{{tickets}}" wx:for-item="ticket" wx:for-index="item_index"
+                          id="{{item_index}}" bindtap="changehidden">
+                        <view class="cost-content {{ticket.remain==0?'blur':''}}">
+                            <view class="cost-content-title">{{ticket.name}}</view>
+                            <view class="cost-content-amount">{{ticket.remain=='名额不限'?'':'剩余名额 '}}{{ticket.remain}}
+                            </view>
+                        </view>
+                        <view style="display:flex;margin-left:30rpx">
+                            <view class="cost-content-money {{ticket.remain==0?'blur':''}}">¥{{ticket.cost/100}}</view>
+
+                            <!--if判断-->
+                            <view class="cost-content-choose">
+                                <view wx:if="{{ticket.isDefault==1}}">
+                                    <icon type="success_no_circle" color="rgb(61,209,164)" size="18"></icon>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</form>

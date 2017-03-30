@@ -125,12 +125,20 @@ Page({
                     detailType = 7;
                     that.data.applyStatusIco = 'https://cdn.51julebu.com/xiaochengxu/image/bmqx@2x.png';
                     that.data.applyStatusText = '报名取消';
-                    that.data.statusDesc = '主办方取消，原因：' + applyInfo.reason;
+                    if (applyInfo.reason) {
+                        that.data.statusDesc = '主办方取消，原因：' + applyInfo.reason;
+                    } else {
+                        that.data.statusDesc = '主办方取消';
+                    }
                 } else if (applyInfo.applyStatus == 2 || applyInfo.payStatus == 4) {//报名者取消
                     detailType = 8;
                     that.data.applyStatusIco = 'https://cdn.51julebu.com/xiaochengxu/image/bmqx@2x.png';
                     that.data.applyStatusText = '报名取消';
-                    that.data.statusDesc = '我已取消，原因：' + applyInfo.reason;
+                    if (applyInfo.reason) {
+                        that.data.statusDesc = '我已取消，原因：' + applyInfo.reason;
+                    } else {
+                        that.data.statusDesc = '我已取消';
+                    }
                 } else if (actInfo.howToPay != 1 && (applyInfo.payStatus == 1 || applyInfo.payStatus == 5 || (applyInfo.applyUserType == 0 && applyInfo.payStatus == 6))) {//待付款
                     detailType = 4;
                     that.data.applyStatusIco = 'https://cdn.51julebu.com/xiaochengxu/image/bmdd@2x.png';
@@ -141,9 +149,9 @@ Page({
                         that.data.applyStatusIco = 'https://cdn.51julebu.com/xiaochengxu/image/bmqx@2x.png';
                         that.data.applyStatusText = '报名取消';
                         if (actStatus == 1) {
-                            that.data.statusDesc = '活动报名已经关闭';
+                            that.data.statusDesc = '超时未付款';//'活动报名已经关闭';
                         } else if (actStatus == 2) {
-                            that.data.statusDesc = '活动已结束';
+                            that.data.statusDesc = '超时未付款';//'活动已结束';
                         }
                     }
                 } else if (applyInfo.refundStatus == 0 || applyInfo.refundStatus == 2) {//退款中
@@ -179,7 +187,7 @@ Page({
                     detailType = 3;
                     that.data.applyStatusIco = 'https://cdn.51julebu.com/xiaochengxu/image/bmdd@2x.png';
                     that.data.applyStatusText = '报名审核中';
-                    cancelApplyAble = true;
+                    cancelApplyAble = false;
                 } else if (actInfo.howToPay != 1 && applyInfo.payStatus == 6) {//超时未付款
                     detailType = 5;
                     that.data.applyStatusIco = 'https://cdn.51julebu.com/xiaochengxu/image/bmqx@2x.png';
@@ -189,7 +197,11 @@ Page({
                     detailType = 6;
                     that.data.applyStatusIco = 'https://cdn.51julebu.com/xiaochengxu/image/bmqx@2x.png';
                     that.data.applyStatusText = '报名取消';
-                    that.data.statusDesc = '主办方审核不通过，原因：' + applyInfo.reason;
+                    if (applyInfo.reason) {
+                        that.data.statusDesc = '主办方审核不通过，原因：' + applyInfo.reason;
+                    } else {
+                        that.data.statusDesc = '主办方审核不通过';
+                    }
                 }
                 if (actInfo.howToPay != 1 && applyInfo.refundStatus == 3) {//已退款要显示便签
                     that.data.refundStatus = '已退款'
@@ -212,7 +224,7 @@ Page({
                     actTitle: actInfo.actTitle,
                     hasHost: hasHost,
                     host: "主办方：" + clubInfo.clubTitle,
-                    actTime: actInfo.activityTime,
+                    actTime: "活动时间：" + actInfo.activityTime,
                     nickAndPhone: applyInfo.userName + "-" + applyInfo.mobile,
                     ticketName: actInfo.howToPay != 1 ? applyInfo.ticketName : "免费体验票",
                     ticketCost: actInfo.howToPay != 1 ? "¥" + applyInfo.ticketCost / 100 : "免费",
@@ -238,38 +250,43 @@ Page({
                 if (orderInfo.applyExpiredTime > 0 && orderInfo.applyExpiredTime > Date.now()) {
                     countdown(that);
                 }
-            }
-            ,
+            },
             function (res) {
                 let errorMsg = utils.getErrorMsg(res);
                 utils.showTip(that, '报名详情加载失败:' + errorMsg.content);
-            }
-
-            ,
+            },
             function (res) {
                 console.log(res)
             }
         );
     },
-    goToActDetail: function () {
-        app.wxService.navigateTo("activity/act_detail/act_detail", {
-            clubID: this.data.clubInfo.clubID,
-            activityID: this.data.actInfo.actID
-        })
+    goToActDetail: function () {//报名详情不可以进入活动详情页面
+        /*        app.wxService.navigateTo("activity/act_detail/act_detail", {
+         clubID: this.data.clubInfo.clubID,
+         activityID: this.data.actInfo.actID
+         })*/
     },
     cancelApply: function (e) {//取消报名
         let that = this;
-        if (!that.data.cancelApplyAble) {
-            app.wxService.showModal({showCancel: false, confirmText: '知道了', content: '暂不支持付费活动在线退款，请到网页端和App操作'});
-            return;
-        } else if (that.data.actInfo.isGroupApply == 1) {//组队报名
-            app.wxService.showModal({showCancel: false, confirmText: '知道了', content: '暂不支持组队活动报名修改'});
-            return;
-        }
-        if (that.data.hasHelpApply == 1 && this.data.applyInfo.applyUserType == 0) {//多人报名
-            app.wxService.navigateTo("activity/applylist/applylist", {activityId: that.data.actInfo.actID, type: 0})
+
+        //payStatus: 报名付费状态：0:不作考虑 1：待付款 2：已付款 3:等待退款 4:已退款 5:待付款-延后 6 付款超时 7 其他付款方式未付，8其他付款方式 已付款
+        if (this.data.actInfo.isGroupApply == 1) {//组队报名
+            this.showModal('暂不支持组队活动报名修改');
+        } else if (this.data.howToPay == 1 || this.data.applyInfo.payStatus == 1 || this.data.applyInfo.payStatus == 5 || this.data.applyInfo.payStatus == 6) {//免费和待支付可以直接取消
+            this.cancelApplyAction(this.data.howToPay != 1 && this.data.applyInfo.payStatus >= 7, this.data.actInfo.actID, applyId);
+        } else if (this.data.actInfo.isSupportRefund != 1) {
+            utils.showTip(this, '当前活动不支持退款');
+        } else if (this.data.hasHelpApply == 1 && this.data.applyInfo.applyUserType == 0) {
+            utils.showTip(this, '取消帮报名才可以取消自己报名');
+        } else if (this.data.applyInfo.payStatus == 2) {
+            app.wxService.navigateTo('activity/apply_cancel/apply_cancel', {
+                activityId: this.data.actInfo.actID,
+                applyId: applyId,
+            });
+        } else if (this.data.applyInfo.payStatus == 3) {//取消退款？
+            utils.showTip(this, '取消退款')
         } else {
-            that.cancelApplyAction(that.data.applyInfo.payStatus >= 7, that.data.actInfo.actID, applyId);
+            this.cancelApplyAction(this.data.howToPay != 1 && this.data.applyInfo.payStatus >= 7, this.data.actInfo.actID, applyId);
         }
     },
     editApply: function (e) {//编辑报名
@@ -292,13 +309,21 @@ Page({
                 showCancel: false, confirmText: '知道了', content: '暂不支持组队活动报名，请在超级俱乐部App或网页端报名活动'
             })
         } else if (this.data.detailType == 4) {//待付款，去支付
-            app.wxService.navigateTo('activity/applylist/applylist', {activityId: this.data.actInfo.actID, type: 2});
+            app.wxService.navigateTo('activity/apply_p/apply_page', {
+                activityId: this.data.actInfo.actID,
+                type: 5,
+                helperApply: this.data.actInfo.helperApply,
+            });
         } else if (this.data.helperApply == 2) {//此活动不能帮人报名
             utils.showTip(this, "当前活动不允许帮人报名");
         } else if (this.data.isNeedJoinClub == 1) {//报名需要检测俱乐部
             this.joinClubTips();
         } else {
-            app.wxService.navigateTo('activity/apply_page/apply_page', {activityId: this.data.actInfo.actID, type: 3});
+            app.wxService.navigateTo('activity/apply_p/apply_page', {
+                activityId: this.data.actInfo.actID,
+                type: 2,
+                helperApply: this.data.actInfo.helperApply,
+            });
         }
     },
     retryApply: function (e) {//重新报名
@@ -309,10 +334,11 @@ Page({
         } else if (this.data.isNeedJoinClub == 1) {
             this.joinClubTips();
         } else {
-            app.wxService.navigateTo('activity/apply_page/apply_page', {
+            app.wxService.navigateTo('activity/apply_p/apply_page', {
                 activityId: this.data.actInfo.actID,
                 applyId: this.data.applyInfo.applyID,
                 type: 4,
+                helperApply: this.data.actInfo.helperApply,
                 applyUserType: this.data.applyInfo.applyUserType,
             });
         }
@@ -416,7 +442,8 @@ Page({
         if (this.data.needJoinCheck === 1) {//加入俱乐部是否需要验证
             this.setData({
                 joinShowStyle: "opacity:1;pointer-events:auto;",
-                join: '请输入验证信息'
+                join: '请输入验证信息',
+                needjoinText: app.session.getUserInfo().nick + "申请加入",//加入俱乐部默认文字
             });
         } else {
             this.joinClubApi(null);
@@ -444,6 +471,7 @@ Page({
                         'clubHome.roleType': 1
                     });
                     utils.showTip(this, '加入成功');
+                    app.event.emit(app.config.EVENT_CLUB_CHANGE, null);
                 } else {
                     utils.showTip(this, '申请已提交，请耐心等候审核');
                 }

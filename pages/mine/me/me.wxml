@@ -67,7 +67,7 @@
       <text>报名记录</text>
       <text class="con_total des_txt">共报名{{applyActCount}}场活动</text>
     </view>
-    <navigator wx:for="{{dataList}}" wx:key="{{index}}" style="background:#fff;margin-bottom:10rpx;padding:30rpx 0 0 20rpx;">
+    <navigator wx:for="{{dataList}}" wx:key="{{index}}" style="background:#fff;margin-bottom:10rpx;padding:30rpx 0 0 30rpx;">
       <template is="apply_act_item" data="{{item}}" />
     </navigator>
     <view wx:if="{{more == 1}}" style="text-align:center;font-size:24rpx;color:rgb(229,229,229);padding-bottom:42rpx;background:#fff;margin-top:-12px;">
@@ -83,4 +83,4 @@
 
 <!--tip-->
 <template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}" />
-<template is="joinCheck" data="{{joinShowStyle,join}}"  />
+<template is="joinCheck" data="{{joinShowStyle,join,needjoinText}}"  />

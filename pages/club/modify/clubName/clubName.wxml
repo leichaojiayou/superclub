@@ -1,12 +1,12 @@
+
 <!-- pages/julebumingcheng/julebumingcheng.wxml -->
 <form bindsubmit="formSubmit" report-submit="true">
-    <view class="header" style="margin-bottom:62rpx;">
-        <input name="title" placeholder="俱乐部名称15字以内" maxlength="15" placeholder-class="t" value="{{title}}" bindinput="changeTxt"/>
-        <icon type="clear" size="18" bindtap="cleanValue"></icon>
-    </view>
-    <button style="margin:60rpx 30rpx 0 30rpx;" type="primary" style="background:rgb(61, 209, 164);margin:0 30rpx;" form-type="submit" hover-class="hover-btn" wx:if="{{newTitle}}">保存</button>
-    <button style="margin:60rpx 30rpx 0 30rpx;" type="primary" style="background:rgb(61, 209, 164);margin:0 30rpx;" disabled="true" wx:else>保存</button>
+  <view class="header" style="margin-bottom:62rpx;">
+    <input name="title" placeholder="请填写俱乐部名称" placeholder-class="t" value="{{title}}" bindinput="changeTxt" />
+    <icon wx:if="{{newTitle}}" type="clear" size="18" bindtap="cleanValue"></icon>
+  </view>
+  <button wx:if="{{newTitle}}" class="save-club-title" form-type="submit" hover-class="hover-btn">保存</button>
+  <button wx:else class="save-club-title" disabled="true" style="background-color: rgba(61, 209, 164,0.4);color:rgba(255,255,255,0.6)">保存</button>
 </form>
-
 <import src="../../../../template/toasts/toasts.wxml" />
 <template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}" />

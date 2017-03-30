@@ -10,12 +10,19 @@
 <view class="dialog_content" wx:if="{{showCommentDialog}}">
   <input bindinput="commentText" placeholder="{{commentInputHolder}}" focus="true" class="dialog-content-input" />
   <view>
-    <button bindtap="commentAction" class="dialog-content-btn">评论</button>
+    <button catchtap="commentAction" class="dialog-content-btn">评论</button>
   </view>
+</view>
+<view class="club-add-tip" wx:if="{{isActClubUser!=1}}" style="z-index:2;">
+  <view class="club-add-content">
+    <view class="club-question">是否加入俱乐部</view>
+    <view class="club-add-text">加入俱乐部可订阅更多活动消息</view>
+  </view>
+  <navigator class="club-add-btn" bindtap="joinClub">加入</navigator>
 </view>
 
 <!--pages/act_detail/act_detail.wxml-->
-<scroll-view scroll-y="true" class="all_scr" style="padding-bottom:112rpx;">
+<scroll-view scroll-y="true" class="all_scr" style="padding-bottom:112rpx;{{isActClubUser!=1?'padding-top:130rpx;':''}}">
 
   <!--俱乐部封面-->
   <image wx:if="{{cover}}" class="header_imgss" src="{{cover}}" mode="aspectFill"></image>
@@ -37,20 +44,22 @@
     </view>
 
     <!--活动地点item，当经纬度都为0时，不渲染-->
-    <view class="detail_input" wx:if="{{hideActAddress}}">
+    <view class="detail_input" style="padding-bottom:15rpx;" wx:if="{{hideActAddress}}">
       <text class="des_txt detail_txt">活动地点</text>
       <view class="detail_row_right actAddress">
 
         <!--活动地点-->
-        <text>{{actAddress}}</text>
+        <view class="txt-overflow">{{actAddress}}</view>
+        <view class="detail_lineh"></view>
+      </view>
+      <view style="display:flex;justify-content:flex-end">
 
         <!--分割线-->
         <view class="detail_linev"></view>
-        <view class="detail_lineh"></view>
-      </view>
-      <view bindtap="viewActAddress" class="detail_map">
-        <image src="https://cdn.51julebu.com/xiaochengxu/image/map.png" style="width:28rpx;height:34rpx"></image>
-        <text class="map_txt">地图</text>
+        <view bindtap="viewActAddress" class="detail_map">
+          <image src="https://cdn.51julebu.com/xiaochengxu/image/map.png" style="width:28rpx;height:34rpx"></image>
+          <text class="map_txt">地图</text>
+        </view>
       </view>
     </view>
 
@@ -69,40 +78,39 @@
       <view class="detail_row_right">
 
         <!--费用-->
-        <text class="green_txt">{{actCost}}</text>
+        <text bindtap="showCostTab" class="green_txt" style="fonts-zie:28rpx">{{actCost}}</text>
         <view class="detail_lineh"></view>
       </view>
     </view>
-    <view class="detail_input" wx:if="{{!hideHost}}">
+    <view class="detail_input" bindtap="goToHost" wx:if="{{!hideHost}}">
 
       <!--主办方-->
       <text style="letter-spacing:0.4em;" class="des_txt detail_txt">主办方</text>
       <view class="detail_row_right">
-        <text>{{host}}</text>
-      </view>
-
-      <!--箭头-->
-
-      <!--<image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" style="width:28rpx;height:34rpx" class="detail_map"></image>-->
+        <image class="leader-icon" src="{{actClubImg}}"></image>{{host}}</view>
+      <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow" mode="aspectFill"></image>
     </view>
   </view>
+  <view style="height:40rpx;background:#f5f5f5" wx:if="{{guide=='无'&& !hideActCost}}"></view>
+
+  <!--<view class="divider" wx:if="{{guide!='无'||hideActCost}}"></view>-->
 
   <!--详情 报名须知 费用循环-->
-  <view class="sort">
+  <view class="sort" wx:if="{{guide!='无'||hideActCost}}">
     <view class="xiangqing" bindtap="changePage">
       <text class="sort1" id="0">详情
       </text>
-      <view style="margin-top:11rpx;width:59rpx;height:8rpx;border-radius: 4rpx;background-color: {{status==0?'rgb(61, 209, 164)':'rgb(246, 246, 246)'}};"></view>
+      <view class="detail-tabar-border {{status==0?'detail-tabar-bg':''}}"></view>
     </view>
-    <view class="xiangqing" bindtap="changePage">
+    <view class="xiangqing" bindtap="changePage" wx:if="{{guide!='无'}}">
       <text class="sort1" id="1">报名须知
       </text>
-      <view style="margin-top:11rpx;width:114rpx;height:8rpx;border-radius: 4rpx;  background-color: {{status==1?'rgb(61, 209, 164)':'rgb(246, 246, 246)'}};"></view>
+      <view class="detail-tabar-border {{status==1?'detail-tabar-bg':''}}" style="width:114rpx"></view>
     </view>
     <view wx:if="{{hideActCost}}" class="xiangqing" bindtap="changePage">
       <text class="sort1" id="2">费用
       </text>
-      <view style="margin-top:11rpx;width:59rpx;height:8rpx;border-radius: 4rpx;  background-color: {{status==2?'rgb(61, 209, 164)':'rgb(246, 246, 246)'}};"></view>
+      <view class="detail-tabar-border {{status==2?'detail-tabar-bg':''}}"></view>
     </view>
   </view>
 
@@ -127,26 +135,25 @@
       <view wx:for="{{applyed}}" wx:key="apply">
         <template is="applyed" data="{{item}}" />
       </view>
+      <view wx:if="{{!hideApplyLoadMore}}" class="comment-footer-txt" style="border-top:1rpx solid #e5e5e5;margin:0 30rpx" bindtap="loadMoreApply">加载更多报名</view>
       <text class="deadlineTime">{{deadlineTime}}</text>
-      <image wx:if="{{!hideApplyLoadMore}}" bindtap="loadMoreApply" style="width:31rpx;height:18rpx;align-self:center;  padding-bottom: 30rpx" src="https://cdn.51julebu.com/xiaochengxu/image/down_arrow.png"></image>
-
       <!--评论title-->
       <view class="comment_title paddingLR">
         <text class="comment_text">评论({{commentCount}}条)</text>
         <text bindtap="showCommentDialog" class='comment_button' style="color:rgb(61, 209, 164)">我要评论</text>
       </view>
-      <view wx:if="{{!(comments.length>0)}}" style="text-align:center;padding:12rpx 0;font-size:24rpx;color:#8e8e8e">暂无评论</view>
+      <view wx:if="{{!(comments.length>0)}}" class="comment-footer-txt">暂无评论</view>
 
       <!--评论列表-->
       <view wx:for="{{comments}}" wx:key="comment">
         <template is="comment" data="{{item}}" />
       </view>
-      <view wx:if="{{!hideCommentLoadMore}}" bindtap="loadMoreComment" style="text-align:center;padding:12rpx 0;font-size:24rpx;color:#8e8e8e">加载更多评论</view>
+      <view wx:if="{{!hideCommentLoadMore}}" class="comment-footer-txt" bindtap="loadMoreComment">加载更多评论</view>
     </view>
   </view>
 
   <!--报名须知page-->
-  <view class="textarea" wx:if="{{status==1}}" style="padding:34rpx 30rpx 0 30rpx;background-color:rgb(255,255,255);">
+  <view class="textarea" wx:if="{{status==1}}">
     <text>{{guide}}</text>
     <view style="height:116rpx;"></view>
   </view>
@@ -155,7 +162,7 @@
   <view class="textarea" wx:if="{{status==2}}">
 
     <!--费用-->
-    <view style="padding:34rpx 30rpx 0 30rpx;background-color:rgb(255,255,255);">
+    <view>
 
       <!--line1-->
       <view class="line1">
@@ -201,20 +208,71 @@
       <!--费用 e-->
     </view>
   </view>
+  <view wx:if="{{clubOtherActs&&clubOtherActs.length>0}}" style="border-bottom:1rpx solid #e6e6e6;">
+    <view style="height:50rpx;background:#f5f5f5;"></view>
+
+    <!--该俱乐部的其他活动-->
+    <view class="border_1" style="padding-bottom:20rpx;padding-top:50rpx;border-top:1rpx solid #e6e6e6;">
+      <view class="border_1_1"></view>
+      <view style="margin:0 20rpx">俱乐部其他活动</view>
+      <view class="border_1_1"></view>
+    </view>
+    <view wx:if="{{clubOtherActs&&clubOtherActs.length>0}}" wx:for="{{clubOtherActs}}" wx:key='index' class="midview_list">
+
+      <!-- 每条---报名中 -->
+      <navigator class="midview_item_1" catchtap="actDetail" data-actid="{{item.actId}}">
+        <view class="midview_item_img_view">
+          <image mode="scaleToFill" class=" midview_item_1_img" src="{{item.cover}}"></image>
+        </view>
+        <view class="midview_item_2">
+          <view class="activity-title">
+            <text class="bigsize txt-overflow-two">{{item.title}}</text>
+          </view>
+          <view class="smalltext apply-time">时间 {{item.actTime}}</view>
+          <view class="midview_item_2_1">
+            <text class="smalltext">报名 {{item.haveApplyNum}}</text>
+
+            <!--            <text class="pricetext" wx:if="{{item.isProxyAct ==1 }}"></text>-->
+            <text class="pricetext" wx:if="{{item.ticketCount > 1}}">¥ {{item.cost/100}}起</text>
+            <text class="pricetext" wx:elif="{{item.ticketCount == 1&&item.cost !=0 }}">¥ {{item.cost/100}}</text>
+            <text class="pricetext" wx:else="{{item.ticketCount == 0}}">免费</text>
+          </view>
+        </view>
+      </navigator>
+    </view>
+    <view wx:if="{{clubOtherActs&&clubOtherActs.length>0}}" bindtap="goToHost" class="look-act-more">
+      <view class="">查看全部{{clubActCount}}场活动</view>
+    </view>
+    <view wx:elif="{{activity.length>0}}" class="theend_text_view">
+      <text class="theend_text">THE END</text>
+    </view>
+  </view>
+  <view style="height:100rpx; background:#f5f5f5"></view>
 </scroll-view>
 
-<form bindsubmit="applyButton" report-submit="true">
   <!--我要报名-->
   <view class="bottom">
 
-    <!--money为0则免费-->
-    <text class="textarea1_case_money" wx:if="{{!costAct&&applyButtonStatus!=2&&!lineDownCost}}">免费</text>
+      <!--money为0则免费-->
+      <text class="textarea1_case_money" wx:if="{{leftBottomTextType==1}}" style="color:#8e8e8e;font-size:34rpx;">{{moneyText}}</text>
 
-    <!--money不为0则显示价格-->
-    <view wx:if="{{(costAct||lineDownCost)&&applyButtonStatus!=2}}" class="textarea1_case_money">{{costText}}<text class="textarea1_case_titxt2">{{(isApply!=-1&&isApply!=2&&isApply!=3&&isApply!=4)||tickets.length==1?'':' 起'}}{{lineDownCost?'·线下支付':''}}</text></view>
-    <text class="textarea1_case_money" wx:if="{{applyButtonStatus===2}}" style="color:#8e8e8e;font0size:34rpx;">{{(isApply==0)?'审核中':'已报名'}}</text>
-    <button class="textarea1_case_sign"  form-type="submit" style="opacity:{{applyButtonText=='报名已关闭'?'0.6':'1'}}">{{applyButtonText}}</button>
+      <!--money不为0则显示价格-->
+      <view wx:if="{{leftBottomTextType==0}}" class="textarea1_case_money">{{costText}}
+          <text class="textarea1_case_titxt2">{{moneyText}}</text>
+      </view>
+    <!--<text class="textarea1_case_money" wx:if="{{applyStatus==0||applyStatus==0}}" style="color:#8e8e8e;font-size:34rpx;">{{(isApply==0)?'审核中':'已报名'}}</text>-->
+    <view class="bottom-beta-box">
+    <form bindsubmit="leftButton" report-submit="true" wx:if="{{!hideLeftButton}}">
+      <button class="textarea1_case_sign change-apply" form-type="submit" style="opacity:{{applyButtonText=='报名已关闭'?'0.6':'1'}}">
+        {{leftButtonText}}
+      </button>
+    </form>
+    <form bindsubmit="rightButton" report-submit="true" wx:if="{{!hideRightButton}}">
+      <button class="textarea1_case_sign" form-type="submit" style="opacity:{{rightButtonText=='报名已关闭'||rightButtonText=='暂无名额'?'0.6':'1'}}">
+        {{rightButtonText}}
+      </button>
+    </form>
+    </view>
   </view>
-</form>
 <template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}" />
-<template is="joinCheck" data="{{joinShowStyle,join}}"  />
+<template is="joinCheck" data="{{joinShowStyle,join,needjoinText}}" />

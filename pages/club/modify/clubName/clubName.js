@@ -13,34 +13,40 @@ Page({
       clubID: e.clubID,
       title: e.title,
       type: type,
-      newTitle:e.title
+      newTitle: e.title
     })
 
   },
 
-  changeTxt:function(e){
+  changeTxt: function (e) {
     this.setData({
-      newTitle:e.detail.value
+      newTitle: e.detail.value
     })
   },
   //clean club name
   cleanValue: function () {
     this.setData({
-      title: ''
+      title: '',
+      newTitle:false   
     })
   },
 
   //post param to server
   formSubmit: function (e) {
+
     const that = this;
     let formData = e.detail.value;
     let param = {
       data: formData
     }
+    if (param.data.title.length > 15) {
+      App.util.showTip(this, '不可超过15个字符');
+      return
+    }
     param.data.formId = e.detail.formId;
     if (this.data.title == formData.title) {
       wxService.navigateBack();
-      return ;
+      return;
     }
     clubApi.uniquenClubName(param, res => { }, res => { }, res => {
       if (res.data.status === 0) {
@@ -57,6 +63,7 @@ Page({
               App.event.trigger('clubHome', {
                 title: param.data.title
               })
+
               wxService.navigateBack();
             }
           })

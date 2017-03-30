@@ -1,27 +1,21 @@
 @import "../../../template/common/common.wxss";
 @import "../../../template/toasts/toasts.wxss";
 
-.manage {
+.flex-center {
   display: flex;
-  flex-direction: row;
-  background-color: yellow;
-  justify-content: space-around;
+  justify-content: center;
 }
 
-.container1 {
-  height: 177rpx;
-  background-color: white;
-  border-bottom: 2.2vh solid rgb(246, 246, 246);
+.flex-middle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .mycharge {
   display: flex;
   align-items: center;
-  padding: 40rpx 0 16rpx 32rpx;
-}
-
-.mycharge1 {
-  padding: 0 0 36rpx 32rpx;
+  padding: 40rpx 0 16rpx 30rpx;
 }
 
 .mycharge_txt {
@@ -29,20 +23,21 @@
   letter-spacing: -0.8rpx;
 }
 
-/*.des_txt {
-  padding-left: 30rpx;
-}*/
-
 /* pages/index_empty/index_empty.wxss */
 
-page {
-  white-space: normal;
+.create-club-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1rpx solid #000;
+  width: 360rpx;
+  height: 70rpx;
+  margin: 32rpx 0 46rpx;
+  font-size: 32rpx;
 }
 
 .header {
-  /*height: 208rpx;*/
-  background-color: rgb(255, 255, 255);
-  /*margin-top: 33rpx;*/
+  background: #fff;
   display: flex;
   align-items: flex-start;
   position: relative;
@@ -56,8 +51,6 @@ page {
   height: 130rpx;
   width: 130rpx;
   border-radius: 10rpx;
-  /*border: 1rpx solid rgb(180, 180, 180);
-  margin-left: 32rpx;*/
 }
 
 .arrowright {
@@ -74,25 +67,16 @@ page {
   width: 400rpx;
   font-size: 34rpx;
   letter-spacing: -0.8rpx;
-  display:  -webkit-box;
-  -webkit-line-clamp:  1;
-  -webkit-box-orient:  vertical;
-  padding-right: 30rpx;
+  margin-right: 30rpx;
+  padding-bottom:14rpx;
+  height:38rpx
 }
 
-/*中间分类*/
-
-.sort {
-  flex-direction: row;
-  color: #fff;
-  margin-top: 0;
-}
 
 /*每一类的样式*/
 
 .sort_item {
   background-color: red;
-  /*padding: 4.5px 8.5px;*/
   margin-right: 3%;
   border-radius: 3px;
 }
@@ -103,6 +87,7 @@ page {
   letter-spacing: -0.3px;
   color: rgb(142, 142, 142);
   margin-top: 0;
+  height: 26rpx;
 }
 
 /*body*/
@@ -136,6 +121,13 @@ page {
 }
 
 /*模版*/
+
+.empty-list {
+  display: flex;
+  align-items: center;
+  margin-top: 14rpx;
+  position: relative;
+}
 
 .swiper {
   width: 100%;
@@ -202,12 +194,29 @@ page {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
+}
+
+.mangage-statu-txt {
+  padding: 0 30rpx 30rpx;
+}
+
+.mangage-club-message {
+  display: flex;
+  align-items: center;
+  padding-bottom: 20rpx;
+  padding-left: 30rpx;
+}
+
+.manage-club-img {
+  width: 36rpx;
+  height: 31rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
 }
 
 .mangage-club-btn {
   position: absolute;
-  right: 4%;
+  right: 30rpx;
   color: #3dd1a5;
   border: 2rpx solid #3dd1a5;
   border-radius: 10rpx;
@@ -232,6 +241,7 @@ page {
   width: 85rpx;
   border-radius: 6rpx;
   margin-right: 12rpx;
+  margin-bottom: 16rpx;
   line-height: 42rpx;
 }
 
@@ -261,10 +271,6 @@ page {
   width: 130rpx;
 }
 
-.club-index-title {
-  display: flex;
-}
-
 .txt-overflow {
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -281,9 +287,10 @@ page {
 
 .items-tap {
   display: flex;
-  align-items: center;
-  justify-content: center;
   white-space: nowrap;
+  /*margin-bottom: 18rpx;*/
+  color: #fff;
+  font-size: 26rpx;
 }
 
 .container_title {
@@ -322,11 +329,26 @@ page {
   display: flex;
   margin-left: 28rpx;
 }
-.club-index-list{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  height: 42rpx;
-  margin-bottom:19rpx;
-  margin-top:15rpx;
+
+
+.club-list-detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+  padding: 20rpx 0;
+}
+
+.club-list {
+  display: flex;
+  align-items: flex-start;
+  margin-left: 30rpx;
+}
+
+.container-txt {
+  padding: 17rpx 0 25rpx 32rpx;
+}
+
+.club-status {
+  margin: 31rpx 0 41rpx;
 }

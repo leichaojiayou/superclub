@@ -31,8 +31,6 @@ page {
   display: flex;
 }
 
-
-
 .header_btn {
   margin-top: 20rpx;
   font-size: 22rpx;
@@ -107,23 +105,30 @@ page {
 }
 
 .pay {
-  font-size: 18rpx;
+  font-size: 24rpx;
   line-height: 36.8rpx;
   letter-spacing: -0.4rpx;
   color: rgb(142, 142, 142);
 }
-.no_image{
+
+.pay-none {
+  position: absolute;
+  top: 41rpx;
+  right: 31rpx;
+}
+
+.no_image {
   margin-top: 360rpx;
   width: 100rpx;
   height: 100rpx;
-
 }
-.item_wu{
+
+.item_wu {
   width: 750rpx;
   text-align: center;
 }
-.wu_text{
-  
+
+.wu_text {
   font-size: 26rpx;
   letter-spacing: -0.6rpx;
   color: rgb(142, 142, 142);

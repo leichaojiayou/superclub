@@ -1,109 +1,113 @@
 <import src="../../../template/toasts/toasts" />
-<scroll-view scroll-y="true" style="height:100vh;">
-  <view class="header" bindtap="clickLogo">
-
-    <!--俱乐部logo-->
-    <text class="header_txt">俱乐部Logo</text>
-
-    <!--俱乐部图片-->
-      <image src="{{logo!='' ? logo : 'https://cdn.51julebu.com/xiaochengxu/image/club.png'}}" class="header_img"></image>
-
-    <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow-absolute" style="top:46%" mode="aspectFill"></image>
+<view style="margin-top: 32rpx;">
+  <view class="list-content-bg border-line">
+    <navigator class="create-content" bindtap="clickLogo">
+      <view class="create-alpha-content">俱乐部Logo</view>
+      <view class="create-beta-content">
+        <image src="{{logo!='' ? logo : 'https://cdn.51julebu.com/xiaochengxu/image/club.png'}}" class="create-content-logo"></image>
+        <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow" mode="aspectFill"></image>
+      </view>
+    </navigator>
   </view>
 
   <!--名称-->
-  <view bindtap="clickName" style=" background-color: rgb(255, 255, 255);">
-    <view class="name_item">
-      <view style="margin-top: 29rpx;margin-bottom:15.5pt;">
-        <text class="name_txt ">名称</text>
-        <text class="name_txt1">{{title}}</text>
+  <view class="list-content-bg">
+    <navigator class="list-content" bindtap="clickName">
+      <view class="create-alpha-content">名称</view>
+      <view class="create-beta-content">
+        <text class="choose_txt {{title != '' ? 'choose-had' : ''}}">{{title != '' ? title : '俱乐部名称'}}</text>
+        <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow" mode="aspectFill"></image>
       </view>
-      <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow-absolute" style="top:46%" mode="aspectFill"></image>
-    </view>
+    </navigator>
   </view>
 
   <!--所在地-->
-  <view bindtap="clickLocation" style=" background-color: rgb(255, 255, 255);">
-    <view class="name_item">
-      <view style="margin-top: 14.5pt;margin-bottom:15.5pt;">
-        <text class="name_txt ">所在地</text>
-        <text class="choose_txt" style="color:{{locationColor}}">{{location != '' ? location : choose}}</text>
+  <view class="list-content-bg">
+    <navigator bindtap="clickLocation" class="list-content">
+      <view class="create-alpha-content">所在地</view>
+      <view class="create-beta-content">
+        <text class="choose_txt {{location != '' ? 'choose-had' : ''}}">{{location != '' ? location : choose}}</text>
+        <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow" mode="aspectFill"></image>
       </view>
-      <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow-absolute" style="top:46%" mode="aspectFill"></image>
-    </view>
+    </navigator>
   </view>
 
   <!--成立时间, 暂时不做-->
-  <view bindtap="clickSetupTime" hidden="{{true}}" style=" background-color: rgb(255, 255, 255);">
-    <view class="name_item">
-      <view style="margin-top: 14.5pt;margin-bottom:15.5pt;">
-        <text class="name_txt ">成立时间</text>
+  <view class="list-content-bg" wx:if="{{false}}">
+    <navigator bindtap="clickSetupTime" class="list-content">
+      <view class="create-alpha-content">成立时间</view>
+      <view class="create-beta-content">
         <text class="choose_txt">{{choose}}</text>
+        <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow" mode="aspectFill"></image>
       </view>
-      <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow-absolute" style="top:46%" mode="aspectFill"></image>
-    </view>
+    </navigator>
   </view>
 
   <!--主打项目-->
-  <view bindtap="clickFeature" style=" background-color: rgb(255, 255, 255);">
-    <view class="name_item">
-      <view style="margin-top: 14.5pt;margin-bottom:15.5pt;display:flex;justify-content: space-between">
-        <view class="name_txt">主打项目</view>
+  <view class="list-content-bg">
+    <navigator bindtap="clickFeature" class="list-content">
+      <view class="create-alpha-content">主打项目</view>
+      <view class="create-beta-content">
         <text wx:if="{{features.length==0}}" class="choose_txt">{{choose}}</text>
-        <view class="create-choose">
-          <block wx:for="{{features}}" wx:key="feature_key">
-            <text class="choose-project">{{item.name}}</text>
+        <view wx:else style="margin-right:30rpx">
+          <block wx:for="{{features}}" wx:key="feature_key" wx:for-index="index">
+            <text wx:if="{{index==0}}" class="choose-project choose-project-list" style="background: rgb(145, 213, 192);">{{item.name}}</text>
+            <text wx:if="{{index==1}}" class="choose-project choose-project-list" style="background:rgb(172, 198, 237)">{{item.name}}</text>
+            <text wx:if="{{index==2}}" class="choose-project choose-project-list" style="background:rgb(227, 192, 163)">{{item.name}}</text>
           </block>
         </view>
+        <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow" mode="aspectFill"></image>
       </view>
-      <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow-absolute" style="top:46%" mode="aspectFill"></image>
-    </view>
+    </navigator>
   </view>
 
   <!--宣言-->
-  <view bindtap="clickSlogan" style=" background-color: rgb(255, 255, 255);">
-    <view class="name_item">
-      <view style="margin-top: 14.5pt;margin-bottom:15.5pt;">
-        <text class="name_txt ">宣言</text>
-        <text class="xuanyan-jianjie" style="color:{{sloganColor}}">{{slogan != '' ? slogan:input}}</text>
+  <view class="list-content-bg">
+    <navigator bindtap="clickSlogan" class="list-content">
+      <view class="create-alpha-content">宣言</view>
+      <view class="create-beta-content">
+        <text class="choose_txt {{slogan != '' ? 'choose-had-content':''}}">{{slogan != '' ? slogan:'请填写俱乐部宣言'}}</text>
+        <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow" mode="aspectFill"></image>
       </view>
-      <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow-absolute" style="top:46%" mode="aspectFill"></image>
-    </view>
+    </navigator>
   </view>
 
   <!--简介-->
-  <view bindtap="clickDesc" style=" background-color: rgb(255, 255, 255);border-bottom: 0.5pt solid rgb(229, 229, 229);">
-    <view class="name_item">
-      <view style="margin-top: 14.5pt;margin-bottom:15.5pt;">
-        <text class="name_txt ">简介</text>
-        <text class="xuanyan-jianjie" style="color:{{descColor}}">{{desc!= '' ? desc:txt}}</text>
+  <view class="list-content-bg border-line-bottom">
+    <navigator bindtap="clickDesc" class="list-content">
+      <view class="create-alpha-content">简介</view>
+      <view class="create-beta-content">
+        <text class="choose_txt {{desc!= '' ? 'choose-had-content':''}}">{{desc!= '' ? desc:'请简单介绍一下您的俱乐部'}}</text>
+        <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow" mode="aspectFill"></image>
       </view>
-      <image src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" class="right-arrow-absolute" style="top:46%" mode="aspectFill"></image>
-    </view>
+    </navigator>
   </view>
 
   <!--负责人-->
-  <view class="host">
-    <text class="host_txt">负责人</text>
-    <input bindinput="inputCharger" placeholder="输入" class="input_txt" />
+  <view class="list-content-bg border-line" style="margin-top:46rpx">
+    <view class="list-content" style="border-top:0">
+      <view class="create-alpha-content">负责人</view>
+      <view class="create-beta-content">
+        <input bindinput="inputCharger" placeholder="请填写真实姓名" placeholder-class="choose_txt" class="input_txt" />
+      </view>
+    </view>
   </view>
 
-  <!--联系电话-->
-  <view class="phonecontact">
-    <view class="name_item">
-      <view style="margin-top: 29rpx;margin-bottom:15.5pt;">
-        <text class="name_txt ">联系电话</text>
-        <input bindinput="inputPhone" placeholder="输入" class="input_txt1" type="number" />
+  <!--手机号码-->
+  <view class="list-content-bg border-line-bottom">
+    <view class="list-content">
+      <view class="create-alpha-content">手机号码</view>
+      <view class="create-beta-content">
+        <input maxlength="11" bindinput="inputPhone" placeholder="请填写手机号码" placeholder-class="choose_txt" class="input_txt" type="number" />
       </view>
     </view>
   </view>
   <form bindsubmit="formSubmit" report-submit="true">
-    <button type="primary" class="btn" style="background:rgb(61, 209, 164);" form-type="submit" disabled="{{logo==''||title==''||location==''||slogan==''||features.length==0||desc==''||charger==''||phone==''}}">提交审核</button>
+    <button wx:if="{{logo==''||title==''||location==''||slogan==''||features.length==0||desc==''||charger==''||phone==''}}" class="btn" style="background:rgba(61, 209, 164,0.4);color:rgba(255,255,255,0.6)" disabled="true">提交审核</button>
+    <button wx:else class="btn" hover-class="hover-btn" form-type="submit">提交审核</button>
   </form>
-  <view style="height:85rpx;  background-color: rgb(246, 246, 246);"></view>
 
   <!--临时用户绑定手机号码-->
-  <template is="sendNum" data="{{authDialog,countDown}}" />
-</scroll-view>
-
+</view>
+<template is="sendNum" data="{{authDialog,countDown}}" />
 <template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}" />

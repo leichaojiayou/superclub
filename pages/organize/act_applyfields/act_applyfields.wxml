@@ -15,7 +15,7 @@
     <view wx:for="{{fieldOptions}}" wx:for-item="fieldOption" wx:for-index="item_index">
       <block wx:if="{{fieldOption.addOrRemvoer==1}}">
         <view class="item_view1">
-          <view bindtap="addApplyItem"  id="{{item_index}}">
+          <view class="apply-fields" bindtap="addApplyItem"  id="{{item_index}}">
             <image src="https://cdn.51julebu.com/xiaochengxu/image/add@2x.png" class="img" style="height:20px;width:20px"></image>
           </view>
           <input bindinput="fieldOptInp" id="filed_{{item_index}}" type="text" maxlength="10" placeholder="输入选项" placeholder-class="psection" value="{{fieldOption.optionName}}"/>

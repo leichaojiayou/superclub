@@ -3,10 +3,6 @@
 
 /*一个大框*/
 
-page {
-  white-space: normal;
-}
-
 .bigview {
   font-size: 16px;
   margin: 15px 0 0 0;
@@ -14,8 +10,8 @@ page {
   flex-direction: column;
   align-items: stretch;
   background-color: white;
-  border-top: 0.5px solid rgb(229, 229, 229);
-  border-bottom: 0.5px solid rgb(229, 229, 229);
+  border-top: 1rpx solid rgb(229, 229, 229);
+  border-bottom: 1rpx solid rgb(229, 229, 229);
 }
 
 /*大框里面item框*/
@@ -79,7 +75,6 @@ page {
 
 .buttonview {
   width: 100%;
-  height: 200px;
   margin-top: 30px;
 }
 
@@ -172,9 +167,11 @@ page {
 .apply-agree {
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 40rpx;
   font-size: 26rpx;
   color: #262626;
-  margin-bottom: 61rpx;
+  margin-bottom: 41rpx;
 }
 
 .apply-aggree-img {
@@ -186,4 +183,63 @@ page {
 .batten {
   padding: 0 30rpx 16px 30rpx;
   white-space: normal;
+}
+
+.cost-content {
+  flex-flow: wrap;
+  display: flex;
+  flex-direction: column;
+}
+
+.cost-content-title {
+  font-size: 28rpx;
+  flex: 1;
+}
+
+.cost-content-amount {
+  color: gray;
+  font-size: 24rpx;
+  padding-top: 10rpx;
+}
+
+.cost-content-money {
+  color: #3dd1a5;
+  padding: 0 30rpx 0 0;
+}
+
+.cost-content-choose {
+  width: 36rpx;
+  height: 36rpx;
+  padding-right: 40rpx 
+}
+.base-style{
+  color: rgb(191, 191, 191);
+  min-width: 450rpx;
+  text-align: right;
+}
+.drawer-choose-theme{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36rpx;
+  letter-spacing: -0.8rpx;
+  color: #1a1a1a;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+.min-width{
+  min-width: 450rpx;
+  text-align: right;
+}
+.help-apply-status{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 88rpx;
+  padding: 0 30rpx;
+}
+.help-apply-icon{
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx
 }

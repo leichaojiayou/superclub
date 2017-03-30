@@ -14,7 +14,11 @@ Page({
     clubId: "",
     payinfo: true,
     actId: 0,
-    showPayButton: true
+    showPayButton: true,
+    refundTxt: "活动费用为0无需设置",
+    refundColor: "rgb(191, 191, 191)",
+    refundTime: 0,
+    canRefund: 1
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -24,6 +28,27 @@ Page({
     var president = options.president;
     var isPresident = options.isPresident;
     var actId = options.actId;
+    var begin = options.begin;
+    var refundTime = options.refundTime;
+    var canRefund = options.canRefund;
+    var applyCount = Number(options.applyCount == "undefined" ? "0" : options.applyCount)
+    if (canRefund == 1) {
+      this.setData({ refundTxt: "活动开始前均可申请退款", refundColor: "rgb(61,209,164)" })
+    } else if (canRefund == 2) {
+      this.setData({ refundTxt: "指定时间前可申请退款", refundColor: "rgb(61,209,164)" })
+    } else if (canRefund == 3) {
+      this.setData({ refundTxt: "不支持退款", refundColor: "rgb(61,209,164)" })
+    } else {
+      this.setData({ refundTxt: "活动费用为0无需设置", refundColor: "rgb(191, 191, 191)" })
+      canRefund = 1
+      if (begin != 0 && begin != "undefined") {//如果设置开始时间，退款时间默认是开始时间
+        refundTime = Number(begin)
+      } else {
+        refundTime = new Date().getTime()
+      }
+
+    }
+    this.setData({ canRefund: canRefund, refundTime: refundTime })
     if (payee && payee != undefined && payee != null && payee != "" && payee != "null") {
       payee = JSON.parse(payee);
       this.setData({
@@ -36,61 +61,99 @@ Page({
       })
     }
     this.setData({ isPresident: isPresident, clubId: options.clubId, actId: actId })
-    if (options.tickets != "null" && options.tickets != "[]") {//组织活动再次修改票价
+    if (options.tickets != "null" && options.tickets != "[]") {//组织活动再次修改票价 付费
       var tickets = JSON.parse(options.tickets);
       for (var i = 0; i < tickets.length; i++) {
         //tickets[i].cost = tickets[i].cost
-        tickets[i].canEdit = false
+        // if (tickets[i].canEdit == null || tickets[i].canEdit == undefined) {
+        //   if (tickets[i].applyCount > 0) {// 编辑item图标
+        //     tickets[i].canEdit = false
+        //   } else {
+        //     tickets[i].canEdit = true
+        //   }
+        // }
+        if (Number(tickets[i].ticketID) > 0) {//有下发的票价
+          // if (tickets[i].applyCount > 0) {// 编辑item图标
+          //   tickets[i].itemEdit = false
+          // } else {
+          //   tickets[i].itemEdit = true
+          // }
+          if (applyCount > 0) {
+            tickets[i].itemEdit = false
+            tickets[i].canEdit = false
+          } else {
+            tickets[i].itemEdit = true
+            tickets[i].canEdit = true
+          }
+        } else {//新增的票价
+          tickets[i].canEdit = true
+          tickets[i].itemEdit = true
+        }
       }
       this.setData({
         tickets: tickets,
         neeToPay: options.neeToPay,
-        howToPay: options.howToPay,
-        maxApplyCount: options.maxApplyCount
+        howToPay: options.howToPay
       })
-    } else {
-      var tks = [{ "applyCount": 0, "name": "", "cost": "", "ticketID": 0, "memberCount": "", canEdit: true }]
+    } else {  //免费
+      var tks = [{ "applyCount": 0, "name": "", "cost": "", "ticketID": 0, "memberCount": "", canEdit: true, itemEdit: true }]
       this.setData({
         tickets: tks,
         neeToPay: 1,
         howToPay: 2
       })
     }
-    this.setData({ costDesc: options.costDesc, showPayButton: (options.showPayButton == "true" ? true : false) })
-    // if (actId && actId != undefined && actId != null && actId != "" && actId != "null" && actId != "0" && actId != 0) {//编辑活动
-    //   this.setData({
-    //     tickets: JSON.parse(options.tickets),
-    //     neeToPay: options.neeToPay,
-    //     howToPay: options.howToPay,
-    //     costDesc: options.costDesc,
-    //     maxApplyCount: options.maxApplyCount
-    //   })
-    // } else {
-    //   if (options.tickets != "[]") {//组织活动再次修改票价
-    //     this.setData({
-    //       tickets: JSON.parse(options.tickets),
-    //       neeToPay: options.neeToPay,
-    //       howToPay: options.howToPay,
-    //       costDesc: options.costDesc,
-    //       maxApplyCount: options.maxApplyCount
-    //     })
-    //   } else {
-    //     var tks = [{ "applyCount": 0, "name": "", "cost": "", "ticketID": 0, "memberCount": "" }]
-    //     this.setData({
-    //       tickets: tks,
-    //       neeToPay: 1,
-    //       howToPay: 2
-    //     })
-    //   }
-    // }
+    this.setData({ costDesc: options.costDesc, showPayButton: (options.showPayButton == "true" ? true : false), maxApplyCount: options.maxApplyCount, begin: options.begin, applyCount: applyCount, })
+  },
+  setRefund: function () {
+    var isCostZero = this.isCostZero()
+    var actid = this.data.actId;
+    var applyCount = Number(this.data.applyCount);
+    if (actid == 0 || actid == "undefined") {//组织活动
+      if (!isCostZero) {
+        app.wxService.navigateTo('organize/act_refund/act_refund', {
+          canRefund: this.data.canRefund,
+          refundTime: this.data.refundTime,
+          begin: this.data.begin
+        })
+      }
+    } else {//编辑活动
+      if (applyCount < 1) {//没人报名可设置
+        if (!isCostZero) {
+          app.wxService.navigateTo('organize/act_refund/act_refund', {
+            canRefund: this.data.canRefund,
+            refundTime: this.data.refundTime,
+            begin: this.data.begin
+          })
+        }
+      }
 
+    }
   },
   onReady: function () {
     // 页面渲染完成
 
   },
   onShow: function () {
-    // 页面显示
+    var actRefund = app.globalData.actRefund //活动费用
+    if (actRefund != undefined && actRefund != null && actRefund != "null") {
+      if (actRefund.refund == 1) {
+        this.setData({ refundTxt: "活动开始前均可申请退款", refundColor: "rgb(61,209,164)" })
+      } else if (actRefund.refund == 2) {
+        this.setData({ refundTxt: "指定时间前可申请退款", refundColor: "rgb(61,209,164)" })
+      } else if (actRefund.refund == 3) {
+        this.setData({ refundTxt: "不支持退款", refundColor: "rgb(61,209,164)" })
+      } else {
+        this.setData({ refundTxt: "活动费用为0无需设置", refundColor: "rgb(191, 191, 191)" })
+        canRefund = 1
+        refundTime = new Date().getTime()
+      }
+      this.setData({
+        refundTime: actRefund.time,
+        canRefund: actRefund.refund
+      })
+    }
+
   },
   onHide: function () {
 
@@ -111,6 +174,7 @@ Page({
         tk.cost = tickes[i].cost
         tk.memberCount = tickes[i].memberCount
         tk.ticketID = tickes[i].ticketID
+        tk.canEdit = tickes[i].canEdit
         if (tickes[i].name != "" && tickes[i].cost != "") {
           var count = tickes[i].memberCount
           if (count == "") {
@@ -120,12 +184,15 @@ Page({
         tks[i] = tk
       }
     }
+    app.globalData.actRefund = "null"
     app.globalData.actFeeObject = {
       maxApplyCount: this.data.maxApplyCount,
       tickets: tks,
       neeToPay: this.data.neeToPay,
       howToPay: this.data.howToPay,
-      costDesc: this.data.costDesc
+      costDesc: this.data.costDesc,
+      refundTime: this.data.refundTime,
+      canRefund: this.data.canRefund
     };  //存储数据到app对象上
   },
   onlinePay: function (e) {
@@ -384,7 +451,7 @@ Page({
     this.setData({ tickets: tiks })
   },
   addItem: function (e) {
-    var tksItem = { "applyCount": 0, "name": "", "cost": "", "ticketID": 0, "memberCount": "", canEdit: true }
+    var tksItem = { "applyCount": 0, "name": "", "cost": "", "ticketID": 0, "memberCount": "", canEdit: true, itemEdit: true }
     var id = e.currentTarget.id;
     var index = id.split("_")[1];
     var tiks = this.data.tickets;

@@ -17,7 +17,7 @@ page {
   right: 0;
   z-index: 11;
   height: 100rpx;
-  /*border-bottom: 1rpx solid rgb(230, 230, 230);*/
+  border-bottom: 1rpx solid #e5e5e5;
 }
 
 .topview_1 {
@@ -74,7 +74,8 @@ page {
 }
 
 .top_view {
-  margin: 6rpx 35rpx 0 35rpx;
+  padding: 0 35rpx;
+  background:#fff;
 }
 
 .top_item_view {
@@ -85,12 +86,12 @@ page {
 }
 
 .mid_item_view {
-  background-color: rgb(246, 246, 246);
   height: 88rpx;
   display: flex;
   flex-shrink: 0;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1rpx solid #e6e6e6;
 }
 
 .top_item_foot_view {
@@ -124,7 +125,6 @@ page {
   border: 1rpx solid rgba(61, 209, 164, 0.8);
   border-radius: 6rpx;
   font-size: 25rpx;
-  width: 309rpx;
 }
 
 /*按钮text*/
@@ -210,9 +210,9 @@ page {
 
 .list_view1 {
   display: flex;
-  flex-shrink: 0;
-  align-items: center;
+  align-items: flex-start;
   border-bottom: 1rpx solid rgb(230, 230, 230);
+  background: #fff;
 }
 
 .list_view2 {
@@ -220,6 +220,7 @@ page {
   display: flex;
   flex-shrink: 0;
   flex-direction: column;
+  background: #fff;
 }
 
 .list_view2_top {
@@ -231,20 +232,16 @@ page {
   margin: 29rpx 27rpx 29rpx 29rpx;
   width: 80rpx;
   height: 80rpx;
+  border-radius: 50%;
 }
 
 /*300rpx*/
 
-.user_image2 {
-  margin: 29rpx 27rpx 0 29rpx;
-  width: 80rpx;
-  height: 80rpx;
-}
 
 .image_view {
   display: flex;
-  flex-shrink: 0;
-  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 }
 
 .user_info_top {
@@ -292,10 +289,6 @@ page {
 .border_view {
   background-color: rgb(246, 246, 246);
   height: 48rpx;
-}
-
-.fill_Height {
-  height: 100rpx;
 }
 
 .foot_view {
@@ -404,11 +397,6 @@ page {
 
 /*sdfsf*/
 
-page {
-  background-color: rgb(255, 255, 255);
-  white-space: normal;
-  overflow: scroll;
-}
 
 .header {
   padding: 87rpx 0 70rpx 0;

@@ -56,6 +56,17 @@
   font-size: 26rpx;
 }
 
-.persident{
-  color: #000000
+.persident {
+  color: #000;
+}
+
+.align-left {
+  text-align: left;
+  padding-left: 33rpx;
+}
+
+.base-btn {
+  margin: 61rpx 30rpx;
+  background: rgb(61, 209, 164);
+  color: #fff;
 }

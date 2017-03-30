@@ -1,7 +1,13 @@
 <view class="header">
   <view class="header_left" style="width:150px">活动总名额
   </view>
-  <input placeholder-style="font-size: 34rpx;letter-spacing:-0.8rpx;color: rgb(191, 191, 191);" class="input" placeholder="默认不限" value="{{maxApplyCount==-1?'':maxApplyCount}}" bindblur="setMaxApplyCount" />
+  <input placeholder-class="placeholder-style" class="input" placeholder="默认不限" value="{{maxApplyCount==-1?'':maxApplyCount}}" bindblur="setMaxApplyCount" />
+</view>
+<view class="header" bindtap="setRefund" wx:if="{{ payinfo}}">
+  <view class="header_left" style="width:150px">退款设置
+  </view>
+  <text class="header_left_txt" class="placeholder-style" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;color: {{refundColor}};">{{refundTxt}}</text>
+  <image class="right-arrow" src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" style="padding-top: 26rpx;"></image>
 </view>
 
 <!-- 1 -->
@@ -12,40 +18,44 @@
 
   <!--开始循环图片-->
   <view class="center">
-    <image class="icon" src="https://cdn.51julebu.com/xiaochengxu/image/delet@2x.png"></image>
-    <view wx:if="{{!ticket.canEdit}}">
-      <view id="item_{{item_index}}" style="width:67px;height:268rpx;position:absolute;"></view>
+    <view wx:if="{{!ticket.itemEdit}}">
+      <image style="opacity: 0.5;" class="icon" src="https://cdn.51julebu.com/xiaochengxu/image/delet@2x.png"></image>
+      <view id="item_{{item_index}}" class="center-icon"></view>
     </view>
-    <view wx:if="{{ticket.canEdit}}">
-      <view id="item_{{item_index}}" bindtap="removeItem" style="width:67px;height:268rpx;position:absolute;"></view>
+    <view wx:if="{{ticket.itemEdit}}">
+      <image class="icon" src="https://cdn.51julebu.com/xiaochengxu/image/delet@2x.png"></image>
+      <view id="item_{{item_index}}" class="center-icon" bindtap="removeItem"></view>
     </view>
     <view class="center_body">
       <view class="center_item">
         <view class="header_left" style="width:100px">费用名称 </view>
         <view style="display:flex;justify-content:flex-end;align-items:center;white-space:nowrap;width:426rpx;" wx:if="{{!ticket.canEdit}}">
-          <text style="margin-right:32rpx;margin-top:16rpx;text-align:right; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ticket.name}}</text>
+          <text class="header_left_txt" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ticket.name}}</text>
         </view>
         <view wx:if="{{ticket.canEdit}}">
-          <input id="name_{{item_index}}" placeholder-style="font-size: 34rpx;letter-spacing:-0.8rpx;color: rgb(191, 191, 191);" class="input" placeholder="20字内" maxlength="20" value="{{ticket.name}}" bindinput="setItemInfo" />
+          <input id="name_{{item_index}}" placeholder-class="placeholder-style" class="input" placeholder="20字内" maxlength="20" value="{{ticket.name}}" bindinput="setItemInfo" />
         </view>
       </view>
       <view class="center_item  border">
         <view class="header_left" style="width:100px">金额 </view>
         <view wx:if="{{!ticket.canEdit}}">
-          <text style="margin-right:32rpx;margin-top:16rpx;text-align:right;">{{ticket.cost}}</text>
+          <text class="header_left_txt">{{ticket.cost}}</text>
         </view>
         <view wx:if="{{ticket.canEdit}}">
-          <input id="cost_{{item_index}}" placeholder-style="font-size: 34rpx;letter-spacing:-0.8rpx;color: rgb(191, 191, 191); " class="input" placeholder="有人报名后不可修改" value="{{ticket.cost}}" bindinput="setItemInfo" />
+          <input id="cost_{{item_index}}" placeholder-class="placeholder-style" class="input" placeholder="有人报名后不可修改" value="{{ticket.cost}}" bindinput="setItemInfo" />
         </view>
       </view>
       <view class="center_item">
         <view class="header_left" style="width:100px">名额</view>
-        <view wx:if="{{!ticket.canEdit}}">
-          <text style="margin-right:32rpx;margin-top:16rpx;text-align:right;">{{ticket.memberCount==-1?'不限':ticket.memberCount}}</text>
+        <view class="tickets-amount" wx:if="{{!ticket.canEdit}}">
+          <input id="memberCount_{{item_index}}" placeholder-class="placeholder-style" class="input" placeholder="默认不限" value="{{ticket.memberCount==-1?'':ticket.memberCount}}" bindinput="setItemInfo" />|
+          <view class="header_left_txt tickets-amount-txt">已有{{ticket.applyCount==-1?'不限':ticket.applyCount}}报名</view>
         </view>
         <view wx:if="{{ticket.canEdit}}">
-          <input id="memberCount_{{item_index}}" placeholder-style="font-size: 34rpx;letter-spacing:-0.8rpx;color: rgb(191, 191, 191);" class="input" placeholder="默认不限" value="{{ticket.memberCount==-1?'':ticket.memberCount}}" bindinput="setItemInfo" />
+          <input id="memberCount_{{item_index}}" placeholder-class="placeholder-style" class="input" placeholder="默认不限" value="{{ticket.memberCount==-1?'':ticket.memberCount}}" bindinput="setItemInfo" />
         </view>
+
+        <!--<input id="memberCount_{{item_index}}" placeholder-class="placeholder-style" class="input" placeholder="默认不限" value="{{ticket.memberCount==-1?'':ticket.memberCount}}" bindinput="setItemInfo" />-->
       </view>
     </view>
   </view>
@@ -59,7 +69,7 @@
 
 <!-- textarea-->
 <view class="textarea">
-  <textarea style="width:100%;" placeholder-style="font-size: 34rpx;letter-spacing:-0.8rpx;color: rgb(191, 191, 191);" placeholder="费用说明，必填" value="{{costDesc}}" bindblur="setCostDesc" />
+  <textarea style="width:100%;" placeholder-class="placeholder-style" placeholder="费用说明，必填" value="{{costDesc}}" bindblur="setCostDesc" />
 </view>
 
 <!-- 3 -->

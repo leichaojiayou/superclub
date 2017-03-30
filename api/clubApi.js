@@ -141,7 +141,7 @@ class ClubApi {
         let club_ids = clubs.join(',')
         let param = {
             method: 'POST',
-            loading: false,
+            loading: true,
             data: {
                 club_ids: club_ids
             }

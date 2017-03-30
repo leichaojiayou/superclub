@@ -10,7 +10,7 @@ Page({
       description: e.description,
       type: e.type
     })
-    setTimeout( ()=> {
+    setTimeout(() => {
       let data = this.data;
       this.setData({
         newDescription: data.description,
@@ -27,12 +27,9 @@ Page({
   },
 
   changeText: function (e) {
-    if (e.detail.value) {
-      this.setData({
-        description: e.detail.value
-      })
-    }
-
+    this.setData({
+      description: e.detail.value
+    })
   },
 
   submit: function () {
@@ -46,17 +43,21 @@ Page({
           App.event.trigger('club', {
             description: param.data.description
           })
-          wxService.navigateBack();
         }
       })
+    } else {
+      App.event.trigger('club_fill', {
+        desc: this.data.description
+      }, {}, true);
     }
+    wxService.navigateBack();
   },
 
-  onUnload: function () {
-    App.event.trigger('club_fill', {
-      desc: this.data.description
-    }, {}, true);
-  }
+  // onUnload: function () {
+  //   App.event.trigger('club_fill', {
+  //     desc: this.data.description
+  //   }, {}, true);
+  // }
 
 
 })

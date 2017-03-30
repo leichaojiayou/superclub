@@ -27,11 +27,9 @@ Page({
   },
 
   changeText: function (e) {
-    if (e.detail.value) {
-      this.setData({
-        slogan: e.detail.value
-      })
-    }
+    this.setData({
+      slogan: e.detail.value
+    })
   },
 
   submit: function () {
@@ -42,26 +40,27 @@ Page({
     if (!this.data.type) {
       clubApi.modifyClub(param, res => {
         if (res.data.status == 1) {
-
           App.event.trigger('club', {
             slogan: param.data.slogan
           })
-
           App.event.trigger('clubHome', {
             slogan: param.data.slogan
           })
-
-          wxService.navigateBack();
         }
       })
+    } else {
+      App.event.trigger('club_fill', {
+        slogan: this.data.slogan
+      }, {}, true);
     }
+    wxService.navigateBack();
 
   },
-  onUnload: function () {
-    App.event.trigger('club_fill', {
-      slogan: this.data.slogan
-    }, {}, true);
-  }
+  // onUnload: function () {
+  //   App.event.trigger('club_fill', {
+  //     slogan: this.data.slogan
+  //   }, {}, true);
+  // }
 
 
 })

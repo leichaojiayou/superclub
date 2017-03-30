@@ -25,3 +25,6 @@
   background: rgba(149, 255, 223, 0.2);
   border-radius: 4rpx;
 }
+.gray_txt{
+  padding: 4rpx 10rpx;
+}

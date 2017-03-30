@@ -127,7 +127,7 @@
   </view>
 
   <!-- 俱乐部设置框 -->
-  <view class="bigview" wx:if="{{club.roleType != 0 && club.roleType != 1 }}">
+  <view class="bigview" wx:if="{{club.roleType != 0 && club.roleType != 1}}">
     <navigator class="itemView" wx:if="{{club.roleType != 4}}" bindtap="setJoinWay">
       <text>设置加入方式</text>
       <view class="itemView_foot ">
@@ -198,7 +198,7 @@
     <navigator class="itemView" wx:if="{{club.roleType === 2 || club.roleType === 3}}" bindtap="setDeclaration">
       <text>宣言</text>
       <view class="itemView_foot " bindtap>
-        <view class="foot_text_view ">
+        <view class="foot_text_view master-project-overflow" style="display:-webkit-box;text-align:right">
           <text class="bigsize_2">{{club.slogan}}</text>
         </view>
         <image class="right-arrow " src="{{page.img}} " bindtap></image>
@@ -207,7 +207,7 @@
     <view wx:else class="item-view-show">
       <view class="item-short-txt">宣言</view>
       <view class="itemView_foot">
-        <view class="foot_text_view" style="margin:30rpx 0 30rpx 0;">
+        <view class="foot_text_view" style="margin:30rpx 0;">
           <text class="club-foot-show-text">{{club.slogan}}</text>
         </view>
       </view>
@@ -217,7 +217,7 @@
     <navigator class="itemView" style="border-bottom:none" wx:if="{{club.roleType === 2 || club.roleType === 3}}">
       <text>简介</text>
       <view class="itemView_foot" catchtap="setDescription">
-        <view class="foot_text_view ">
+        <view class="foot_text_view master-project-overflow" style="display:-webkit-box;text-align:right">
           <text class="bigsize_2">{{club.description}}</text>
         </view>
         <image class="right-arrow " src="{{page.img}} "></image>
@@ -236,12 +236,12 @@
   <!-- 俱乐部成员统计 -->
   <view class="bigview " bindtap="tips">
     <navigator class="itemView club-count-member" style="border-bottom:none">
-      <view style="display:flex;align-items:center">
+      <view class="flex-middle">
         <image class="statistics_icon " src="{{page.club_statistics_icon}} " mode="aspectFit"></image>
         <text style="padding-left:28rpx;">俱乐部成员统计</text>
       </view>
-      <view style="display:flex;align-items:center">
-        <text class="bigsize" style="padding-right:30rpx;">{{club.memberCount}}人</text>
+      <view class="flex-middle">
+        <view class="bigsize" style="margin-right:30rpx;">{{club.memberCount}}人</view>
         <image class="right-arrow" src="{{page.img}}"></image>
       </view>
     </navigator>
@@ -252,7 +252,7 @@
     <view class="buttonview ">
       <button wx:if="{{club.roleType === 2}}" hover-class="hover-btn" form-type="submit">删除俱乐部</button>
       <button wx:elif="{{club.roleType != 0 }}" hover-class="hover-btn" form-type="submit">退出俱乐部</button>
-      <button wx:else hover-class="hover-btn" style="border: 1rpx solid rgb(61, 209, 164);background-color: rgb(61, 209, 164);" form-type="submit">
+      <button wx:else hover-class="hover-btn" style="border: 1rpx solid #3dd1a5;background: #3dd1a5;" form-type="submit">
         加入俱乐部
       </button>
     </view>
@@ -260,5 +260,5 @@
 </scroll-view>
 <import src="../../../template/toasts/toasts.wxml" />
 <template is="sendCheckCode" data="{{param,status,time}}" />
-<template is="joinCheck" data="{{joinShowStyle,join}}" />
+<template is="joinCheck" data="{{joinShowStyle,join,needjoinText}}" />
 <template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}" />

@@ -1,0 +1,71 @@
+@import "../../../template/toasts/toasts.wxss";
+
+.cancel-content {
+    margin-top: 30rpx;
+    padding: 0 30rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    height: 88rpx;
+     border-top: 1rpx solid rgb(229, 229, 229);
+    border-bottom: 1rpx solid rgb(229, 229, 229);
+    font-size: 32rpx;
+}
+
+.itemView_foot {
+    display: flex;
+    align-items: center;
+}
+
+.foot_text_view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.apply-btn{
+    margin: 60rpx 30rpx 0;
+    height: 94rpx;
+    line-height: 94rpx;
+    z-index: 99;
+}
+
+.cost-cancel{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    height: 88rpx;
+    padding: 0 30rpx;
+    font-size: 32rpx;
+    margin-top: 40rpx;
+    border-top: 1rpx solid #e6e6e6;
+    border-bottom: 1rpx solid #e6e6e6;
+    
+}
+.cancel-reason{
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    padding: 0 30rpx;
+    font-size: 32rpx;
+    border-bottom: 1rpx solid #e6e6e6;
+    color: #000;
+}
+.cancel-reason-txt{
+    color: #8e8e8e;
+    font-size: 26rpx;
+    margin: 20rpx 0 44rpx;
+}
+.base-style{
+    color: #8e8e8e;
+}
+.right-arrow{
+    margin-left: 30rpx;
+}
+.bigsize{
+    min-width: 450rpx;
+    text-align: right;
+}

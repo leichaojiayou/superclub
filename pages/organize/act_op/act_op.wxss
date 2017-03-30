@@ -1,3 +1,5 @@
+@import "/template/toasts/toasts.wxss";
+@import "/template/organize/picker.wxss";
 page {
   white-space: normal;
   overflow-x: hidden;
@@ -58,7 +60,7 @@ page {
   height: 500rpx;
   text-align: justify;
 }
-  
+
 .choose {
   height: 80rpx;
   background: #eee;
@@ -218,56 +220,6 @@ page {
   align-items: center;
 }
 
-/*时间控件*/
-
-.picker-view-big {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  transition: opacity 400ms ease-in;
-}
-
-.picker-view {
-  background: #fff;
-}
-
-.pickerdata {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.pickerdata picker-view-column view {
-  text-align: center;
-}
-
-.picker-btn {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 40%;
-  display: flex;
-  justify-content: space-between;
-  background: #fff;
-}
-
-.btn {
-  padding: 14rpx 14rpx;
-}
-
-.picker-alpha-btn {
-  color: #8e8e8e;
-}
-
-.picker-beta-btn {
-  color: #008000;
-}
-
 .act-textarea {
   width: 92%;
   border-top: 1rpx solid #e6e6e6;
@@ -301,4 +253,26 @@ page {
 
 .list-box-border {
   border-bottom: 1rpx solid #e6e6e6;
+}
+
+.check-agree-checkbox {
+  width: 35rpx;
+  height: 35rpx;
+  padding-right: 10rpx;
+}
+
+.list-address {
+  float: right;
+  width: 310rpx;
+  display:  -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient:  vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
+}
+.placeholder-style{
+  color: rgb(191, 191, 191);
+  font-size: 34rpx;
 }

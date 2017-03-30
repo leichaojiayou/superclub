@@ -4,6 +4,7 @@ const mineApi = app.api("mineApi");
 const actApi = app.api("actApi");
 const clubApi = app.api("clubApi");
 const utils = app.util;
+const session = app.session;
 var needCountdown = false;
 let recvResult = 0;
 let currentActItem;
@@ -172,15 +173,22 @@ Page({
     //取消报名  待审核和其他支付方式可以取消
     cancelApply: function (e) {
         let item = e.currentTarget.dataset.item;
-        if (item.payStatus != 0 && item.payStatus != 1 && item.payStatus != 5 && item.payStatus != 7 && item.payStatus != 8 && item.applyStatus != 0) {
-            this.showModal('暂不支持在线付费报名取消，请在超级俱乐部App或网页端取消')
-            return;
-        } else if (item.isGroupApply == 1) {//组队报名
-            this.showModal('暂不支持组队活动报名修改')
-            return;
-        }
-        if (item.hasHelpApply == 1 && item.applyUserType == 0) {
-            app.wxService.navigateTo("activity/applylist/applylist", {activityId: item.activityID, type: 0})
+        //payStatus: 报名付费状态：0:不作考虑 1：待付款 2：已付款 3:等待退款 4:已退款 5:待付款-延后 6 付款超时 7 其他付款方式未付，8其他付款方式 已付款
+        if (item.isGroupApply == 1) {//组队报名
+            this.showModal('暂不支持组队活动报名修改');
+        } else if (item.howToPay == 1 || item.payStatus == 1 || item.payStatus == 5 || item.payStatus == 6) {//免费和待支付可以直接取消
+            this.cancelApplyAction(item.howToPay != 1 && item.payStatus >= 7, item.activityID, item.applyId);
+        } else if (item.isSupportRefund != 1) {
+            utils.showTip(this, '当前活动不支持退款');
+        } else if (item.hasHelpApply == 1 && item.applyUserType == 0) {
+            utils.showTip(this, '取消帮报名才可以取消自己报名');
+        } else if (item.payStatus == 2) {
+            app.wxService.navigateTo('activity/apply_cancel/apply_cancel', {
+                activityId: item.activityID,
+                applyId: item.applyId,
+            });
+        } else if (item.payStatus == 3) {//取消退款？
+            utils.showTip(this, '取消退款')
         } else {
             this.cancelApplyAction(item.howToPay != 1 && item.payStatus >= 7, item.activityID, item.applyId);
         }
@@ -194,10 +202,11 @@ Page({
             currentActItem = item;
             this.joinClubTips();
         } else {
-            app.wxService.navigateTo('activity/apply_page/apply_page', {
+            app.wxService.navigateTo('activity/apply_p/apply_page', {
                 activityId: item.activityID,
                 applyId: item.applyId,
                 type: 4,
+                helperApply: item.helperApply,
                 applyUserType: item.applyUserType,
             });
         }
@@ -205,11 +214,33 @@ Page({
     //去支付按钮
     toPay: function (e) {
         let id = e.currentTarget.id;
-        app.wxService.navigateTo('activity/applylist/applylist', {activityId: id, type: 2});
+        app.wxService.navigateTo('activity/apply_p/apply_page', {
+            activityId: id,
+            type: 5
+        });
     },
     //申请退款
     applyRefund: function (e) {
-        this.showModal('暂不支持付费活动在线退款，请到网页端和App操作')
+        let item = e.currentTarget.dataset.item;
+        //payStatus: 报名付费状态：0:不作考虑 1：待付款 2：已付款 3:等待退款 4:已退款 5:待付款-延后 6 付款超时 7 其他付款方式未付，8其他付款方式 已付款
+        if (item.isGroupApply == 1) {//组队报名
+            this.showModal('暂不支持组队活动报名修改');
+        } else if (item.howToPay == 1 || item.payStatus == 1 || item.payStatus == 5 || item.payStatus == 6) {//免费和待支付可以直接取消
+            this.cancelApplyAction(item.howToPay != 1 && item.payStatus >= 7, item.activityID, item.applyId);
+        } else if (item.isSupportRefund != 1) {
+            utils.showTip(this, '当前活动不支持退款');
+        } else if (item.hasHelpApply == 1 && item.applyUserType == 0) {
+            utils.showTip(this, '取消帮报名才可以取消自己报名');
+        } else if (item.payStatus == 2) {
+            app.wxService.navigateTo('activity/apply_cancel/apply_cancel', {
+                activityId: item.activityID,
+                applyId: item.applyId,
+            });
+        } else if (item.payStatus == 3) {//取消退款？
+            utils.showTip(this, '取消退款')
+        } else {
+            this.cancelApplyAction(item.howToPay != 1 && item.payStatus >= 7, item.activityID, item.applyId);
+        }
     },
     //不支持退款
     noSupportRefund: function (e) {
@@ -336,7 +367,8 @@ Page({
         if (currentActItem.needJoinCheck === 1) {//加入俱乐部是否需要验证
             this.setData({
                 joinShowStyle: "opacity:1;pointer-events:auto;",
-                join: '请输入验证信息'
+                join: '请输入验证信息',
+                needjoinText: app.session.getUserInfo().nick + "申请加入",//加入俱乐部默认文字
             });
         } else {
             this.joinClubApi(null);
@@ -364,6 +396,7 @@ Page({
                         'clubHome.roleType': 1
                     });
                     utils.showTip(this, '加入成功');
+                    app.event.emit(app.config.EVENT_CLUB_CHANGE, null);
                 } else {
                     utils.showTip(this, '申请已提交，请耐心等候审核');
                 }

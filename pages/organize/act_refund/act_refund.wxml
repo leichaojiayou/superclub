@@ -1,0 +1,25 @@
+<import src="../../../template/organize/picker.wxml" />
+<!--pages/duanxintixing/duanxintixing.wxml-->
+<view style="height:31rpx;border-bottom:1rpx solid rgb(230,230,230)"></view>
+
+<!--时间循环-->
+<view style="background: #fff;" bindtap="changehidden">
+  <view class="item" wx:for="{{refunds}}"  wx:for-item="refund" wx:for-index="item_index"  id="{{item_index}}">
+    <text>{{refund.text}}</text>
+    <!--if判断-->
+    <view wx:if="{{refund.isDefault==1}}">
+      <icon type="success_no_circle" size="18"  ></icon>
+    </view>
+  </view>
+</view>
+<view class="foot">
+  <text class="t26rpx">活动有人支付成功后，则不能更改退款设置</text>
+</view>
+
+<view class="header"   bindtap="togglePicker"  wx:if="{{pointTime==1}}">
+  <view class="header_left" style="width:150px">指定时间
+  </view>
+   <text class="header_left_txt" class="placeholder-style" style=" text-overflow:ellipsis; white-space:nowrap;color:black ;">{{timetxt}}</text>
+   <image class="right-arrow" src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png" style="padding-top: 26rpx;"></image>
+</view>
+<template is="pickerData" data="{{modalShowStyle: modalShowStyle, zindex: zindex, value: value, years: years, months: months, days: days , hours: hours , minutes: minutes}}" />

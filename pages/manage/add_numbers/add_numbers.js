@@ -98,7 +98,7 @@ Page({
       this.data.ticket_id = item.ticketids[e.detail.value]
     
     }
-
+    console.log(item.ranges)
     this.setData({
       applyFields:applyFields,
     })

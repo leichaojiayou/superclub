@@ -1,59 +1,65 @@
+
 <!--pages/index_empty/index_empty.wxml-->
 <template name="foot">
-    <!--模版-->
-    <view catchtap="actDetails" data-info="{{item}}" style="background-color: rgb(255, 255, 255);">
-        <!--swiper-->
-        
-        <view style="position: relative">
-        <image src="{{item.cover}}" class="swiper" mode="widthFix" />
-        <!--活动状态标签-->
-        <!--麻烦后台处理下-->
-        <text class="sw_txt" style="background-color:rgb(61,209,164)">{{item.actStatusText}}</text>
-        </view>
-        <!--文字-->
-        <view class="item_css">
-            <text class="item_text">{{item.title}}</text>
-            <view class="item_time">
-                <text>{{item.formatTime}}开始</text>
-                <text wx:if="{{item.actOnline!=0}}">     线上活动</text>
-                <text wx:else>     {{item.address}}</text>
-            </view>
-            <view style="display:flex;align-items:center;margin-top:14rpx;position: relative;">
-                <image catchtap="clubDetail" data-id="{{item.clubInfo.clubID}}" src="{{item.clubInfo.logo}}" class="item_img"></image>
-                <text class="item_text_ab">{{item.clubInfo.title}}</text>
-                <text class="item_price">{{item.price}}</text>
-            </view>
-            <!--<text class="sw_txt" style="background-color:rgb(61,209,164)">{{item.actStatusText}}</text>-->
-        </view>
+
+  <!--模版-->
+  <view catchtap="actDetails" data-info="{{item}}" style="background: #fff;">
+
+    <!--swiper-->
+    <view style="position: relative">
+      <image src="{{item.cover}}" class="swiper" mode="widthFix" />
+
+      <!--活动状态标签-->
+
+      <!--麻烦后台处理下-->
+      <text class="sw_txt" style="background-color:rgb(61,209,164)">{{item.actStatusText}}</text>
     </view>
+
+    <!--文字-->
+    <view class="item_css">
+      <text class="item_text">{{item.title}}</text>
+      <view class="item_time">
+        <text>{{item.formatTime}}开始</text>
+        <text wx:if="{{item.actOnline!=0}}"> 线上活动</text>
+        <text wx:else> {{item.address}}</text>
+      </view>
+      <view class="empty-list">
+        <image catchtap="clubDetail" data-id="{{item.clubInfo.clubID}}" src="{{item.clubInfo.logo}}" class="item_img"></image>
+        <text class="item_text_ab">{{item.clubInfo.title}}</text>
+        <text class="item_price">{{item.price}}</text>
+      </view>
+    </view>
+  </view>
 </template>
+
 <!--如果用户没加入任何俱乐部，没有管理的俱乐部，没访问过任何俱乐部，显示该页面-->
 <template name="index_empty">
-    <scroll-view scroll-y="true" style="height:100vh;" bindscrolltolower="loadMoreActs" bindscrolltoupper="refreshActs">
-        <!--body-图片-->
-        <view style="display:flex;justify-content: center;margin-top:45rpx;">
-            <image src="https://cdn.51julebu.com/xiaochengxu/image/empty@2x.png" class="body_img">
-            </image>
-        </view>
-        <!--body-文字-->
-            <text style="display:flex;justify-content:center;margin-top:20rpx;" class="body_txt">未加入任何俱乐部，您可以参加其他</text>
-        
-        <view style="display:flex;justify-content:center;">
-            <text class="body_txt">俱乐部活动，或创建俱乐部！</text>
-        </view>
-        <!--body-按钮-->
-        <view style="display:flex;align-items:center;margin:32rpx 0 46rpx 0;">
-            <button size="mini" style="display:flex;align-items:center;justify-content:center;border:1rpx solid #000;width:360rpx;height:70rpx;" bindtap="manageClub">创建俱乐部</button>
-        </view>
-        <view class="border_1">
-            <view class="border_1_1"></view>
-                <text style="margin:0 8rpx 0 8rpx">俱乐部活动</text>
-            <view class="border_1_1"></view>
-        </view>
-        <!--活动列表数据-->
-        <view wx:for="{{hotActs}}" wx:key="key_act">
-            <template is="foot" data="{{item}}" />
-        </view>
-        <view style="height:200rpx;"></view>
-    </scroll-view>
+  <scroll-view scroll-y="true" style="height:100vh;" bindscrolltolower="loadMoreActs" bindscrolltoupper="refreshActs">
+
+    <!--body-图片-->
+    <view class="flex-center" style="margin-top:45rpx;">
+      <image src="https://cdn.51julebu.com/xiaochengxu/image/empty@2x.png" class="body_img">
+      </image>
+    </view>
+
+    <!--body-文字-->
+    <text class="body_txt flex-center" style="margin-top:45rpx;">未加入任何俱乐部，您可以参加其他</text>
+    <view class="flex-center">
+      <text class="body_txt">俱乐部活动，或创建俱乐部！</text>
+    </view>
+    <view class="flex-center">
+      <button class="create-club-btn" bindtap="manageClub">创建俱乐部</button>
+    </view>
+    <view class="border_1">
+      <view class="border_1_1"></view>
+      <text style="padding:0 8rpx">俱乐部活动</text>
+      <view class="border_1_1"></view>
+    </view>
+
+    <!--活动列表数据-->
+    <view wx:for="{{hotActs}}" wx:key="key_act">
+      <template is="foot" data="{{item}}" />
+    </view>
+    <view style="height:200rpx;"></view>
+  </scroll-view>
 </template>

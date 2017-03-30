@@ -34,7 +34,7 @@ class Session {
         if (this.key) {
             return this.key;
         }
-        this.key = storage.getSync(this.keyPrefix + 'key', '')
+        this.key = this.getSync('key', null)
         return this.key;
     }
 
@@ -51,7 +51,7 @@ class Session {
         if (this.user) {
             return this.user
         }
-        this.user = storage.getSync(this.keyPrefix + 'user', {})
+        this.user = this.getSync('user', {})
         return this.user
     }
 
@@ -59,8 +59,8 @@ class Session {
         if (user && key) {
             this.key = key;
             this.user = user;
-            storage.saveSync(this.keyPrefix + "user", user)
-            storage.saveSync(this.keyPrefix + "key", key)
+            this.saveSync("user", user)
+            this.saveSync("key", key)
         }
     }
 
@@ -76,20 +76,20 @@ class Session {
     }
 
     getMyClubInfo() {
-        return storage.getSync(this.keyPrefix + "club", {})
+        return this.getSync("club", {})
     }
 
     saveMyClubInfo(club) {
-        storage.saveSync(this.keyPrefix + "club", club)
+        this.saveSync("club", club)
     }
 
     removeMyClubInfo() {
-        storage.removeSync(this.keyPrefix + "club")
+        this.removeSync("club")
     }
 
     //解决多人报名时，在两个页面反复跳转导致数据错乱
     getApplyInfo() {
-        return storage.getSync(this.keyPrefix + "applyInfo", {})
+        return this.getSync("applyInfo", {})
     }
 
     /**
@@ -103,11 +103,11 @@ class Session {
      * @param applyInfo
      */
     saveApplyInfo(applyInfo) {
-        storage.saveSync(this.keyPrefix + "applyInfo", applyInfo)
+        this.saveSync("applyInfo", applyInfo)
     }
 
     removeApplyInfo() {
-        storage.removeSync(this.keyPrefix + "applyInfo")
+        this.removeSync("applyInfo")
     }
 
     updateJoinClubs(clubs) {
@@ -128,23 +128,57 @@ class Session {
             }
         })
         this.recentClubIds = newRecents;
-        storage.saveSync(this.keyPrefix + "recentClubIds", newRecents)
+        this.saveSync("recentClubIds", newRecents)
     }
 
     /**
      * 最近访问的俱乐部列表
      */
     recentClubs() {
-        if (!this.recentClubIds) {
-            this.recentClubIds = storage.getSync(this.keyPrefix + "recentClubIds", [])
-        }
-        if (this.recentClubIds == null) {
-            this.recentClubIds = []
-        }
-        return this.recentClubIds;
+        return this.getSync('recentClubIds', [])
     }
 
-    addAccessClub(clubId) {
+    /**
+     * 获取所有最近访问的俱乐部,包括之前在访问首页活动的俱乐部
+     */
+    allRecentClubs() {
+        let recentIds = this.recentClubs()
+        let clubs = recentIds
+        let invisibleClubs = this.getSync('recentInvisibleClubs', [])
+        if (invisibleClubs.length > 0) {
+            invisibleClubs.forEach(e => {
+                if (!this.__exist(e, this.joinClubs, clubs)) {
+                    clubs.push(e)
+                }
+            })
+            if (clubs.length > 5) {
+                clubs = clubs.slice(0, 5)
+            }
+            this.saveSync('recentClubIds', clubs)
+            this.saveSync('recentInvisibleClubs', [])
+        }
+        return clubs
+    }
+
+    __exist(id, joinClubs, recentClubs) {
+        if (joinClubs != null && joinClubs.length > 0) {
+            for (let i = 0; i < joinClubs.length; i++) {
+                if (id == joinClubs[i]) {
+                    return true;
+                }
+            }
+        }
+        if (recentClubs != null && recentClubs.length > 0) {
+            for (let i = 0; i < recentClubs.length; i++) {
+                if (id == recentClubs[i]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    addAccessClub(clubId, addToRecent = true) {
         if (this.joinClubs && this.joinClubs.length > 0) {
             for (let i = 0; i < this.joinClubs.length; i++) {
                 let id = this.joinClubs[i];
@@ -154,28 +188,43 @@ class Session {
                 }
             }
         }
-        let clubs = this.recentClubs()
-        if (clubs.length > 0) {
-            for (let i = 0; i < clubs.length; i++) {
-                let id = clubs[i];
-                if (id == clubId) {
-                    //最近访问过该俱乐部，移除
-                    clubs.splice(i, 1)
+        if (addToRecent) {
+            let clubs = this.recentClubs()
+            if (clubs.length > 0) {
+                for (let i = 0; i < clubs.length; i++) {
+                    let id = clubs[i];
+                    if (id == clubId) {
+                        //最近访问过该俱乐部，移除
+                        clubs.splice(i, 1)
+                    }
                 }
             }
+            clubs.unshift(Number.parseInt(clubId))
+            if (clubs.length >= 6) {
+                //保留最近5个访问过的俱乐部
+                clubs.pop()
+            }
+            this.recentClubIds = clubs;
+            this.saveSync("recentClubIds", clubs)
+        } else {
+            //如果从小程序首页访问的俱乐部, 不直接显示在最近访问的.
+            //直到用户加入或者创建了俱乐部后才显示出来
+            let recentInVisibleClubs = this.getSync('recentInvisibleClubs', [])
+            for (let i = 0; i < recentInVisibleClubs.length; i++) {
+                let id = recentInVisibleClubs[i];
+                if (id == clubId) {
+                    //最近访问过该俱乐部，移除
+                    recentInVisibleClubs.splice(i, 1)
+                }
+            }
+            recentInVisibleClubs.unshift(Number.parseInt(clubId))
+            this.saveSync("recentInvisibleClubs", recentInVisibleClubs)
         }
-        clubs.unshift(Number.parseInt(clubId))
-        if (clubs.length >= 6) {
-            //保留最近5个访问过的俱乐部
-            clubs.pop()
-        }
-        this.recentClubIds = clubs;
-        storage.saveSync(this.keyPrefix + "recentClubIds", clubs)
     }
 
     setCode(code, status) {
-        storage.saveSync(this.keyPrefix + "code", code);
-        storage.saveSync(this.keyPrefix + "status", status);
+        this.saveSync("code", code);
+        this.saveSync("status", status);
     }
 
     /**
@@ -183,8 +232,7 @@ class Session {
      */
     checkNewActCount(clubs) {
         if (clubs == null || clubs.length == 0) return
-        let cacheClubs = storage.getSync(this.keyPrefix + 'cacheClubs', [])
-        if (cacheClubs == null) cacheClubs = []
+        let cacheClubs = this.getSync('cacheClubs', [])
         let newAccessClubs = []
         clubs.forEach(club => {
             let found = false
@@ -211,12 +259,11 @@ class Session {
         if (newAccessClubs.length > 0) {
             cacheClubs = cacheClubs.concat(newAccessClubs)
         }
-        storage.saveSync(this.keyPrefix + 'cacheClubs', cacheClubs)
+        this.saveSync('cacheClubs', cacheClubs)
     }
 
     markClubRead(club) {
-        let cacheClubs = storage.getSync(this.keyPrefix + 'cacheClubs', [])
-        if (cacheClubs == null) return
+        let cacheClubs = this.getSync('cacheClubs', [])
         let found = false
         for (var i = 0; i < cacheClubs.length; i++) {
             let cache = cacheClubs[i]
@@ -228,7 +275,7 @@ class Session {
             }
         }
         if (found) {
-            storage.saveSync(this.keyPrefix + 'cacheClubs', cacheClubs)
+            this.saveSync('cacheClubs', cacheClubs)
         }
     }
 
@@ -256,7 +303,7 @@ class Session {
                 cacheMsgs = []
             }
             cacheMsgs = cacheMsgs.concat(actMsgs)
-            if(cacheMsgs.length > 100) {
+            if (cacheMsgs.length > 100) {
                 cacheMsgs.slice(0, cacheMsgs.length - 100)
             }
             this.saveSync('act_messages', cacheMsgs)

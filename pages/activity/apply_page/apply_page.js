@@ -14,7 +14,7 @@ let applyResult = 0;
 let activityId, applyId;//活动ID、报名Id
 Page({
     data: {
-        type: 0,//0、普通报名模式；1、帮报名填写模式；2、修改报名资料模式；3、帮报名模式(可以立即帮报名);4、重新报名页面;
+        type: 0,//0、普通报名模式；1、帮报名填写模式；2、修改报名资料模式；3、帮报名模式(可以立即帮报名);4、重新报名页面;5、支付模式（已报名但未支付）
         isCost: false,
         selectTicketIndex: 0,
         selectTicket: {}, //已选择的票价
@@ -34,6 +34,7 @@ Page({
         formId: 0,
         needPayCost: '',//马上报名按钮上显示金额
         helperApply: 0,//是否允许帮报名, 1为允许, 2为不允许.
+        greenButtonText: '',//立即报名按钮
     },
     pickerEvent: function (e) {//选择器事件
         let that = this;
@@ -72,9 +73,11 @@ Page({
                 applyId = param.applyId;
             }
         }
+        that.data.greenButtonText = param.type != 1 && param.type != 2 ? '马上报名' : '保存';
         that.setData({
             type: param.type,
             helperApply: param.helperApply,
+            greenButtonText: that.data.greenButtonText,
         });
         if (that.data.type == 0) {
             app.wxService.setNavigationBarTitle("报名活动");
@@ -139,10 +142,16 @@ Page({
                     item.option = item.option.split(',');
                     if (item.defaultValue) {
                         item.select = item.option.indexOf(item.defaultValue);
-                        inputData[item.fieldName] = item.option[0];
+                        inputData[item.fieldName] = item.defaultValue;
                     } else {
-                        inputData[item.fieldName] = null;
-                        item.select = -1;
+                        if (item.option.length == 1) {
+                            item.defaultValue = item.option[0];
+                            item.select = 0;
+                            inputData[item.fieldName] = item.defaultValue;
+                        } else {
+                            inputData[item.fieldName] = null;
+                            item.select = -1;
+                        }
                     }
                 } else {//文本填写
                     inputData[item.fieldName] = item.defaultValue;
@@ -173,6 +182,10 @@ Page({
             if (tickets && tickets.length != 0) {
                 let tickets = res.data.tickets;
                 let selectTicket = null;
+                if (tickets.length == 1) {
+                    selectTicket = tickets[0];
+                    tickets[0].isDefault = 1;
+                }
                 if (that.data.type == 2) {
                     selectTicket = tickets[0];
                 }
@@ -180,7 +193,7 @@ Page({
                     item.desc = item.name + "：" + (item.cost / 100);
                     let remain = 0;
                     if (item.memberCount == -1) {
-                        remain = "不限"
+                        remain = "名额不限"
                     } else {
                         if ((item.memberCount - item.applyCount) > 0) {
                             remain = item.memberCount - item.applyCount
@@ -218,13 +231,23 @@ Page({
             }
         });
     },
+    trimStr: function (str) {
+        return str.replace(/(^\s*)|(\s*$)/g, "");
+    },
     checkInput: function (showTips) {//检查填写信息是否有错误
         if (!this.data.selectTicket) {
             utils.showTip(this, '请选择票价');
             return false;
         }
         for (let item of this.data.fields) {
-            let value = inputData[item.fieldName];
+            let value = this.trimStr(inputData[item.fieldName]);
+            if (item.fieldName == "身份证" || item.fieldName == "身份证号" || item.fieldName == '身份证号码') {
+                let result = utils.checkID(value);
+                if (result != 0) {
+                    utils.showTip(this, "请输入正确的" + item.fieldName);
+                    return;
+                }
+            }
             if (!value || value.lengh == 0 || (item.fieldName == "手机" && value.length != 11)) {
                 if (showTips) {
                     utils.showTip(this, item.fieldName + "填写错误");
@@ -260,6 +283,8 @@ Page({
             }
         } else if (this.data.type == 2) {//修改报名资料
             that.update();
+        } else if (this.data.type == 5) {//立即支付
+            that.getUnPayId();
         }
     },
     update: function () {//修改报名资料
@@ -296,8 +321,8 @@ Page({
         let that = this;
         let data = JSON.stringify(inputData);
         console.log(data);
-        if (!this.checkInput(false)) {
-            utils.showTip(that, '请完善当前用户报名信息');
+        if (!this.checkInput()) {
+            //utils.showTip(that, '请完善当前用户报名信息');
             return
         } else if (getApp().session.isTempUser()) {
             this.validatePhone();
@@ -373,7 +398,7 @@ Page({
             return;
         }
         if (!this.checkInput(false)) {
-            utils.showTip(that, '请完善当前用户报名信息');
+            utils.showTip(that, '请先完善当前用户信息');
             return
         } else if (getApp().session.isTempUser()) {
             this.validatePhone();
@@ -398,7 +423,7 @@ Page({
             app.wxService.setNavigationBarTitle("帮人报名");
             that.loadApplyInfo();
         } else {
-            utils.showTip(that, '请完善当前用户报名信息');
+            utils.showTip(that, '请先完善当前用户信息');
         }
     },
 
@@ -576,7 +601,11 @@ Page({
                     let currPage = pages[pages.length - 1];   //当前页面
                     let prevPage = pages[pages.length - 2];  //上一个页面
                     prevPage.recvData(110);//返回act_detail result==110，代表支付失败
-                    app.wxService.navigateBack();
+                    //app.wxService.navigateBack();
+                    that.setData({
+                        type: 5,
+                        greenButtonText: '立即支付',
+                    })
                 },
                 complete: function () {
                 }

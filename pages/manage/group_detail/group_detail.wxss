@@ -7,8 +7,7 @@ page {
 .list_view1 {
   background-color: rgb(255, 255, 255);
   display: flex;
-  flex-shrink: 0;
-  align-items: center;
+  align-items: flex-start;
   border-bottom: 1rpx solid rgb(230, 230, 230);
 }
 
@@ -27,23 +26,18 @@ page {
 
 .image_view {
   display: flex;
-  flex-shrink: 0;
-  flex-direction: column;
+    justify-content: center;
+  align-content: center;
 }
 
 .user_image {
   margin: 29rpx 27rpx 29rpx 29rpx;
   width: 80rpx;
   height: 80rpx;
+  border-radius: 50%;
 }
 
 /*300rpx*/
-
-.user_image2 {
-  margin: 29rpx 27rpx 0 29rpx;
-  width: 80rpx;
-  height: 80rpx;
-}
 
 .user_info_top {
   width: 78%;

@@ -1,5 +1,4 @@
 <!--template/common/city/city.wxml-->
-<scroll-view scroll-y="true" style="height:100vh;white-space: normal;">
 <view class="place-page">
   <view wx:for="{{cities}}" wx:key="city">
     <view class="place-content"  data-cityName="{{item.cityName}}" data-cityid="{{item.cityID}}" catchtap="chooseCity">
@@ -8,5 +7,5 @@
     </view>
   </view>
 </view>
-</scroll-view>
+
 

@@ -1,14 +1,8 @@
 
-<!-- pages/summary/summary.wxml -->
-  <view style="position: relative;margin-top:41rpx;">
-  <view style="background: rgb(255, 255, 255);height:2vh"></view>
-  <view style="padding:0 32rpx;background:#fff;">
-    <textarea name="description" placeholder="俱乐部简介" class="textarea textarea-height" placeholder-class="head_name"
-              placeholder-style="color:rgb(191,191,191);" cursor-spacing="10" maxlength="3000" value="{{newDescription}}" bindinput="changeText"  />
+<view style="margin-top:41rpx;">
+  <view class="description-txt">
+    <textarea name="description" placeholder="请简单介绍一下您的俱乐部" class="textarea" placeholder-class="head_name" placeholder-style="color:rgb(191,191,191);" cursor-spacing="10" maxlength="1000" value="{{newDescription}}" bindinput="changeText" />
+  <text class="num_txt des_txt">{{1000-description.length}}字</text>
   </view>
 </view>
-<button hover-class="hover-btn" wx:if="{{!type}}" type="primary" style="margin:61rpx 30rpx;background:rgb(61, 209, 164);" catchtap="submit">保存</button>
-
-
-
-  
+<button hover-class="hover-btn" type="primary" style="margin:61rpx 30rpx;background:rgb(61, 209, 164);" catchtap="submit">保存</button>

@@ -12,7 +12,6 @@ const actApi = app.api("actApi");
 const clubApi = app.api("clubApi");
 const session = app.session;
 
-//测试数据
 let activityId;//
 let clubId;
 const loadCount = 10;//一次加载的数目
@@ -21,7 +20,6 @@ let applyStart = 0, commentStart = 0;//报名列表、评论列表请求start，
 
 /**
  * //报名成功、支付成功等页面返回的值
- * 小于一百是报名结果信息，大于一百是支付结果信息
  * -1: 需要验证手机, 需要弹出验证码输入框.
  -2: 手机验证码验证失败.
  -3: 临时用户输入的手机号已关联了老用户.
@@ -62,7 +60,6 @@ Page({
         comments: [],//评论列表
         applyStatus: -100,//报名状态, -1.未报名 0.未审核 1.通过 2.取消 3.拒绝 4.不通过,7作废
         payStatus: -100,//支付状态, -1:未报名 0:不作考虑 1：待付款 2：已付款 3:等待退款 4:已退款 5:待付款-延后 6 付款超时 7 其他付款方式未付，8其他付款方式 已付款
-        applyButtonText: '',//报名按钮文字
         tickets: [],//票价列表
         minCost: 0,//最低票价
         maxCost: 0,//最高票价
@@ -73,16 +70,6 @@ Page({
         dialogInfo: {},//报名成功弹窗
         hasHelpApply: 0,//是否有帮人报名, 0为无, 1为有.
         applyId: 0,
-        /**
-         * 报名按钮状态：
-         * 1、未报名，显示立即报名按钮
-         * 2、已报名已付款，显示修改报名按钮
-         * 3、未付款，显示立即付款
-         * 4、报名日期已截至，显示报名已关闭
-         * 5、暂无名额
-         * 6、已报名已付款待审核，显示修改报名按钮、待审核状态
-         */
-        applyButtonStatus: 0,
         commentInputHolder: "请输入评论内容",//评论输入框提示
         isGroupApply: 0,//是否组队报名活动, 0为否, 1为是.
         isProxyActivity: 0,// 是否代理活动, 0为否, 1为是.
@@ -97,6 +84,32 @@ Page({
         isApply: -100,//报名按钮：-1未报名； 0审核中；1已经报名；2取消；3拒绝；4未通过；7退款中 8退款失败
         unpayId: 0,// 待付款ID.
         helperApply: 0,//是否允许帮报名, 1为允许, 2为不允许.
+        backOrTo: 0,//1、点击进入俱乐部时，直接navigateBack
+        recent: 1, //是否添加到最近访问的俱乐部去
+
+        isActClubUser: 1,//是否活动俱乐部成员
+        clubActCount: 0,//俱乐部总活动数
+        clubOtherActs: [],//该俱乐部的其他活动
+        actClubImg: '',//俱樂部頭像
+        /**
+         * 报名按钮状态：
+         * 1、未报名，显示立即报名按钮
+         * 2、已报名已付款，显示修改报名按钮
+         * 3、未付款，显示立即付款
+         * 4、报名日期已截至，显示报名已关闭
+         * 5、暂无名额
+         * 6、已报名已付款待审核，显示修改报名按钮、待审核状态
+         * 7、退款中，显示撤销退款
+         */
+        applyButtonStatus: 0,
+        rightButtonText: '',//底部右侧按钮文字
+        leftButtonText: '',//底部左侧按钮文字
+        hideRightButton: false,//
+        hideLeftButton: true,//
+        leftBottomTextType: 0,//左下角 费用（or报名状态）显示，0、￥9.01起；1、免费（已报名）
+        moneyText: '',//左下角文字描述
+        isSupportRefund: 1,// 是否支持退款 1：支持 0：不支持
+        actUserId: 0,//活动发起者的用户ID
     },
     changePage: function (e) {//切换tab操作
         let id = e.target.id;
@@ -104,46 +117,58 @@ Page({
             status: id
         });
     },
+    showCostTab: function (e) {
+        if (this.data.hideActCost) {
+            this.setData({
+                status: 2
+            })
+        }
+    },
     showApplyDiaolg: function () {
         let that = this;
+        let itemList = ['取消报名', '修改报名资料'];
         wx.showActionSheet({
-            itemList: ['帮人报名', '取消报名', '修改报名资料'],
+            itemList: itemList,
             success: function (res) {
-                console.log(res.tapIndex);
-                switch (res.tapIndex) {
-                    case 0://帮报
-                        if (that.data.helperApply == 1) {
-                            app.wxService.navigateTo('activity/apply_page/apply_page', {
-                                activityId: activityId,
-                                type: 3
-                            });
-                        } else {
-                            utils.showTip(that, "当前活动不允许帮人报名");
+                let tap = itemList[res.tapIndex];
+                if (tap == '取消报名') {
+                    if (that.data.hasHelpApply == 1) {//取消多人报名，进入报名列表页面
+                        app.wxService.navigateTo("activity/apply_p/apply_page", {
+                            activityId: activityId,
+                            type: 3,
+                            isSupportRefund: that.data.isSupportRefund,
+                        })
+                    } else if (that.data.costAct && that.data.payStatus < 7 && that.data.payStatus != 1 && that.data.payStatus != 6) {
+                        if (that.data.isSupportRefund != 1) {//不支持退款
+                            utils.showTip(that, '当前活动不支持退款');
+                            return;
                         }
-                        break;
-                    case 1://取消报名
-                        if (that.data.hasHelpApply == 1) {
-                            app.wxService.navigateTo("activity/applylist/applylist", {activityId: activityId, type: 0})
-                        } else if (that.data.costAct && that.data.payStatus < 7 && that.data.isApply != 0) {
-                            app.wxService.showModal({
-                                showCancel: false,
-                                confirmText: '知道了', content: '小程序暂不支持付费活动在线退款，请到网页端和App操作'
-                            });
-                        } else {
-                            that.cancelApply(that.data.applyId);
-                        }
-                        break;
-                    case 2://修改报名资料
-                        if (that.data.hasHelpApply == 1) {
-                            app.wxService.navigateTo("activity/applylist/applylist", {activityId: activityId, type: 0});
-                        } else {
-                            app.wxService.navigateTo("activity/apply_page/apply_page", {
-                                activityId: activityId,
-                                applyId: that.data.applyId,
-                                type: 2
-                            })
-                        }
-                        break;
+                        //进入退款页面
+                        app.wxService.navigateTo('activity/apply_cancel/apply_cancel', {
+                            activityId: activityId,
+                            applyId: that.data.applyId,
+                        });
+                    } else {//非在线付费报名，直接弹窗取消报名
+                        that.cancelApply(that.data.applyId);
+                    }
+                } else if (tap == '修改报名资料') {
+                    app.wxService.navigateTo("activity/apply_p/apply_page", {
+                        activityId: activityId,
+                        type: 3,
+                        isSupportRefund: that.data.isSupportRefund,
+                    });
+                    /*                    if (that.data.hasHelpApply == 1) {
+                     app.wxService.navigateTo("activity/apply_p/apply_page", {
+                     activityId: activityId,
+                     type: 3,
+                     });
+                     } else {
+                     app.wxService.navigateTo("activity/apply_page/apply_page", {
+                     activityId: activityId,
+                     applyId: that.data.applyId,
+                     type: 2,
+                     });
+                     }*/
                 }
             }
         })
@@ -154,7 +179,7 @@ Page({
         }
         let that = this;
         let cancelReason = ["个人行程有变，参加不了了", "不符合报名条件，主办方拒绝参加", "主办方变更了活动信息",
-            "实际情况跟活动信息不符", "主办方取消了活动", "其他原因"]
+            "实际情况跟活动信息不符", "主办方取消了活动", "其他原因"];
         wx.showActionSheet({
             itemList: cancelReason,
             success: function (res) {
@@ -188,7 +213,7 @@ Page({
             }
         })
     },
-    applyButton: function (e) {//我要报名or修改报名 按钮
+    leftButton: function (e) {//底部左侧按钮
         if (this.unLoginTips()) {
             return;
         }
@@ -213,16 +238,18 @@ Page({
                     if (that.data.isNeedJoinClub == 1) {//需要加入俱乐部才能报名
                         that.joinClubTips();
                     } else {
-                        app.wxService.navigateTo('activity/apply_page/apply_page', {
+                        app.wxService.navigateTo('activity/apply_p/apply_page', {
                             activityId: activityId,
-                            type: 0,
-                            helperApply: that.data.helperApply
+                            type: 1,
+                            helperApply: that.data.helperApply,
                         });
                     }
                 }
                 break;
             case 2://修改报名
-                if (that.data.isGroupApply == 1) {//不允许组队报名
+            case 3://立即付款
+            case 5://暂无名额（还是可以修改报名啊）
+                if (that.data.isGroupApply == 1) {//不允许组队报名修改
                     app.wxService.showModal({
                         showCancel: false,
                         confirmText: '知道了',
@@ -238,6 +265,71 @@ Page({
                     that.showApplyDiaolg();
                 }
                 break;
+            case 4://报名已关闭
+                utils.showTip(this, "报名已关闭");
+                break;
+            case 7:
+                app.wxService.showModal({//获取unPayId失败弹窗
+                    content: '确定撤销退款申请？',
+                    confirmText: "确定"
+                }, function (res) {
+                    if (res.confirm) {
+                        that.revoke();
+                    }
+                });
+                break;
+        }
+    },
+    rightButton: function (e) {//底部右侧按钮
+        if (this.unLoginTips()) {
+            return;
+        }
+        this.data.formId = e.detail.formId;
+        let that = this;
+        session.saveApplyInfo({current: 0, infos: []});//先清空帮报名暂存数据
+        // isApply 报名按钮：-1未报名； 0审核中；1已经报名；2取消；3拒绝；4未通过；7退款中 8退款失败
+        switch (that.data.applyButtonStatus) {
+            case 1://立即报名
+                if (that.data.isGroupApply == 1) {//不允许组队报名
+                    app.wxService.showModal({
+                        showCancel: false,
+                        confirmText: '知道了',
+                        content: '暂不支持组队活动报名，请在超级俱乐部App或网页端报名活动'
+                    })
+                } else if (that.data.isApply == 3) {
+                    app.wxService.showModal({
+                        showCancel: false,
+                        content: '你的报名被发起者拒绝'
+                    })
+                } else {
+                    if (that.data.isNeedJoinClub == 1) {//需要加入俱乐部才能报名
+                        that.joinClubTips();
+                    } else {
+                        app.wxService.navigateTo('activity/apply_p/apply_page', {
+                            activityId: activityId,
+                            type: 1,
+                            helperApply: that.data.helperApply,
+                        });
+                    }
+                }
+                break;
+            case 2://帮人报名
+                if (that.data.isGroupApply == 1) {//不允许组队报名
+                    app.wxService.showModal({
+                        showCancel: false,
+                        confirmText: '知道了',
+                        content: '暂不支持组队活动报名，请在超级俱乐部App或网页端报名活动'
+                    })
+                } else if (that.data.helperApply == 1) {
+                    app.wxService.navigateTo('activity/apply_p/apply_page', {
+                        activityId: activityId,
+                        type: 2,
+                        helperApply: that.data.helperApply,
+                    });
+                } else {
+                    utils.showTip(that, "当前活动不允许帮人报名");
+                }
+                break;
             case 3://立即付款
                 if (that.data.isGroupApply == 1) {//不允许组队报名
                     app.wxService.showModal({
@@ -246,7 +338,11 @@ Page({
                         content: '暂不支持组队活动付款，请在超级俱乐部App或网页端进行操作'
                     })
                 } else {
-                    app.wxService.navigateTo('activity/applylist/applylist', {activityId: activityId, type: 2});
+                    app.wxService.navigateTo('activity/apply_p/apply_page', {
+                        activityId: activityId,
+                        type: 5,
+                        helperApply: that.data.helperApply,
+                    });
                 }
                 break;
             case 4://报名已关闭
@@ -336,6 +432,7 @@ Page({
                 comments: commentList,
                 hideCommentLoadMore: !more,
                 commentCount: commentCount,
+                actUserId: res.data.actUserId,
             });
         }, function (res) {
             let errorMsg = utils.getErrorMsg(res);
@@ -353,13 +450,18 @@ Page({
             },
             function (res) {//成功回调
                 let data = res.data.activityEntity;
-                app.session.addAccessClub(data.clubId)
-                let applyButtonText = '';
+                app.session.addAccessClub(data.clubId, that.data.recent == 1);
+                let rightButtonText = '', leftButtonText = '';
+                let hideRightButton = false, hideLeftButton = false;
                 let costAct = data.howToPay != 1;
                 let applyButtonStatus = 0;
                 let lineDownCost = false;
                 let hideActCost = data.howToPay != 1;
                 let isApply = data.isApply;
+                let isActClubUser = data.isActClubUser;//是否活动俱乐部成员
+                let clubActCount = res.data.clubActCount;//俱乐部总活动数
+                let clubOtherActs = res.data.clubOtherActs;
+                that.data.moneyText = '';
 
                 //计算活动费用，最大最小值等、、、、
                 let minCost = 99999999999, maxCost = 0;//最小最大费用
@@ -389,42 +491,67 @@ Page({
                 if (maxCost == 0) {
                     actCost = "免费";
                 }
-                that.data.costText = utils.realformatMoney(minCost);
                 if (maxCost > 0 && !costAct) {
                     lineDownCost = true;
                     hideActCost = true;
                 }
-
+                //左下角费用显示
+                that.data.costText = utils.realformatMoney(minCost);
+                if (data.tickets && data.tickets.length > 0) {
+                    that.data.leftBottomTextType = 0;
+                    if (data.tickets.length > 1) that.data.moneyText = '起';
+                    if (lineDownCost) that.data.moneyText = that.data.moneyText + '·线下支付';
+                } else {
+                    that.data.leftBottomTextType = 1;
+                    that.data.moneyText = '免费';
+                }
                 if (data.actStatus == 1) {//报名已关闭
-                    applyButtonText = "报名已关闭";
+                    rightButtonText = "报名已关闭";
+                    hideLeftButton = true;
                     applyButtonStatus = 4;
                 } else
                 //报名按钮：-1未报名； 0审核中；1已经报名；2取消；3拒绝；4未通过；7退款中 8退款失败
-                if (isApply == 1 || isApply == 0) {//已报名、待审核，都要检查unpayID是否为空
+                if (isApply == 1 || isApply == 0) {//已报名、待审核，都要检查unpayID是否为空,不为空则是待付款状态
                     if (costAct && data.unpayId != 0) {//待付款
-                        applyButtonText = "立即付款";
-                        that.data.costText = '待付款' + utils.formatMoney(data.applyCost);
+                        rightButtonText = "立即付款";
+                        leftButtonText = '修改报名';
                         applyButtonStatus = 3;
+                        that.data.costText = utils.realformatMoney(data.applyCost);//显示待支付金额
                     } else {//已报名，显示修改报名
-                        applyButtonText = "修改报名";
+                        hideRightButton = data.helperApply == 2;
+                        rightButtonText = "帮人报名";
+                        leftButtonText = '修改报名';
                         applyButtonStatus = 2;
+                        that.data.leftBottomTextType = 1;
+                        if (isApply == 0) {// 审核中 0
+                            that.data.moneyText = '审核中';
+                        } else {
+                            that.data.moneyText = '已报名';
+                        }
                     }
                 } else if (isApply == -1 || isApply == 2 || isApply == 3 || isApply == 4) {//未报名、已取消、拒绝、审核未通过，都显示我要报名
-                    applyButtonText = "我要报名";
+                    rightButtonText = "我要报名";
                     applyButtonStatus = 1;
+                    hideLeftButton = true;
                 } else if (isApply == 7 || isApply == 8) {//退款中，修改报名按钮要置灰
-                    applyButtonText = "修改报名";
-                    applyButtonStatus = 2;
+                    leftButtonText = "撤销退款";
+                    applyButtonStatus = 7;
+                    hideRightButton = true;
+                    that.data.leftBottomTextType = 1;
+                    that.data.moneyText = '退款中';
                 }
-                let surplusCount = '';//剩余名额
+                let surplusCount = '';//报名名额相关显示
                 if (data.apllyNum === -1) {
                     surplusCount = "报名名额不限"
-                } else if (data.haveApplyNum === data.apllyNum) {
-                    if (applyButtonStatus != 2 && applyButtonStatus != 3) {//有修改报名和立即付款就不要显示暂无名额了
-                        applyButtonText = "暂无名额";
-                        applyButtonStatus = 5;
-                        that.data.costText = utils.realformatMoney(minCost);
+                } else if (data.haveApplyNum == data.apllyNum) {
+                    if (applyButtonStatus != 3) {//有修改报名和立即付款就不要显示暂无名额了
+                        rightButtonText = "暂无名额";
+                        hideLeftButton = true;
+                    } else {
+                        leftButtonText = "修改报名";
+                        rightButtonText = "立即付款";
                     }
+                    applyButtonStatus = 5;
                     surplusCount = "暂无名额";
                 } else {
                     surplusCount = "剩余名额 " + (data.apllyNum - data.haveApplyNum);
@@ -462,7 +589,6 @@ Page({
                     lineDownCost: lineDownCost,
                     applyStatus: data.applyStatus,
                     payStatus: data.payStatus,
-                    applyButtonText: applyButtonText,
                     tickets: data.tickets,
                     minCost: minCost,
                     maxCost: maxCost,
@@ -474,11 +600,22 @@ Page({
                     isGroupApply: data.isGroupApply,
                     isProxyActivity: data.isProxyActivity,
                     costText: that.data.costText,
+                    leftBottomTextType: that.data.leftBottomTextType,
+                    moneyText: that.data.moneyText,
                     isNeedJoinClub: data.isNeedJoinClub,
                     needJoinCheck: data.needJoinCheck,
                     isApply: isApply,
                     unpayId: data.unpayId,
                     helperApply: data.helperApply,
+                    isActClubUser: isActClubUser,
+                    clubActCount: clubActCount,
+                    clubOtherActs: clubOtherActs,
+                    actClubImg: data.actClubImg,
+                    rightButtonText: rightButtonText,
+                    leftButtonText: leftButtonText,
+                    hideRightButton: hideRightButton,
+                    hideLeftButton: hideLeftButton,
+                    isSupportRefund: data.isSupportRefund,
                 });
                 that.loadApplyList(0);
                 that.loadComment(0);
@@ -497,6 +634,10 @@ Page({
         activityId = params.activityID;
         clubId = params.clubID;
         refresh = params.refresh;
+        that.setData({
+            backOrTo: params.backOrTo,
+            recent: params.recent ? params.recent : 1,
+        });
         session.saveApplyInfo({current: 0, infos: []});
         if (app.session.getUserKey() == null) {
             app.relogin(function (res) {//登录成功
@@ -507,8 +648,7 @@ Page({
         } else {
             this.loadActDetail();
         }
-    }
-    ,
+    },
     onShareAppMessage: function () {
         let that = this;
         actApi.shareActStat({//发送分享统计
@@ -532,8 +672,7 @@ Page({
             title: this.data.actTitle,
             path: url,
         }
-    }
-    ,
+    },
     showCommentDialog: function (e) {//显示我要评论弹窗
         if (this.unLoginTips()) {
             return;
@@ -542,19 +681,16 @@ Page({
             showCommentDialog: true,
             commentInputHolder: typeof e == 'string' ? e : "请输入评论内容",
         })
-    }
-    ,
+    },
     hideCommentDialog: function () {//隐藏我要评论弹窗
         this.setData({
             showCommentDialog: false,
         });
         commentId = 0;//每次评论操作后 重置被评论人ID
-    }
-    ,
+    },
     commentText: function (e) {//评论内容赋值
         commentText = e.detail.value
-    }
-    ,
+    },
     commentAction: function () {//评论操作
         let that = this;
         if (!commentText || commentText.length == 0) {
@@ -576,13 +712,11 @@ Page({
                 that.loadComment(0);
             })
         }
-    }
-    ,
+    },
     hideAuthDialog()
     {
         this.setData({dialogInfo: {applySucceed: ''}});
-    }
-    ,
+    },
     /**
      * 显示报名成功弹窗
      * @param check 0、报名成功；1、待审核
@@ -594,46 +728,14 @@ Page({
                 applySucceed: 'opacity:1;pointer-events:auto;'
             }
         })
-    }
-    ,
+    },
     hideToasts: function () {//报名成功弹窗确认按钮
         this.hideAuthDialog();
-    }
-    ,
+    },
     recvData: function (result) {//报名成功、支付成功以后条用此方法传递参数
         console.log("-------act_detail收到数据-------", result);
         recvResult = result;
-    }
-    ,
-    getUnPayId: function () {//报名成功,获取unPayID去支付页面
-        let that = this;
-        actApi.getUnPayId({
-            data: {
-                activity_id: activityId,
-            }
-        }, function (res) {
-            let unPayId = res.data.unPayId;
-            if (unPayId > 0) {
-                app.wxService.navigateTo("activity/payment/payment", {unPayId: unPayId});
-            } else {
-                utils.showTip(that, '支付订单ID错误:' + 'unPayId=' + unPayId);
-            }
-        }, function (res) {
-            let errorMsg = utils.getErrorMsg(res);
-            app.wxService.showModal({//获取unPayId失败弹窗
-                title: '获取支付订单错误',
-                content: errorMsg.title + '；' + errorMsg.content,
-                confirmText: "重试"
-            }, function (res) {
-                if (res.confirm) {//点击重试按钮，重试
-                    that.getUnPayId();
-                } else {//点击取消按钮，重载活动详情
-                }
-            })
-        }, function (res) {
-        });
-    }
-    ,
+    },
     onShow: function () {
         let that = this;
         switch (recvResult) {
@@ -655,6 +757,9 @@ Page({
                 utils.showTip(that, '修改成功');
                 this.loadActDetail();
                 break;
+            case 6:
+                this.loadActDetail();
+                break;
             case 110://支付失败
                 app.wxService.showModal({showCancel: false, content: '您尚未支付报名费用，报名未成功'});
                 this.loadActDetail();
@@ -669,8 +774,7 @@ Page({
         if (refresh == 109) {
             refresh = 110;
         }
-    }
-    ,
+    },
     commentTap: function (e) {//点击评论itam
         if (this.unLoginTips()) {
             return;
@@ -681,7 +785,11 @@ Page({
         if (item.actUserId == app.session.getUserInfo().userID) {//自己的评论，可以删除
             commentActions = ["删除"]
         } else {//别人的评论，
-            commentActions = ["回复"]
+            if (that.data.actUserId == app.session.getUserInfo().userID) {
+                commentActions = ["删除", "回复"]
+            } else {
+                commentActions = ["回复"]
+            }
         }
         wx.showActionSheet({
             itemList: commentActions,
@@ -706,22 +814,19 @@ Page({
                 }
             }
         });
-    }
-    ,
+    },
     loadMoreComment: function () {//加载更多评论
         if (this.unLoginTips()) {
             return;
         }
         this.loadComment(commentStart);
-    }
-    ,
+    },
     loadMoreApply: function () {//加载更多报名列表
         if (this.unLoginTips()) {
             return;
         }
         this.loadApplyList(applyStart);
-    }
-    ,
+    },
     /**
      * 没有登录弹窗提示
      * @returns {boolean} true为未登录
@@ -737,8 +842,7 @@ Page({
         } else {
             return false;
         }
-    }
-    ,
+    },
     /**
      * 是否加入俱乐部提醒（有些活动必须加入俱乐部才能报名）
      */
@@ -752,19 +856,25 @@ Page({
                 that.joinClub();
             }
         })
-    }
-    ,
+    },
     joinClub: function () {
+        if (this.data.isActClubUser == 1) {
+            utils.showTip(this, '你已经是该俱乐部成员了');
+            return;
+        }
+        if (this.unLoginTips()) {
+            return;
+        }
         if (this.data.needJoinCheck === 1) {//加入俱乐部是否需要验证
             this.setData({
                 joinShowStyle: "opacity:1;pointer-events:auto;",
-                join: '请输入验证信息'
+                join: '请输入验证信息',
+                needjoinText: app.session.getUserInfo().nick + "申请加入",
             });
         } else {
             this.joinClubApi(null);
         }
-    }
-    ,
+    },
     /**
      * 调用 加入俱乐部接口
      * @param needjoinText 验证消息
@@ -787,23 +897,24 @@ Page({
                         'clubHome.roleType': 1
                     });
                     utils.showTip(this, '加入成功');
+                    app.event.emit(app.config.EVENT_CLUB_CHANGE, null);
                 } else {
                     utils.showTip(this, '申请已提交，请耐心等候审核');
                 }
                 that.loadActDetail();
+            } else if (res.data.status == 5001) {
+                utils.showTip(this, '你已经是该俱乐部成员');
             } else {
                 utils.showTip(this, res.data.msg);
             }
         })
-    }
-    ,
+    },
 //=============加入俱乐部验证弹窗===============
     hideClubCheck: function () {
         this.setData({
             joinShowStyle: "",
         });
-    }
-    ,
+    },
     /**
      * 获取验证消息文本
      */
@@ -811,8 +922,7 @@ Page({
         this.setData({
             needjoinText: e.detail.value
         })
-    }
-    ,
+    },
 
     /**
      * 验证消息 提示框 确定按钮
@@ -823,8 +933,7 @@ Page({
         } else {
             utils.showTip(this, '请输入验证信息');
         }
-    }
-    ,
+    },
 
     /**
      * 验证消息 提示框 取消按钮
@@ -833,7 +942,38 @@ Page({
         this.setData({
             joinShowStyle: "",
         });
+    },
+    goToHost: function () {//进入主办方
+        if (this.unLoginTips()) {
+            return;
+        }
+        if (this.data.backOrTo == 1) {
+            app.wxService.navigateBack();
+        } else {
+            app.wxService.navigateTo('club/clubhome/clubhome?clubId=' + clubId)
+        }
+    },
+    actDetail: function (e) {
+        activityId = e.currentTarget.dataset.actid;
+        app.wxService.redirectTo('activity/act_detail/act_detail?activityID=' + activityId + "&clubID=" + clubId)
+    },
+    /**
+     * 撤销退款申请
+     */
+    revoke: function () {
+        let that = this;
+        actApi.cancelRefund({
+            data: {
+                applyId: that.data.applyId,
+            },
+            api_version: 16,
+        }, function (res) {
+            app.util.showTip(that, '操作成功！');
+        }, function (res) {
+            let errorMsg = utils.getErrorMsg(res);
+            app.util.showTip(that, '撤销失败:' + errorMsg.content);
+        }, function (res) {
+            that.loadActDetail();
+        });
     }
-    ,
-})
-;
+});

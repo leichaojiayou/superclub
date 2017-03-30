@@ -7,8 +7,6 @@ var systemApi = app.api("systemApi")
 Page({
   data: {
     choose: '请选择',
-    input: '输入',
-    txt: '写一段简介描述你的俱乐部吧',
 
     //验证手机的字段
     authCode: "",
@@ -67,7 +65,6 @@ Page({
   //所在地
   clickLocation() {
     app.wxService.navigateTo("club/modify/province/province?type=1");
-    this.setData({ locationColor:'#1a1a1a'})
   },
 
   //创立时间
@@ -91,13 +88,11 @@ Page({
   //宣言
   clickSlogan() {
     app.wxService.navigateTo("club/modify/declaration/declaration?type=1&slogan=" + this.data.slogan);
-    this.setData({ sloganColor:'#1a1a1a'})
   },
 
   //简介
   clickDesc() {
     app.wxService.navigateTo("club/modify/description/description?type=1&description=" + this.data.desc);
-    this.setData({ descColor:'#1a1a1a'})
   },
   //负责人
   inputCharger(e) {
@@ -142,6 +137,14 @@ Page({
   },
 
   formSubmit(e) {
+    if(this.data.charger.length>6){
+      app.util.showTip(this, '负责人姓名仅限6个字')
+      return
+    }else if (this.data.phone.length != 11) {
+      app.util.showTip(this, '请输入正确的手机号码')
+      return
+    }
+
     let formId = e.detail.formId
     this.data.formId = formId
     this.createClub()

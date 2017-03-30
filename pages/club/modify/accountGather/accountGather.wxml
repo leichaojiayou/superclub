@@ -10,17 +10,17 @@
   </view>
 </view>
 <view class="center">
-  <view class="to_msg" style="text-align:left;padding-left:33rpx;">管理员组织的俱乐部活动，收款将打入管理员本人账号。</view>
+  <view class="to_msg align-left">管理员组织的俱乐部活动，收款将打入管理员本人账号。</view>
 </view>
 <view class="item" catchtap="setMasterAccount">
-   <view class="item_1">
+  <view class="item_1">
     <text class="to_msg persident" wx:if="{{roleType==2}}">会长账户</text>
     <text class="to_msg" wx:else>会长账户</text>
     <icon wx:if="{{payeeType==1}}" class="icon" size="13" color="rgb(61,209,165)" type="success_no_circle"></icon>
   </view>
 </view>
 <view class="center">
-  <view class="to_msg" style="text-align:left;padding-left:33rpx;">所有俱乐部活动的收款将统一打入会长账户。</view>
+  <view class="to_msg align-left">所有俱乐部活动的收款将统一打入会长账户。</view>
 </view>
-<button wx:if="{{roleType==2}}" hover-class="hover-btn" style="margin:61rpx 30rpx;background:rgb(61,209,164);" type="primary" catchtap="submit">保存</button>
-<button wx:else hover-class="hover-btn" style="margin:61rpx 30rpx;background:rgb(61,209,164);" type="primary" catchtap="submit" disabled>保存</button>
+<button class="base-btn" wx:if="{{roleType==2}}" hover-class="hover-btn" catchtap="submit">保存</button>
+<button wx:else class="base-btn" catchtap="submit" disabled>保存</button>

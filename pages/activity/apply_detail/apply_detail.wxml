@@ -7,13 +7,13 @@
 
   <!-- 报名状态 -->
   <view class="header">
-    <view class="h_top" wx:if="{{detailType<=3}}">
+    <view class="apply-status-base apply-status-one" wx:if="{{detailType<=3}}">
       <view class="apply_status">
         <image class="icon" src="{{applyStatusIco}}" ></image>
         <view  class="bigsizetxt baomingchengg">{{applyStatusText}}</view>
       </view>
     </view>
-    <view class="h_top" wx:elif="{{detailType==4}}">
+    <view class="apply-status-base apply-status-two" wx:elif="{{detailType==4}}">
       <view class="apply_status">
         <image class="icon" src="{{applyStatusIco}}" ></image>
         <view class="bigsizetxt">{{applyStatusText}}</view>
@@ -22,7 +22,7 @@
         <text style="color:rgb(255, 112, 68)">{{unPayCountDown}}</text>
       </view>
     </view>
-    <view class="h_top" wx:else>
+    <view class="apply-status-base apply-status-two" wx:else>
       <view class="apply_status">
         <image class="icon" src="{{applyStatusIco}}" ></image>
         <view   class="bigsizetxt baomingchengg">{{applyStatusText}}</view>
@@ -54,10 +54,10 @@
       <text style="color:rgb(61 ,209, 164);">{{ticketCost}}</text>
     </view>
     <view class="item3_btns" wx:if="{{actStatus==0}}">
-      <button bindtap="cancelApply" class="{{cancelApplyAble?'item3_btn':'item4_btn'}}">{{(costAct&&applyInfo.payStatus
-        <7)? '申请退款': '取消报名'}}</button>
-          <button bindtap="editApply" class="item3_btn">修改报名</button>
-          <button bindtap="helpApply" class="item1_btn">帮人报名</button>
+      <view bindtap="cancelApply" class="{{actInfo.isSupportRefund == 1?'item3_btn':'item4_btn'}}">{{(costAct&&applyInfo.payStatus
+        <7)? '申请退款': '取消报名'}}</view>
+          <view bindtap="editApply" class="item3_btn">修改报名</view>
+          <view bindtap="helpApply" class="item1_btn">帮人报名</view>
     </view>
   </view>
 
@@ -74,9 +74,9 @@
       </view>
     </view>
     <view class="item3_btns" wx:if="{{actStatus==0}}">
-      <button bindtap="cancelApply" class="{{cancelApplyAble?'item3_btn':'item4_btn'}}">取消报名</button>
-      <button bindtap="editApply" class="item3_btn">修改报名</button>
-      <button bindtap="helpApply" class="item1_btn">去支付</button>
+      <view bindtap="cancelApply" class="{{actInfo.isSupportRefund == 1?'item3_btn':'item4_btn'}}">取消报名</view>
+      <view bindtap="editApply" class="item3_btn">修改报名</view>
+      <view bindtap="helpApply" class="item1_btn">去支付</view>
     </view>
   </view>
 
@@ -104,10 +104,10 @@
       <image class="item3_img" src="{{qrcode}}"></image>
     </view>
     <view class="item3_btns" wx:if="{{actStatus==0}}">
-      <button bindtap="cancelApply" class="{{cancelApplyAble?'item3_btn':'item4_btn'}}">{{(costAct&&applyInfo.payStatus
-        <7)? '申请退款': '取消报名'}}</button>
-          <button bindtap="editApply" class="item3_btn">修改报名</button>
-          <button bindtap="helpApply" class="item1_btn">帮人报名</button>
+      <view bindtap="cancelApply" class="{{actInfo.isSupportRefund == 1?'item3_btn':'item4_btn'}}">{{(costAct&&applyInfo.payStatus
+        <7)? '申请退款': '取消报名'}}</view>
+          <view bindtap="editApply" class="item3_btn">修改报名</view>
+          <view bindtap="helpApply" class="item1_btn">帮人报名</view>
     </view>
   </view>
 
@@ -121,7 +121,7 @@
       <text>{{ticketName}}</text>
       <text style="color:rgb(61 ,209, 164);">{{ticketCost}}</text>
     </view>
-    <button bindtap="retryApply" wx:if="{{actStatus==0&&detailType!=9}}" class="item1_btn">重新报名</button>
+    <view bindtap="retryApply" wx:if="{{actStatus==0&&detailType!=9}}" class="item1_btn">重新报名</view>
   </view>
 
   <!--用户、票价、二维码信息(退款关闭)detailType==10-->
@@ -175,4 +175,4 @@
   </view>
 </view>
 <template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}" />
-<template is="joinCheck" data="{{joinShowStyle,join}}"  />
+<template is="joinCheck" data="{{joinShowStyle,join,needjoinText}}"  />

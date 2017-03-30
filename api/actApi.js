@@ -116,7 +116,7 @@ class ActApi {
     }
 
     /**
-     * 用户自己取消报名
+     * 取消报名
      * 文档：http://doc.iweju.com/FitNesse.WejuBaHttp.ActivityDoc.ActivityApplyCancel
      * @param param actID；applyID；reason：取消报名原因
      */
@@ -229,6 +229,15 @@ class ActApi {
      */
     shareActStat(param, ...fn) {
         api.wxRequest(param, "/ba/sys/share", ...fn);
+    }
+
+    /**
+     * 取消退款接口
+     * 文档：http://doc.iweju.com/FitNesse.WejuBaHttp.BindDoc.CancelApplyDoc
+     * applyId：报名ID
+     */
+    cancelRefund(param, ...fn) {
+        api.wxRequest(param, '/ba/activity/cancel/cancelapply', ...fn)
     }
 }
 /**

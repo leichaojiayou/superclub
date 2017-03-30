@@ -1,6 +1,7 @@
 var app = getApp()
 const utils = app.util;
 import storage from '../../../utils/storage.js'
+import pick from '../../../template/organize/picker.js'
 var organizeApi = app.api("organizeApi");
 var systemApi = app.api("systemApi")
 const date = new Date()
@@ -66,7 +67,7 @@ Page({
     /********************************************************************************************************************************* */
     title: "",	//	活动主题（标题）
     //  content: "",	//	活动内容
-    max_apply_count: 0,	//	活动最多报名人数, 如果不限制传入-1
+    max_apply_count: -1,	//	活动最多报名人数, 如果不限制传入-1
     deadline: 0,	//	报名截止时间（毫秒时间戳）
     begin: 0,	//	活动开始时间（毫秒时间戳）
     end: 0,	//	活动截止时间（毫秒时间戳）
@@ -120,6 +121,12 @@ Page({
     // storage.saveSync("255c4227fb0b88f6000083e1905b7ebf")
 
     //var actId = '592336'
+    app.globalData.applyFieldsObject = {}
+    app.globalData.modelImgSrc = ""
+    app.globalData.actFeeObject = {}
+    app.globalData.smsTimes = {}
+    app.globalData.actType = ""
+
     var actId = e.actID;
     var that = this;
 
@@ -160,7 +167,7 @@ Page({
           that.initContent(actInfo);
           //初始化自定义填写项
           that.initApplyItem(actInfo);
-          //初始化报名人数 时间 地址
+          //初始化时间 地址
           that.initOther(actInfo);
 
           //初始化活动费用说明 金额 费用说明
@@ -185,62 +192,63 @@ Page({
   },
   initDateControl: function () {
     // 初始化时间日期
-    var now = new Date()
-    var years = []
-    var months = []
-    var hours = []
-    var minutes = []
-    var day28 = []
-    var day29 = []
-    var day30 = []
-    var day31 = []
-    var nowyear = 0;
-    var j = 0
-    for (var i = 1990; i <= 2050; i++) {
-      years.push(i)
-      if (now.getFullYear() == i) {
-        nowyear = j
-      }
-      j++
-    }
+    // var now = new Date()
+    // var years = []
+    // var months = []
+    // var hours = []
+    // var minutes = []
+    // var day28 = []
+    // var day29 = []
+    // var day30 = []
+    // var day31 = []
+    // var nowyear = 0;
+    // var j = 0
+    // for (var i = 1990; i <= 2050; i++) {
+    //   years.push(i)
+    //   if (now.getFullYear() == i) {
+    //     nowyear = j
+    //   }
+    //   j++
+    // }
 
-    for (var i = 1; i <= 12; i++) {
-      months.push(i)
-    }
+    // for (var i = 1; i <= 12; i++) {
+    //   months.push(i)
+    // }
 
-    for (var i = 1; i <= 28; i++) {
-      day28.push(i)
-    }
+    // for (var i = 1; i <= 28; i++) {
+    //   day28.push(i)
+    // }
 
-    for (var i = 1; i <= 29; i++) {
-      day29.push(i)
-    }
-    for (var i = 1; i <= 30; i++) {
-      day30.push(i)
-    }
-    for (var i = 1; i <= 31; i++) {
-      day31.push(i)
-    }
-    for (var i = 0; i <= 23; i++) {
-      hours.push(i)
-    }
-    for (var i = 0; i <= 59; i++) {
-      minutes.push(i)
-    }
+    // for (var i = 1; i <= 29; i++) {
+    //   day29.push(i)
+    // }
+    // for (var i = 1; i <= 30; i++) {
+    //   day30.push(i)
+    // }
+    // for (var i = 1; i <= 31; i++) {
+    //   day31.push(i)
+    // }
+    // for (var i = 0; i <= 23; i++) {
+    //   hours.push(i)
+    // }
+    // for (var i = 0; i <= 59; i++) {
+    //   minutes.push(i)
+    // }
 
-    this.setData({
-      years: years,
-      months: months,
-      days: day31,
-      hours: hours,
-      minutes: minutes,
-      day28: day28,
-      day29: day29,
-      day30: day30,
-      day31: day31,
-      value: [nowyear, now.getMonth(), now.getDate() - 1, now.getHours(), now.getMinutes()]
-    })
-
+    // this.setData({
+    //   years: years,
+    //   months: months,
+    //   days: day31,
+    //   hours: hours,
+    //   minutes: minutes,
+    //   day28: day28,
+    //   day29: day29,
+    //   day30: day30,
+    //   day31: day31,
+    //   value: [nowyear, now.getMonth(), now.getDate() - 1, now.getHours(), now.getMinutes()]
+    // })
+    var that = this
+    pick.initDateControl(that)
   },
   onShow: function (e) {
     var cover_img = app.globalData.modelImgSrc //封面
@@ -257,6 +265,8 @@ Page({
     if (actFeeO && actFeeO != "" && actFeeO != "{}") {
       var neetoPay = actFeeObject.neeToPay
       var howtoPay = actFeeObject.howToPay
+      var refundTime = actFeeObject.refundTime
+      var canRefund = actFeeObject.canRefund
       var tickes = actFeeObject.tickets;
       var tickesCount = 0
       var actFeeText = "";
@@ -287,7 +297,9 @@ Page({
         actFeeText: actFeeText,
         cost_desc: actFeeObject.costDesc,
         max_apply_count: actFeeObject.maxApplyCount,
-        tickesCount: tickesCount
+        tickesCount: tickesCount,
+        refundTime: refundTime,
+        canRefund: canRefund
       })
     }
     //报名项
@@ -370,21 +382,7 @@ Page({
 
   },
   initAct: function () {
-    var date = new Date()
-    var year = date.getFullYear()
-    var month = date.getMonth() + 1
-    var day = date.getDate()
-    var hour = date.getHours()
-    var minute = date.getMinutes()
-    var second = date.getSeconds()
-    var datemap = [year, month, day].map(this.formatNumber);
-    var nowtimetxt = datemap[0] + '年' + datemap[1] + '月' + datemap[2] + '日' + ' ' + "09:00"
-    var nowtime = datemap[0] + '/' + datemap[1] + '/' + datemap[2] + ' ' + "09:00"
-    var endtimetxt = datemap[0] + '年' + datemap[1] + '月' + datemap[2] + '日' + ' ' + "18:00"
-    var endtime = datemap[0] + '/' + datemap[1] + '/' + datemap[2] + ' ' + "18:00"
 
-    var begin = new Date(nowtime).getTime()
-    var end = new Date(endtime).getTime()
 
     var beginSmsTimes = [
       {
@@ -426,32 +424,10 @@ Page({
       { isCheck: false, canEidt: false, text: '身份证号', option: "", defaultValue: "", fieldName: "身份证号", fieldType: 1 }
     ];
 
-    // var fields = []
-    // if (actForms.length > 0) {
-    //   for (var i = 0; i < actForms.length; i++) {
-    //     if (actForms[i].isCheck) {
-    //       var field = {}
-    //       field.field_name = actForms[i].fieldName
-    //       if (actForms[i].fieldType == 2) {
-    //         field.option = actForms[i].option
-    //       }
-    //       fields[i] = field
-    //     }
-    //   }
-    // }
-    app.globalData.applyFieldsObject = {}
-    app.globalData.modelImgSrc = ""
-    app.globalData.actFeeObject = {}
-    app.globalData.smsTimes = {}
-    app.globalData.actType = ""
+
 
     this.setData({
-      begin: begin,
-      beginTxt: nowtimetxt,
-      end: end,
-      endTxt: endtimetxt,
-      deadline: begin,
-      deadlineTxt: nowtimetxt,
+
       address: "",
       begin_sms_time: 24 * 3600,
       beginSmsTimes: beginSmsTimes,
@@ -469,7 +445,7 @@ Page({
       helper_apply: 1,
       cost: 0,
       cost_desc: "",
-      max_apply_count: 0,
+      max_apply_count: -1,
       guide: "",
       tickets: [],
       contEditSatus: true
@@ -497,15 +473,7 @@ Page({
       })
     } else {//其他端
       var systemInfo = this.getSystemInfo()
-      // for (var i = 0; i < conts.length; i++) {
-      //   var content = {}
-      //   if (conts[i].type == 1) {//文本类型
-      //     var num = /(\r\n)|(\n)/g;
-      //     if (num.test(conts[i].value)) {//处理换行
-      //       conts[i].value = ""
-      //     }
-      //   }
-      // }
+
       this.setData({
         contents: conts,
         windowWidth: systemInfo.windowWidth + "px",
@@ -669,7 +637,9 @@ Page({
         helper_apply: actInfo.helperApply,
         guide: actInfo.guide,
         act_type: actInfo.actType,
-        actTypeTxt: actTypeTxt
+        actTypeTxt: actTypeTxt,
+        canRefund: actInfo.canRefund,
+        refundTime: actInfo.refundTime,
       });
 
   },
@@ -693,23 +663,8 @@ Page({
     // }
   },
   addActAddress: function () {
-    var that = this;
-    wx.showActionSheet({
-      itemList: ['标记线下活动地点', '线上活动'],
-      success: function (e) {
-        var index = e.tapIndex;
-        if (index == 0) {
-          that.chooseLocation();
-        } else if (index == 1) {
-          that.setData({
-            lat: 0,	//	经度
-            lng: 0,	//	纬度
-            address: "线上活动",
-            act_online: 1
-          });
-        }
-      }
-    })
+    this.chooseLocation();
+
   },
   addContent: function (e) {
     var contents = e.detail.value
@@ -881,6 +836,7 @@ Page({
   },
 
   setActFee: function () {
+    var actInfo = this.data.actInfo
     app.wxService.navigateTo('organize/act_fee/act_fee', {
       actId: this.data.actId,
       tickets: JSON.stringify(this.data.tickets),
@@ -892,7 +848,12 @@ Page({
       president: JSON.stringify(this.data.president),
       isPresident: this.data.isPresident,
       clubId: this.data.clubId,
-      showPayButton: this.data.showPayButton
+      showPayButton: this.data.showPayButton,
+      actNeedToPay: actInfo.needToPay,
+      canRefund: this.data.canRefund,
+      refundTime: this.data.refundTime,
+      begin: this.data.begin,
+      applyCount: actInfo.applyCount
     })
   },
   setActType: function () {
@@ -922,7 +883,6 @@ Page({
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-
         let localPath = res.tempFilePaths[0]
         systemApi.uploadImage(localPath, res => {
           var imgPath = res.data.url;
@@ -937,8 +897,36 @@ Page({
     this.setData({ guide: e.detail.value })
   },
   saveOrUpdateAct: function () {
-    //检验不通过不能进行发布操作
+    var that = this;
     var checked = this.validatePostInfo()
+    if (checked) {
+      var canRefund = this.data.canRefund
+      var refundTime = this.data.refundTime
+      var beginTime = this.data.begin
+      if (canRefund != undefined && canRefund == 2) {
+        if (refundTime > beginTime) {
+          wx.showModal({
+            content: "退款截止时间在活动开始时间之后，确定要发布吗？",
+            confirmText: "确定",
+            showCancel: true,
+            success: function (res) {
+              var confirm = res.confirm
+              if (confirm) {
+                that.post(checked)
+              }
+
+            }
+          })
+        } else {
+          that.post(checked)
+        }
+      }
+
+    }
+  },
+  post: function (checked) {
+    //检验不通过不能进行发布操作
+
     if (checked) {
       var contes = this.data.contents
       var param = {};
@@ -961,11 +949,22 @@ Page({
       param.helper_apply = this.data.helper_apply
       param.need_to_pay = this.data.need_to_pay
       param.how_to_pay = this.data.how_to_pay
+      if (this.data.actId == 0 || this.data.actId == "") {//发布活动
+        if (!this.data.moreApplyIcon) {//报名截止时间的设置默认是不打开的，那默认是开始时间
+          param.deadline = this.data.begin
+        }
+      }
       if (this.data.need_to_pay == 2 && this.data.how_to_pay == 2) {
         param.payee_account = this.data.payee.userID
       } else {
         param.payee_account = ""
       }
+      //退款设置
+      if (this.data.need_to_pay == 2) {
+        param.canRefund = this.data.canRefund
+        param.refundTime = this.data.refundTime
+      }
+
       param.cancel_apply = 1
       param.begin_sms_time = this.data.begin_sms_time
       param.data_type = 0;//发部类型 草稿或者正常活动
@@ -1030,9 +1029,15 @@ Page({
             if (result.statusCode == 200) {//发布成功
               var activityID = result.data.activityId
               that.setData({ isPublic: true })
-              app.wxService.navigateTo('activity/act_detail/act_detail', {
-                activityID: result.data.activityId
-              })
+
+              let url = "activity/act_detail/act_detail?activityID=" + result.data.activityId + "&backOrTo=1";
+              app.wxService.redirectTo(url);
+
+
+              // app.wxService.navigateTo('activity/act_detail/act_detail', {
+              //   activityID: result.data.activityId,
+              //   backOrTo: 1
+              // })
               var pam = {}
               pam.actId = activityID
               pam.count = 1
@@ -1056,9 +1061,12 @@ Page({
             var result = res
             if (result.statusCode == 200) {//发布成功
               that.setData({ isPublic: true })
-              app.wxService.navigateTo('activity/act_detail/act_detail', {
-                activityID: result.data.activityId
-              })
+              let url = "activity/act_detail/act_detail?activityID=" + result.data.activityId + "&backOrTo=1";
+              app.wxService.redirectTo(url);
+              // app.wxService.navigateTo('activity/act_detail/act_detail', {
+              //   activityID: result.data.activityId,
+              //   backOrTo: 1
+              // })
             } else {
               wx.showToast({
                 title: "活动更新失败",
@@ -1093,37 +1101,50 @@ Page({
     this.setData({ showInfo: showMoreInfo, moreApplyIcon: moreApplyIcon, isShowTextarea: isShowTextarea })
   },
   validatePostInfo: function () {
+    var that = this
     var okay = true;
     //校验活动主题方面
     var oTitle = this.data.title;
     if (oTitle && oTitle != '') {
       if (oTitle.length > 30) {
-        wx.showToast({
-          title: "活动主题最多30个字"
-        })
+        utils.showTip(that, "活动主题最多30个字");
+        // wx.showToast({
+        //   title: "活动主题最多30个字"
+        // })
         okay = false;
+        return;
       }
     } else {
-      wx.showToast({
-        title: "请输入活动主题"
-      })
+      utils.showTip(that, "请输入活动主题");
+      // wx.showToast({
+      //   title: "请输入活动主题"
+      // })
 
       okay = false;
+      return;
     }
     var applyNum = this.data.max_apply_count
     var tickesCount = this.data.tickesCount
     var needToPay = this.data.need_to_pay
     if (needToPay == 2) {
+      var actInfo = this.data.actInfo
+      var nTopay = actInfo.needToPay
+      var applyCount = actInfo.applyCount
+      if (nTopay == 1 && applyCount > 0) {//有人报名后，免费不能变付费
+
+        utils.showTip(that, "有人报名，不能修改付费方式！");
+        okay = false;
+        return;
+      }
       var feeItms = this.getAppSets();
       if (!feeItms) {
         okay = false;
         return okay;
       }
       if (tickesCount != -1 && applyNum != -1 && tickesCount > applyNum) {
-        wx.showToast({
-          title: "费用名额已超过活动名额！"
-        })
+        utils.showTip(that, "费用名额已超过活动名额！");
         okay = false;
+        return;
       } else {
         if (tickesCount != -1 && applyNum == -1) {//活动总名额为空，总人数以票价为主
           this.setData({ max_apply_count: tickesCount })
@@ -1136,34 +1157,43 @@ Page({
     }
     var contents = this.data.contents;
     if (contents.length == 0) {
-      wx.showToast({
-        title: "请输入活动详情"
-      })
+      utils.showTip(that, "请请输入活动详情");
+      // wx.showToast({
+      //   title: "请输入活动详情"
+      // })
       okay = false;
+      return;
     }
     var beginTime = this.data.begin
     var endTime = this.data.end
     var deadlineTime = this.data.deadline
-    if (beginTime > endTime) {
-      wx.showToast({
-        title: "活动开始时间大于活动结束时间"
-      })
+    if (beginTime == null || beginTime == 0) {
+      utils.showTip(that, "请填写活动开始时间");
       okay = false;
+      return;
+    }
+    if (endTime == null || endTime == 0) {
+      utils.showTip(that, "请填写活动结束时间");
+      okay = false;
+      return;
+    }
+    if (beginTime > endTime) {
+      utils.showTip(that, "活动开始时间需设置在活动结束之前");
+      okay = false;
+      return;
     }
     if (deadlineTime > endTime) {
-      wx.showToast({
-        title: "截止时间需设置在活动结束之前"
-      })
+      utils.showTip(that, "截止时间需设置在活动结束之前");
       okay = false;
+      return;
     }
 
     var payee = this.data.payee
     var pay = this.data.president
     if (!this.data.agreeCheck) {
-      wx.showToast({
-        title: "请选择超级俱乐部服务协议"
-      })
+      utils.showTip(that, "请选择超级俱乐部服务协议");
       okay = false;
+      return;
     }
 
     //设置收款账号
@@ -1227,18 +1257,17 @@ Page({
       for (var i = 0; i < tickets.length; i++) {
         if (!tickets[i].name || tickets[i].name == "") {
           ticketChecked = false;
-          wx.showToast({
-            title: "费用名称不能为空"
-          })
+          utils.showTip(that, "费用名称不能为空");
           break;
         } else {
           for (var j = i + 1; j < tickets.length; j++) {
             if (tickets[j].name && tickets[j].name != "") {
               if (tickets[i].name == tickets[j].name) {
                 ticketChecked = false;
-                wx.showToast({
-                  title: "费用名称不能重复"
-                })
+                utils.showTip(that, "费用名称不能重复");
+                // wx.showToast({
+                //   title: "费用名称不能重复"
+                // })
                 break;
               }
             }
@@ -1249,26 +1278,30 @@ Page({
         }
         if (tickets[i].name && tickets[i].name.length > 20) {
           ticketChecked = false;
-          wx.showToast({
-            title: "费用名称必须在20字内"
-          })
+          utils.showTip(that, "费用名称必须在20字内");
+          // wx.showToast({
+          //   title: "费用名称必须在20字内"
+          // })
           break;
         }
 
         var costStr = String(tickets[i].cost);
         if ((tickets[i].name != "" && costStr.length == 0) || Number(tickets[i].cost) < 0) {
           ticketChecked = false;
-          wx.showToast({
-            title: "费用金额必须大于或者等于0"
-          })
+          utils.showTip(that, "费用金额必须大于或者等于0");
+          // wx.showToast({
+          //   title: "费用金额必须大于或者等于0"
+          // })
           break;
         }
       }
       if (!this.data.cost_desc || this.data.cost_desc == "") {
         ticketChecked = false;
-        wx.showToast({
-          title: "费用说明不能为空"
-        })
+        utils.showTip(that, "费用说明不能为空");
+        // wx.showToast({
+        //   title: "费用说明不能为空"
+        // })
+        return;
       }
     }
     return ticketChecked;
@@ -1283,71 +1316,96 @@ Page({
 
   //***********************************时间控件************************************************************************
   bindChange: function (e) {
+    var that = this
+    pick.bindChange(e, that)
+    // const val = e.detail.value
 
-    const val = e.detail.value
+    // var y = this.data.years[val[0]];
+    // var m = this.data.months[val[1]];
+    // var ds = [];
+    // if (m == 2) {//2月分
+    //   if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0) {
+    //     ds = this.data.day29
+    //   } else {
+    //     ds = this.data.day28
+    //   }
+    // } else {//31天
+    //   if (m == 1 || 3 || 5 || 7 || 8 || 10 || 12) {
+    //     ds = this.data.day30
 
-    var y = this.data.years[val[0]];
-    var m = this.data.months[val[1]];
-    var ds = [];
-    if (m == 2) {//2月分
-      if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0) {
-        ds = this.data.day29
-      } else {
-        ds = this.data.day28
-      }
-    } else {//31天
-      if (m == 1 || 3 || 5 || 7 || 8 || 10 || 12) {
-        ds = this.data.day30
+    //   } else {//30天
+    //     ds = this.data.day31
 
-      } else {//30天
-        ds = this.data.day31
-
-      }
-    }
-    this.setData({
-      days: ds,
-      year: this.data.years[val[0]],
-      month: this.data.months[val[1]],
-      day: this.data.days[val[2]],
-      hour: this.data.hours[val[3]],
-      minute: this.data.minutes[val[4]],
-    })
-    // 小于10的数值补上0
-    if (this.data.months[val[1]] < 10) {
-      this.setData({
-        month: '0' + this.data.months[val[1]],
-      })
-    }
-    if (this.data.days[val[2]] < 10) {
-      this.setData({
-        day: '0' + this.data.days[val[2]],
-      })
-    }
-    if (this.data.hours[val[3]] < 10) {
-      this.setData({
-        hour: '0' + this.data.hours[val[3]],
-      })
-    }
-    if (this.data.minutes[val[4]] < 10) {
-      this.setData({
-        minute: '0' + this.data.minutes[val[4]],
-      })
-    }
+    //   }
+    // }
+    // this.setData({
+    //   days: ds,
+    //   year: this.data.years[val[0]],
+    //   month: this.data.months[val[1]],
+    //   day: this.data.days[val[2]],
+    //   hour: this.data.hours[val[3]],
+    //   minute: this.data.minutes[val[4]],
+    // })
+    // // 小于10的数值补上0
+    // if (this.data.months[val[1]] < 10) {
+    //   this.setData({
+    //     month: '0' + this.data.months[val[1]],
+    //   })
+    // }
+    // if (this.data.days[val[2]] < 10) {
+    //   this.setData({
+    //     day: '0' + this.data.days[val[2]],
+    //   })
+    // }
+    // if (this.data.hours[val[3]] < 10) {
+    //   this.setData({
+    //     hour: '0' + this.data.hours[val[3]],
+    //   })
+    // }
+    // if (this.data.minutes[val[4]] < 10) {
+    //   this.setData({
+    //     minute: '0' + this.data.minutes[val[4]],
+    //   })
+    // }
   },
   hideModal() {
     this.setData({ modalShowStyle: "" });
 
   },
   togglePicker: function (event) {
+    var that = this
     var flag = event.currentTarget.id
     var indexs = []
+    var begin = 0
+    var end = 0
+    var deadline = 0
+
+    if (this.data.actId == '' || this.data.actId == 0) {//发布活动
+      var date = new Date()
+      var year = date.getFullYear()
+      var month = date.getMonth() + 1
+      var day = date.getDate()
+      var hour = date.getHours()
+      var minute = date.getMinutes()
+      var second = date.getSeconds()
+      var datemap = [year, month, day].map(this.formatNumber);
+      var nowtime = datemap[0] + '/' + datemap[1] + '/' + datemap[2] + ' ' + "09:00"
+      var endtime = datemap[0] + '/' + datemap[1] + '/' + datemap[2] + ' ' + "18:00"
+      begin = new Date(nowtime).getTime()
+      end = new Date(endtime).getTime()
+      deadline = new Date(nowtime).getTime()
+    } else {//编辑活动
+      begin = this.data.begin
+      end = this.data.end
+      deadline = this.data.deadline
+    }
 
     if (flag == 'begin') {
-      indexs = this.formatTimeIndex(this.data.begin)
+      indexs = pick.formatTimeIndex(begin, that)
     } else if (flag == 'end') {
-      indexs = this.formatTimeIndex(this.data.end)
+      indexs = pick.formatTimeIndex(end, that)
     } else if (flag == 'deadline') {
-      indexs = this.formatTimeIndex(this.data.deadline)
+      indexs = pick.formatTimeIndex(deadline, that)
       this.setData({
         isShowTextarea: false
       })
@@ -1368,13 +1426,15 @@ Page({
     })
   },
   touchCancel: function (event) {
-    var timetxt = this.data.timetxt
-    if (timetxt == 'deadline') {
-      this.setData({ zindex: -1, scrolly: true, isShowTextarea: true })
-    } else {
-      this.setData({ zindex: -1, scrolly: true })
-    }
-    this.hideModal();
+    var that = this
+    pick.touchCancel(event, that)
+    // var timetxt = this.data.timetxt
+    // if (timetxt == 'deadline') {
+    //   this.setData({ zindex: -1, scrolly: true, isShowTextarea: true })
+    // } else {
+    //   this.setData({ zindex: -1, scrolly: true })
+    // }
+    // this.hideModal();
   },
   touchAdd: function (event) {
     var timet = this.data.year + '年' + this.data.month + '月' + this.data.day + '日 ' + this.data.hour + ':' + this.data.minute
@@ -1408,16 +1468,16 @@ Page({
       scrolly: true
     })
   },
-  formatTimeIndex: function (datetime) {
-    let date = new Date(datetime)
-    var yearindex = 0
-    for (var i = 0; i < this.data.years.length; i++) {
-      if (this.data.years[i] == date.getFullYear()) {
-        yearindex = i;
-      }
-    }
-    var index = [yearindex, date.getMonth(), date.getDate() - 1, date.getHours(), date.getMinutes()];
-    return index;
-  }
+  // formatTimeIndex: function (datetime) {
+  //   let date = new Date(datetime)
+  //   var yearindex = 0
+  //   for (var i = 0; i < this.data.years.length; i++) {
+  //     if (this.data.years[i] == date.getFullYear()) {
+  //       yearindex = i;
+  //     }
+  //   }
+  //   var index = [yearindex, date.getMonth(), date.getDate() - 1, date.getHours(), date.getMinutes()];
+  //   return index;
+  // }
   //***********************************时间控件************************************************************************
 })

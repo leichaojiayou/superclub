@@ -12,11 +12,11 @@
     </view>
 
     <!--循环列表-->
-    <view wx:for="{{group.applys}}" wx:key="1" wx:for-index="item_index" bindtap="" class="checkbox_group_view">
+    <view wx:for="{{group.applys}}" wx:key="1" wx:for-index="item_index" bindtap="tapSeleteItem" id="{{item_index}}" class="checkbox_group_view">
       <view style="width: 13%;">
 
         <!--列表按钮-->
-        <icon bindtap="tapSeleteItem" id="{{item_index}}" class="item_icon" size="26" type="{{item.isSelected ? 'success' : 'circle'}}" style="{{statu==2 ? 'opacity:0.4' : ''}}" />
+        <icon class="item_icon" size="26" type="{{item.isSelected ? 'success' : 'circle'}}" style="{{statu==2 ? 'opacity:0.4' : ''}}" />
       </view>
       <view class="item_mid_view" style="width: 87%;{{(num-1)== item_index ? 'border-bottom: 0;':''}}">
         <view style="width: 10%;">

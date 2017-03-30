@@ -1,0 +1,27 @@
+<import src="../../../template/toasts/toasts.wxml" />
+<form bindsubmit="submit" report-submit="true">
+    <view class="cancel-content">
+      <text>取消原因</text>
+      <view class="itemView_foot">
+        <picker bindchange="pickerEvent" value="{{selectReason}}" range="{{reasons}}">
+          <view class="foot_text_view">
+            <view class="bigsize {{selectReason==-1?'base-style':''}}">
+              {{selectReason==-1?'请选择':reasons[selectReason]}}
+            </view>
+          </view>
+        </picker>
+        <image class="right-arrow" src="https://cdn.51julebu.com/xiaochengxu/image/black-errow@2x.png"></image>
+      </view>
+    </view>
+  <view class="cost-cancel">
+    <text>退款金额</text>
+    <view style="color: #3dd1a5">¥{{money/100}}
+    </view>
+  </view>
+  <view class="cancel-reason">
+    <view style="margin-top:30rpx">原路退回</view>
+    <view class="cancel-reason-txt">{{needAudit?'主办方同意退款后，报名费用将在主办方确认退款后的2个工作日内原路退回至您支付所使用的账户':'报名费用将在2个工作日内原路退至您支付所使用的账户'}}</view>
+  </view>
+   <button class="apply-btn botbtn" form-type="submit">提交</button>
+</form>
+<template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}" />

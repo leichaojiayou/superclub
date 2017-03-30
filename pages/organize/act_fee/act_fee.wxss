@@ -11,10 +11,22 @@
   border-top: 1rpx solid rgb(230, 230, 230);
 }
 
+.placeholder-style {
+  font-size: 34rpx;
+  letter-spacing: -0.8rpx;
+  color: rgb(191, 191, 191);
+}
+
 .header_left {
   font-size: 34rpx;
   letter-spacing: -0.8rpx;
   color: rgb(26, 26, 26);
+}
+
+.header_left_txt {
+  margin-right: 32rpx;
+  margin-top: 16rpx;
+  text-align: right;
 }
 
 .header_right {
@@ -37,6 +49,12 @@
   margin-top: 21rpx;
   border-bottom: 1rpx solid rgb(230, 230, 230);
   border-top: 1rpx solid rgb(230, 230, 230);
+}
+
+.center-icon {
+  width: 67px;
+  height: 268rpx;
+  position: absolute;
 }
 
 .icon {
@@ -83,19 +101,22 @@
   background: #fff;
   line-height: 88rpx;
 }
-.icon2{
-    margin-top: 19rpx;
-    margin-right: 39rpx;
+
+.icon2 {
+  margin-top: 19rpx;
+  margin-right: 39rpx;
 }
-.textarea{
-      border-bottom: 1rpx solid rgb(230, 230, 230);
+
+.textarea {
+  border-bottom: 1rpx solid rgb(230, 230, 230);
   border-top: 1rpx solid rgb(230, 230, 230);
-    margin-top: 41rpx;
-    height: 270rpx;
-    padding: 31rpx;
-    background: #fff;
+  margin-top: 41rpx;
+  height: 270rpx;
+  padding: 31rpx;
+  background: #fff;
 }
-.item3{
+
+.item3 {
   height: 85rpx;
   background: #fff;
   margin-top: 71rpx;
@@ -106,10 +127,20 @@
   border-bottom: 1rpx solid rgb(230, 230, 230);
   border-top: 1rpx solid rgb(230, 230, 230);
 }
-.mar{
-    margin-top: 24rpx;
+
+.mar {
+  margin-top: 24rpx;
 }
-.mar1{
-    margin-top: 24rpx;
-    padding-bottom: 730rpx;
+
+.mar1 {
+  margin-top: 24rpx;
+  padding-bottom: 730rpx;
+}
+.tickets-amount{
+  display: flex;
+  align-items: center;
+}
+.tickets-amount-txt{
+  white-space: nowrap;
+  color:#8e8e8e;
 }

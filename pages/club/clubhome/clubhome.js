@@ -6,7 +6,7 @@ const userApi = App.api("userApi")
 const systemApi = App.api("systemApi")
 
 const wxService = App.wxService;
-
+const session = App.session;
 const util = require('../../../utils/util')
 Page({
   data: {
@@ -20,10 +20,16 @@ Page({
     },
     start: 0,
     time: 60, //倒计时
-    isReWriteLister: true//是否要启动监听器
+    isReWriteLister: true,//是否要启动监听器
+    isServerDoIt: 0 //服务处理临时用户问题 0：服务器处理 1：不做处理
   },
-
-
+  onPullDownRefresh: function () {
+    wx.showToast({
+      title: '加载中...',
+      icon: 'loading'
+    })
+    this.getMamberActivity()
+  },
   onLoad: function (e) {
     this.setData({
       clubId: e.clubId,
@@ -72,6 +78,7 @@ Page({
     }
     param.data = data;
     clubApi.clubActs(param, (res) => {
+      wx.stopPullDownRefresh()
       console.log(res)
       let data = res.data;
       if (data) {
@@ -85,29 +92,30 @@ Page({
         that.setData({
           activity: activities,
           start: data.start,
-          more: data.more
+          more: data.more,
         })
       }
     })
   },
 
-  onReachBottom:function(){
-     this.getMamberActivity()
+  onReachBottom: function () {
+    this.getMamberActivity()
   },
 
   /**
    * 分享 俱乐部主页
    */
-  onShareAppMessage :function(){
-     return {
+  onShareAppMessage: function () {
+    return {
       title: this.data.clubHome.title,
-      path: '/pages/club/clubhome/clubhome?clubId='+this.data.clubId
+      path: '/pages/club/clubhome/clubhome?clubId=' + this.data.clubId
     }
   },
   actDetail: function (e) {
     wxService.navigateTo('activity/act_detail/act_detail', {
       activityID: e.currentTarget.dataset.actid,
-      clubId: this.data.clubId
+      clubId: this.data.clubId,
+      backOrTo: 1
     })
   },
 
@@ -131,10 +139,17 @@ Page({
   },
 
   joinClub: function (e) {
-    if (!getApp().session.isTempUser()) {
+    if (this.data.isServerDoIt == 0) {
+      //   临时用户直接加入俱乐部
       this.__joinClub();
+
     } else {
-      this.__showSMSPopup();
+      if (!getApp().session.isTempUser()) {
+        this.__joinClub();
+      } else {
+        this.__showSMSPopup();
+      }
+
     }
   },
 
@@ -225,7 +240,7 @@ Page({
         }, 1000)
         that.__showCodePopup(phone);
       } else {
-        App.util.showTip(that,res.data.msg);
+        App.util.showTip(that, res.data.msg);
       }
     });
   },
@@ -411,7 +426,8 @@ Page({
   __showCheckPopup: function () {
     this.setData({
       joinShowStyle: "opacity:1;pointer-events:auto;",
-      join: '申请加入'
+      join: '请输入验证信息',
+      needjoinText: App.session.getUserInfo().nick + "申请加入",
     });
   },
 
@@ -454,6 +470,7 @@ Page({
           App.util.showTip(this, '加入成功');
           let pages = getCurrentPages(), prevPage = pages[pages.length - 2];  //上一个页面
           prevPage.data.refreshClubs = true
+          App.event.emit(App.config.EVENT_CLUB_CHANGE, null)
         } else {
           App.util.showTip(this, '申请已提交，请耐心等候审核');
         }

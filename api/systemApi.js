@@ -29,6 +29,7 @@ class System {
      */
     loadSystemMsg(clubId, ...fn) {
         let param = {}
+        param.loading = true
         param.data = {}
         param.data.clubId = clubId
         api.wxRequest(param, "/ba/sys/applet/message/list", ...fn);

@@ -43,14 +43,14 @@
         <text class="midview_text">活动{{clubHome.activityCount}}</text>
       </view>
     </view>
-    <view class="border_1" style="padding-bottom:40rpx;">
+    <view class="border_1" style="padding-bottom:20rpx;">
       <view class="border_1_1"></view>
       <text style="margin:0 20rpx;">俱乐部活动</text>
       <view class="border_1_1"></view>
     </view>
     <view wx:for="{{activity}}" wx:key='index' class="midview_list">
       <!-- 每条---报名中 -->
-      <view class="midview_item_1" catchtap="actDetail" data-actid="{{item.actID}}">
+      <navigator class="midview_item_1" catchtap="actDetail" data-actid="{{item.actID}}">
         <view class="midview_item_img_view">
           <view class=" midview_item_1_text1" wx:if="{{item.flag === 1}}">报名中</view>
           <view class=" midview_item_1_text2" wx:elif="{{item.flag === 2}}">活动中</view>
@@ -61,7 +61,8 @@
           <view class="activity-title">
             <text class="bigsize txt-overflow-two">{{item.title}}</text>
           </view>
-          <text class="smalltext" style="bottom:13rpx">时间 {{item.begin}} 至 {{item.end}}</text>
+          <view class="smalltext apply-time" wx:if="{{item.begin == item.end}}">时间 {{item.begin}}</view>
+          <view wx:else class="smalltext apply-time">时间 {{item.begin}} 至 {{item.end}}</view>
           <view class="midview_item_2_1">
             <text class="smalltext">报名 {{item.applyCount}}</text>
             <text class="pricetext" wx:if="{{item.isProxyAct ==1 }}"></text>
@@ -70,7 +71,7 @@
             <text class="pricetext" wx:elif="{{item.ticketCount == 0}}">免费</text>
           </view>
         </view>
-      </view>
+      </navigator>
     </view>
     <view wx:if="{{!activity||more == 1}}" class="theend_text_view">
       <text class="theend_text">加载更多...</text>
@@ -94,6 +95,6 @@
 <import src="../../../template/toasts/toasts.wxml"  />
 <template is="sendCheckCode" data="{{param,status,time}}"  />
 <template is="clubCode" data="{{club}}"  />
-<template is="joinCheck" data="{{joinShowStyle,join}}"  />
+<template is="joinCheck" data="{{joinShowStyle,join,needjoinText}}"  />
 <template is="showToast" data="{{showTipTxt: showTipTxt, tipHidden: tipHidden}}"  />
  

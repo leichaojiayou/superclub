@@ -17,6 +17,11 @@ const MSG_GROUP_NOT_SUPPORT = '暂不支持组队活动管理，请在超级俱�
 const EVENT_CLUB_MODIFY = 'club_modify'
 
 /**
+ * 加入或者退出俱乐部
+ */
+const EVENT_CLUB_CHANGE = 'club_change'
+
+/**
  * 发布或者删除活动, {actId, count}
  */
 const EVENT_ACTIVITY_CHANGE = 'activity_change'
@@ -37,5 +42,6 @@ module.exports = {
   MSG_GROUP_NOT_SUPPORT: MSG_GROUP_NOT_SUPPORT,
   EVENT_CLUB_MODIFY: EVENT_CLUB_MODIFY,
   EVENT_ACTIVITY_CHANGE: EVENT_ACTIVITY_CHANGE,
-  EVENT_APPLY_CHANGE: EVENT_APPLY_CHANGE
+  EVENT_APPLY_CHANGE: EVENT_APPLY_CHANGE,
+  EVENT_CLUB_CHANGE:EVENT_CLUB_CHANGE,
 }

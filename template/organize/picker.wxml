@@ -1,0 +1,32 @@
+<!--时间控件-->
+<template name="pickerData">
+<view class="picker-view-big" style="{{modalShowStyle}};z-index: {{zindex}};">
+  <view class="pickerdata">
+    <view class="picker-btn">
+      <view class="btn picker-alpha-btn" bindtap="touchCancel">取消</view>
+      <view class="btn picker-beta-btn" bindtap="touchAdd">确定</view>
+    </view>
+    <picker-view indicator-style="height: 50px;" class="picker-view" style="width: 100%; height:40vh;" value="{{value}}" bindchange="bindChange">
+      <picker-view-column>
+        <view wx:for="{{years}}" style="line-height: 50px;">{{item}}年</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:if="{{item<10}}" wx:for="{{months}}" style="line-height: 50px">0{{item}}月</view>
+        <view wx:if="{{item>9}}" wx:for="{{months}}" style="line-height: 50px">{{item}}月</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:if="{{item<10}}" wx:for="{{days}}" style="line-height: 50px">0{{item}}日</view>
+        <view wx:if="{{item>9}}" wx:for="{{days}}" style="line-height: 50px">{{item}}日</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:if="{{item<10}}" wx:for="{{hours}}" style="line-height: 50px">0{{item}}</view>
+        <view wx:if="{{item>9}}" wx:for="{{hours}}" style="line-height: 50px">{{item}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:if="{{item<10}}" wx:for="{{minutes}}" style="line-height: 50px">0{{item}}</view>
+        <view wx:if="{{item>9}}" wx:for="{{minutes}}" style="line-height: 50px">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+</view>
+</template>

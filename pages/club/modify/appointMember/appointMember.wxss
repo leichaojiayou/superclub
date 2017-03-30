@@ -1,7 +1,8 @@
 /* pages/dismiss/dismiss.wxss */
 
-page {
-  white-space: normal;
+.base-btn {
+  background: #3dd1a5;
+  color: #fff;
 }
 
 .header {
@@ -21,6 +22,12 @@ page {
   display: flex;
   justify-content: center;
   margin-top: 48rpx;
+}
+
+.header_t_txt {
+  font-size: 26rpx;
+  Letter-spacing: -0.6rpx;
+  color: rgb(191, 191, 191);
 }
 
 .header_btn {
